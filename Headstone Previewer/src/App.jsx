@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Route, BrowserRouter } from 'react-router-dom' 
+import { Route, Routes, BrowserRouter } from 'react-router-dom' 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import Previewer from './components/Previewer.jsx'
+import Previewer from './Components/Previewer/Previewer.jsx'
 import './App.css'
 
 function App() {
@@ -10,8 +10,10 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Route path="/" element={<Previewer />} />
-        
+      <p>Hello</p>
+        <Routes>
+            <Route path="/" element={<Previewer />} />
+        </Routes>
       </BrowserRouter>
     </>
   )
