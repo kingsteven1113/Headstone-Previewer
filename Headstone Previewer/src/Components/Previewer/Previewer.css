@@ -3,3 +3,13 @@
     width: 60%;
     height: auto;
 } 
+
+.previewer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Preview-Options {
+    display: flex;
+}
