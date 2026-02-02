@@ -13,3 +13,71 @@
 .Preview-Options {
     display: flex;
 }
+
+.TypeOptionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ShapeOptionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+}
+
+.ColorOptionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+}
+
+.TypeOptionsList ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ShapeOptionsList ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+
+.ColorOptionsList ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+
+
+
+
+.active {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    visibility: visible;
+    
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+}
+
+.NoCombonationMessage {
+    font-size: 1.5rem;
+    color: red;
+    margin-top: 20px;
+    display: block;
+    visibility: hidden;
+}

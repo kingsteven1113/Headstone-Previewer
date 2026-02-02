@@ -128,8 +128,8 @@ import Paradiso_Die_And_Base from '../../assets/Krieger.jpg';
 import Paradiso_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Die_And_Base_Serpentine_Top from '../../assets/Krieger.jpg';
-import Paradiso_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Die_And_Base_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Die_And_Base_Oval_Top from '../../assets/Krieger.jpg';
 import Paradiso_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
@@ -512,7 +512,7 @@ import Bahama_Blue_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
 import Bahama_Blue_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
 
 import Hickey_Marker from '../../assets/Meek installed.jpg';
-import Impala_Black_Hickey_Marker from '../../assets/Casillas 2.jpg';
+import Impala_Black_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
 import Impala_Black_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
 import Impala_Black_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
 import Impala_Black_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
@@ -646,6 +646,18 @@ import Paradiso_Bench from '../../assets/CJStonesLogo.jpg';
 import Bahama_Blue_Bench from '../../assets/CJStonesLogo.jpg';
 import Bronze_Plaque from '../../assets/George.jpg';
 
+import Impala_Black_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Barre_Grey_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import North_American_Pink_Bronze_Plaque from '../../assets/George.jpg';
+import Mahogany_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Evergreen_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Jet_Black_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Blue_Pearl_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Bahama_Blue_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+
 
 
 const Previewer = () => {
@@ -654,6 +666,11 @@ const Previewer = () => {
 
   function resetSelections() {
     setSelection(initialSelection);
+    setTypeSelected(initialType);
+    setColorSelected(initialColor);
+    setShapeSelected(initialShape);
+    document.getElementById('ColorOptionsList').classList.remove('active');
+    document.getElementById('ShapeOptionsList').classList.remove('active');
   }
 
 
@@ -663,126 +680,134 @@ const Previewer = () => {
     shape: null,
   }
 
- 
+
 
   const [selection, setSelection] = useState(initialSelection);
 
   const imageSrc = (selection) => {
     // Three-condition if statements (most complicated)
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Heart_Shape") { return Impala_Black_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Angel_Carved") { return Impala_Black_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Flat_Top") { return Impala_Black_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Serpentine_Top") { return Impala_Black_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Oval_Top") { return Impala_Black_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Half_Serpentine_Top") { return Impala_Black_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Half_Oval_Top") { return Impala_Black_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Apex_Top") { return Impala_Black_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Roof_Top") { return Impala_Black_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Heart_Shape") { return Barre_Grey_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Angel_Carved") { return Barre_Grey_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Flat_Top") { return Barre_Grey_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Serpentine_Top") { return Barre_Grey_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Oval_Top") { return Barre_Grey_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Half_Serpentine_Top") { return Barre_Grey_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Half_Oval_Top") { return Barre_Grey_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Apex_Top") { return Barre_Grey_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Roof_Top") { return Barre_Grey_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Heart_Shape") { return North_American_Pink_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Angel_Carved") { return North_American_Pink_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Flat_Top") { return North_American_Pink_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Serpentine_Top") { return North_American_Pink_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Oval_Top") { return North_American_Pink_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Half_Serpentine_Top") { return North_American_Pink_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Half_Oval_Top") { return North_American_Pink_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Apex_Top") { return North_American_Pink_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Roof_Top") { return North_American_Pink_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Heart_Shape") { return Mahogany_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Angel_Carved") { return Mahogany_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Flat_Top") { return Mahogany_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Serpentine_Top") { return Mahogany_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Oval_Top") { return Mahogany_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Half_Serpentine_Top") { return Mahogany_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Half_Oval_Top") { return Mahogany_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Apex_Top") { return Mahogany_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Roof_Top") { return Mahogany_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Heart_Shape") { return Cats_Eye_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Angel_Carved") { return Cats_Eye_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Flat_Top") { return Cats_Eye_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Serpentine_Top") { return Cats_Eye_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Oval_Top") { return Cats_Eye_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Half_Serpentine_Top") { return Cats_Eye_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Half_Oval_Top") { return Cats_Eye_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Apex_Top") { return Cats_Eye_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Roof_Top") { return Cats_Eye_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Heart_Shape") { return Evergreen_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Angel_Carved") { return Evergreen_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Flat_Top") { return Evergreen_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Serpentine_Top") { return Evergreen_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Oval_Top") { return Evergreen_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Half_Serpentine_Top") { return Evergreen_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Half_Oval_Top") { return Evergreen_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Apex_Top") { return Evergreen_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Roof_Top") { return Evergreen_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Heart_Shape") { return Jet_Black_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Angel_Carved") { return Jet_Black_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Flat_Top") { return Jet_Black_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Serpentine_Top") { return Jet_Black_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Oval_Top") { return Jet_Black_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Half_Serpentine_Top") { return Jet_Black_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Half_Oval_Top") { return Jet_Black_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Apex_Top") { return Jet_Black_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Roof_Top") { return Jet_Black_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Heart_Shape") { return Blue_Pearl_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Angel_Carved") { return Blue_Pearl_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Flat_Top") { return Blue_Pearl_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Serpentine_Top") { return Blue_Pearl_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Oval_Top") { return Blue_Pearl_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Half_Serpentine_Top") { return Blue_Pearl_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Half_Oval_Top") { return Blue_Pearl_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Apex_Top") { return Blue_Pearl_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Roof_Top") { return Blue_Pearl_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Heart_Shape") { return Tropical_Green_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Angel_Carved") { return Tropical_Green_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Flat_Top") { return Tropical_Green_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Serpentine_Top") { return Tropical_Green_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Oval_Top") { return Tropical_Green_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Half_Serpentine_Top") { return Tropical_Green_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Half_Oval_Top") { return Tropical_Green_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Apex_Top") { return Tropical_Green_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Roof_Top") { return Tropical_Green_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Heart_Shape") { SelectionImage = 'Martinez'; return Impala_Black_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Angel_Carved") { SelectionImage = 'Wietsma'; return Impala_Black_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Flat_Top") {SelectionImage = 'Weldon'; return Impala_Black_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Serpentine_Top") {SelectionImage = 'Casillas'; return Impala_Black_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Oval_Top") { SelectionImage = 'None'; return Impala_Black_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Impala_Black_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Impala_Black_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Apex_Top") {SelectionImage = 'None'; return Impala_Black_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return Impala_Black_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Heart_Shape") { SelectionImage = 'Gabrielli'; return Barre_Grey_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Angel_Carved") { SelectionImage = 'Rende'; return Barre_Grey_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Flat_Top") { SelectionImage = 'Shappe'; return Barre_Grey_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Serpentine_Top") { SelectionImage = 'Coakley'; return Barre_Grey_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Oval_Top") { SelectionImage = 'Smith'; return Barre_Grey_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Barre_Grey_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Barre_Grey_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Apex_Top") { SelectionImage = 'Thorsen'; return Barre_Grey_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey" && selection.shape === "Roof_Top") { SelectionImage = 'Camacho'; return Barre_Grey_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Heart_Shape") { SelectionImage = 'Cinelli'; return North_American_Pink_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Angel_Carved") { SelectionImage = 'Red Angel'; return North_American_Pink_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Flat_Top") { SelectionImage = 'Finnigan'; return North_American_Pink_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Serpentine_Top") { SelectionImage = 'Conforti'; return North_American_Pink_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Oval_Top") { SelectionImage = 'Zmudzinski'; return North_American_Pink_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None';return North_American_Pink_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Half_Oval_Top") {
+       SelectionImage = 'None'; return North_American_Pink_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Apex_Top") {
+       SelectionImage = 'None'; return North_American_Pink_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return North_American_Pink_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Heart_Shape") {
+       SelectionImage = 'None'; return Mahogany_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Angel_Carved") {
+       SelectionImage = 'None'; return Mahogany_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Flat_Top") {
+      SelectionImage = 'None'; return Mahogany_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Serpentine_Top") {
+       SelectionImage = 'Ferdinand'; return Mahogany_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Oval_Top") {
+      SelectionImage = 'None'; return Mahogany_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Mahogany_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Mahogany_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Apex_Top") { SelectionImage = 'None'; return Mahogany_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return Mahogany_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Cats_Eye_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Angel_Carved") {
+      SelectionImage = 'None'; return Cats_Eye_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Flat_Top") { SelectionImage = 'None'; return Cats_Eye_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Serpentine_Top") { SelectionImage = 'Stockhamer'; return Cats_Eye_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Oval_Top") { SelectionImage = 'None'; return Cats_Eye_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Cats_Eye_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Cats_Eye_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Apex_Top") { SelectionImage = 'None'; return Cats_Eye_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return Cats_Eye_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Evergreen_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Angel_Carved") { SelectionImage = 'None'; return Evergreen_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Flat_Top") { SelectionImage = 'None'; return Evergreen_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Serpentine_Top") { SelectionImage = 'Seredynski'; return Evergreen_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Oval_Top") {SelectionImage = 'None'; return Evergreen_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Half_Serpentine_Top") {SelectionImage = 'None'; return Evergreen_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Half_Oval_Top") {SelectionImage = 'None'; return Evergreen_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Apex_Top") {SelectionImage = 'None'; return Evergreen_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen" && selection.shape === "Roof_Top") {SelectionImage = 'None'; return Evergreen_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Heart_Shape") { SelectionImage = 'Mason'; return Jet_Black_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Angel_Carved") { SelectionImage = 'Wietsma'; return Jet_Black_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Flat_Top") { SelectionImage = 'Weldon'; return Jet_Black_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Serpentine_Top") { SelectionImage = 'Rivera'; return Jet_Black_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Oval_Top") { SelectionImage = 'Mlikovich'; return Jet_Black_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Jet_Black_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Jet_Black_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Apex_Top") { SelectionImage = 'None'; return Jet_Black_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return Jet_Black_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Blue_Pearl_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Angel_Carved") { SelectionImage = 'None'; return Blue_Pearl_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Flat_Top") { SelectionImage = 'None'; return Blue_Pearl_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Serpentine_Top") { SelectionImage = 'Anderson'; return Blue_Pearl_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Oval_Top") { SelectionImage = 'None'; return Blue_Pearl_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Blue_Pearl_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Blue_Pearl_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Apex_Top") { SelectionImage = 'None'; return Blue_Pearl_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return Blue_Pearl_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Heart_Shape") {SelectionImage = 'None'; return Tropical_Green_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Angel_Carved") {SelectionImage = 'None'; return Tropical_Green_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Flat_Top") { SelectionImage = 'None'; return Tropical_Green_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Serpentine_Top") { SelectionImage = 'Meier'; return Tropical_Green_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Oval_Top") { SelectionImage = 'None'; return Tropical_Green_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Tropical_Green_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Tropical_Green_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Apex_Top") { SelectionImage = 'None'; return Tropical_Green_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return Tropical_Green_Die_And_Base_Roof_Top; }
     if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Heart_Shape") { return Paradiso_Die_And_Base_Heart_Shape; }
     if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Angel_Carved") { return Paradiso_Die_And_Base_Angel_Carved; }
     if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Flat_Top") { return Paradiso_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Serpentine_Top") { return Paradiso_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Oval_Top") { return Paradiso_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Half_Serpentine_Top") { return Paradiso_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Half_Oval_Top") { return Paradiso_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Apex_Top") { return Paradiso_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Roof_Top") { return Paradiso_Die_And_Base_Roof_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Heart_Shape") { return Bahama_Blue_Die_And_Base_Heart_Shape; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Angel_Carved") { return Bahama_Blue_Die_And_Base_Angel_Carved; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Flat_Top") { return Bahama_Blue_Die_And_Base_Flat_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Serpentine_Top") { return Bahama_Blue_Die_And_Base_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Oval_Top") { return Bahama_Blue_Die_And_Base_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Half_Serpentine_Top") { return Bahama_Blue_Die_And_Base_Half_Serpentine_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Half_Oval_Top") { return Bahama_Blue_Die_And_Base_Half_Oval_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Apex_Top") { return Bahama_Blue_Die_And_Base_Apex_Top; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Roof_Top") { return Bahama_Blue_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Paradiso_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Oval_Top") { SelectionImage = 'Krieger'; return Paradiso_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Paradiso_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Paradiso_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Apex_Top") { SelectionImage = 'None'; return Paradiso_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Paradiso" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return Paradiso_Die_And_Base_Roof_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Bahama_Blue_Die_And_Base_Heart_Shape; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Angel_Carved") { SelectionImage = 'None'; return Bahama_Blue_Die_And_Base_Angel_Carved; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Flat_Top") { SelectionImage = 'None'; return Bahama_Blue_Die_And_Base_Flat_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Serpentine_Top") { SelectionImage = 'Giglio'; return Bahama_Blue_Die_And_Base_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Oval_Top") { SelectionImage = 'None'; return Bahama_Blue_Die_And_Base_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Bahama_Blue_Die_And_Base_Half_Serpentine_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Bahama_Blue_Die_And_Base_Half_Oval_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Apex_Top") { SelectionImage = 'None'; return Bahama_Blue_Die_And_Base_Apex_Top; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue" && selection.shape === "Roof_Top") { SelectionImage = 'None'; return Bahama_Blue_Die_And_Base_Roof_Top; }
 
     // Add all other three-condition if statements for Monolith, Slant_Marker, Flush_Marker, Hickey_Marker here (similarly reordered)
 
     // Two-condition if statements
-    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black") { return Impala_Black_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey") { return Barre_Grey_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink") { return North_American_Pink_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Mahogany") { return Mahogany_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye") { return Cats_Eye_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Evergreen") { return Evergreen_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black") { return Jet_Black_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl") { return Blue_Pearl_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green") { return Tropical_Green_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Paradiso") { return Paradiso_Die_And_Base; }
-    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue") { return Bahama_Blue_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Impala_Black") {document.getElementById('ShapeOptionsList').classList.add('active'); return Impala_Black_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Barre_Grey") {document.getElementById('ShapeOptionsList').classList.add('active'); return Barre_Grey_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "North_American_Pink") {document.getElementById('ShapeOptionsList').classList.add('active'); return North_American_Pink_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Mahogany") {document.getElementById('ShapeOptionsList').classList.add('active'); return Mahogany_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Cats_Eye") {document.getElementById('ShapeOptionsList').classList.add('active'); return Cats_Eye_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Evergreen") {document.getElementById('ShapeOptionsList').classList.add('active'); return Evergreen_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Jet_Black") {document.getElementById('ShapeOptionsList').classList.add('active'); return Jet_Black_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Blue_Pearl") {document.getElementById('ShapeOptionsList').classList.add('active'); return Blue_Pearl_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Tropical_Green") {document.getElementById('ShapeOptionsList').classList.add('active'); return Tropical_Green_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Paradiso") {document.getElementById('ShapeOptionsList').classList.add('active'); return Paradiso_Die_And_Base; }
+    if (selection.type === "Die_And_Base" && selection.color === "Bahama_Blue") {document.getElementById('ShapeOptionsList').classList.add('active'); return Bahama_Blue_Die_And_Base; }
 
     // Add all other two-condition if statements for Monolith, Slant_Marker, Flush_Marker, Hickey_Marker, Bench here
 
@@ -801,124 +826,135 @@ const Previewer = () => {
     // Monolith
     if (selection.type === "Monolith") {
       if (selection.color === "Impala_Black") {
-        if (selection.shape === "Heart_Shape") { return Impala_Black_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Impala_Black_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Impala_Black_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Impala_Black_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Impala_Black_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Impala_Black_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Impala_Black_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Impala_Black_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Impala_Black_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") {SelectionImage = 'None'; return Impala_Black_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Impala_Black_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'Wood'; return Impala_Black_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Impala_Black_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Impala_Black_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Impala_Black_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Impala_Black_Monolith_Roof_Top; }
         return Impala_Black_Monolith;
       }
       if (selection.color === "Barre_Grey") {
-        if (selection.shape === "Heart_Shape") { return Barre_Grey_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Barre_Grey_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Barre_Grey_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Barre_Grey_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Barre_Grey_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Barre_Grey_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Barre_Grey_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Barre_Grey_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Barre_Grey_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'Ettere'; return Barre_Grey_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Strandburg'; return Barre_Grey_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'Fornerod'; return Barre_Grey_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'Stanley Walker'; return Barre_Grey_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Barre_Grey_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Barre_Grey_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Barre_Grey_Monolith_Roof_Top; }
         return Barre_Grey_Monolith;
       }
       if (selection.color === "North_American_Pink") {
-        if (selection.shape === "Heart_Shape") { return North_American_Pink_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return North_American_Pink_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return North_American_Pink_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return North_American_Pink_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return North_American_Pink_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return North_American_Pink_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return North_American_Pink_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return North_American_Pink_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") {SelectionImage = 'None'; return North_American_Pink_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return North_American_Pink_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Maynes'; return North_American_Pink_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return North_American_Pink_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return North_American_Pink_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return North_American_Pink_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return North_American_Pink_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return North_American_Pink_Monolith_Roof_Top; }
         return North_American_Pink_Monolith;
       }
       if (selection.color === "Mahogany") {
-        if (selection.shape === "Heart_Shape") { return Mahogany_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Mahogany_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Mahogany_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Mahogany_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Mahogany_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Mahogany_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Mahogany_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Mahogany_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Mahogany_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Mahogany_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Castellano'; return Mahogany_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Mahogany_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Mahogany_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Mahogany_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Mahogany_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Mahogany_Monolith_Roof_Top; }
         return Mahogany_Monolith;
       }
       if (selection.color === "Cats_Eye") {
-        if (selection.shape === "Heart_Shape") { return Cats_Eye_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Cats_Eye_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Cats_Eye_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Cats_Eye_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Cats_Eye_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Cats_Eye_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Cats_Eye_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Cats_Eye_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Cats_Eye_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Cats_Eye_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Cats_Eye_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Cats_Eye_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Cats_Eye_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Cats_Eye_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Cats_Eye_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Cats_Eye_Monolith_Roof_Top; }
         return Cats_Eye_Monolith;
       }
       if (selection.color === "Evergreen") {
-        if (selection.shape === "Heart_Shape") { return Evergreen_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Evergreen_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Evergreen_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Evergreen_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Evergreen_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Evergreen_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Evergreen_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Evergreen_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Evergreen_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Evergreen_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Evergreen_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Evergreen_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Evergreen_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Evergreen_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Evergreen_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Evergreen_Monolith_Roof_Top; }
         return Evergreen_Monolith;
       }
       if (selection.color === "Jet_Black") {
-        if (selection.shape === "Heart_Shape") { return Jet_Black_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Jet_Black_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Jet_Black_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Jet_Black_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Jet_Black_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Jet_Black_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Jet_Black_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Jet_Black_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Jet_Black_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'Bruckenthal'; return Jet_Black_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Delorier'; return Jet_Black_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Jet_Black_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Jet_Black_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Jet_Black_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Jet_Black_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Jet_Black_Monolith_Roof_Top; }
         return Jet_Black_Monolith;
       }
       if (selection.color === "Blue_Pearl") {
-        if (selection.shape === "Heart_Shape") { return Blue_Pearl_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Blue_Pearl_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Blue_Pearl_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Blue_Pearl_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Blue_Pearl_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Blue_Pearl_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Blue_Pearl_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Blue_Pearl_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Blue_Pearl_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Blue_Pearl_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Taskovich'; return Blue_Pearl_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Blue_Pearl_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Blue_Pearl_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Blue_Pearl_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Blue_Pearl_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Blue_Pearl_Monolith_Roof_Top; }
         return Blue_Pearl_Monolith;
       }
       if (selection.color === "Tropical_Green") {
-        if (selection.shape === "Heart_Shape") { return Tropical_Green_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Tropical_Green_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Tropical_Green_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Tropical_Green_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Tropical_Green_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Tropical_Green_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Tropical_Green_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Tropical_Green_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Tropical_Green_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Tropical_Green_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Tropical_Green_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Tropical_Green_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Tropical_Green_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Tropical_Green_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Tropical_Green_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Tropical_Green_Monolith_Roof_Top; }
         return Tropical_Green_Monolith;
       }
       if (selection.color === "Paradiso") {
-        if (selection.shape === "Heart_Shape") { return Paradiso_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Paradiso_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Paradiso_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Paradiso_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Paradiso_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Paradiso_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Paradiso_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Paradiso_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Paradiso_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Paradiso_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Paradiso_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'Reiter'; return Paradiso_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Paradiso_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Paradiso_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Paradiso_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Paradiso_Monolith_Roof_Top; }
         return Paradiso_Monolith;
       }
       if (selection.color === "Bahama_Blue") {
-        if (selection.shape === "Heart_Shape") { return Bahama_Blue_Monolith_Heart_Shape; }
-        if (selection.shape === "Flat_Top") { return Bahama_Blue_Monolith_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Bahama_Blue_Monolith_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Bahama_Blue_Monolith_Oval_Top; }
-        if (selection.shape === "Half_Serpentine_Top") { return Bahama_Blue_Monolith_Half_Serpentine_Top; }
-        if (selection.shape === "Half_Oval_Top") { return Bahama_Blue_Monolith_Half_Oval_Top; }
-        if (selection.shape === "Apex_Top") { return Bahama_Blue_Monolith_Apex_Top; }
-        if (selection.shape === "Roof_Top") { return Bahama_Blue_Monolith_Roof_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Heart_Shape") { SelectionImage = 'None'; return Bahama_Blue_Monolith_Heart_Shape; }
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Bahama_Blue_Monolith_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Bahama_Blue_Monolith_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Bahama_Blue_Monolith_Oval_Top; }
+        if (selection.shape === "Half_Serpentine_Top") { SelectionImage = 'None'; return Bahama_Blue_Monolith_Half_Serpentine_Top; }
+        if (selection.shape === "Half_Oval_Top") { SelectionImage = 'None'; return Bahama_Blue_Monolith_Half_Oval_Top; }
+        if (selection.shape === "Apex_Top") { SelectionImage = 'None'; return Bahama_Blue_Monolith_Apex_Top; }
+        if (selection.shape === "Roof_Top") { SelectionImage = 'None'; return Bahama_Blue_Monolith_Roof_Top; }
         return Bahama_Blue_Monolith;
       }
     }
@@ -926,131 +962,156 @@ const Previewer = () => {
     // Slant_Marker
     if (selection.type === "Slant_Marker") {
       if (selection.color === "Impala_Black") {
-        if (selection.shape === "Flat_Top") { return Impala_Black_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Impala_Black_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Impala_Black_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'Pharr'; return Impala_Black_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Orellana'; return Impala_Black_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Impala_Black_Slant_Marker_Oval_Top; }
         return Impala_Black_Slant_Marker;
       }
       if (selection.color === "Barre_Grey") {
-        if (selection.shape === "Flat_Top") { return Barre_Grey_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Barre_Grey_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Barre_Grey_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'Robinson'; return Barre_Grey_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Brunetto'; return Barre_Grey_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'Kimbark'; return Barre_Grey_Slant_Marker_Oval_Top; }
         return Barre_Grey_Slant_Marker;
       }
       if (selection.color === "North_American_Pink") {
-        if (selection.shape === "Flat_Top") { return North_American_Pink_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return North_American_Pink_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return North_American_Pink_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'Pitzpatrick'; return North_American_Pink_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Duah'; return North_American_Pink_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'Brockway'; return North_American_Pink_Slant_Marker_Oval_Top; }
         return North_American_Pink_Slant_Marker;
       }
       if (selection.color === "Mahogany") {
-        if (selection.shape === "Flat_Top") { return Mahogany_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Mahogany_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Mahogany_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Mahogany_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Bell-Watson'; return Mahogany_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Mahogany_Slant_Marker_Oval_Top; }
         return Mahogany_Slant_Marker;
       }
       if (selection.color === "Cats_Eye") {
-        if (selection.shape === "Flat_Top") { return Cats_Eye_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Cats_Eye_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Cats_Eye_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Cats_Eye_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Cats_Eye_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Cats_Eye_Slant_Marker_Oval_Top; }
         return Cats_Eye_Slant_Marker;
       }
       if (selection.color === "Evergreen") {
-        if (selection.shape === "Flat_Top") { return Evergreen_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Evergreen_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Evergreen_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Evergreen_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Evergreen_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Evergreen_Slant_Marker_Oval_Top; }
         return Evergreen_Slant_Marker;
       }
       if (selection.color === "Jet_Black") {
-        if (selection.shape === "Flat_Top") { return Jet_Black_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Jet_Black_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Jet_Black_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Jet_Black_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'Sheehy'; return Jet_Black_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Jet_Black_Slant_Marker_Oval_Top; }
         return Jet_Black_Slant_Marker;
       }
       if (selection.color === "Blue_Pearl") {
-        if (selection.shape === "Flat_Top") { return Blue_Pearl_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Blue_Pearl_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Blue_Pearl_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'Hernandez'; return Blue_Pearl_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = "D'Onofrio"; return Blue_Pearl_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Blue_Pearl_Slant_Marker_Oval_Top; }
         return Blue_Pearl_Slant_Marker;
       }
       if (selection.color === "Tropical_Green") {
-        if (selection.shape === "Flat_Top") { return Tropical_Green_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Tropical_Green_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Tropical_Green_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Tropical_Green_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Tropical_Green_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Tropical_Green_Slant_Marker_Oval_Top; }
         return Tropical_Green_Slant_Marker;
       }
       if (selection.color === "Paradiso") {
-        if (selection.shape === "Flat_Top") { return Paradiso_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Paradiso_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Paradiso_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Paradiso_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Paradiso_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Paradiso_Slant_Marker_Oval_Top; }
         return Paradiso_Slant_Marker;
       }
       if (selection.color === "Bahama_Blue") {
-        if (selection.shape === "Flat_Top") { return Bahama_Blue_Slant_Marker_Flat_Top; }
-        if (selection.shape === "Serpentine_Top") { return Bahama_Blue_Slant_Marker_Serpentine_Top; }
-        if (selection.shape === "Oval_Top") { return Bahama_Blue_Slant_Marker_Oval_Top; }
+        document.getElementById('ShapeOptionsList').classList.add('active');
+        if (selection.shape === "Flat_Top") { SelectionImage = 'None'; return Bahama_Blue_Slant_Marker_Flat_Top; }
+        if (selection.shape === "Serpentine_Top") { SelectionImage = 'None'; return Bahama_Blue_Slant_Marker_Serpentine_Top; }
+        if (selection.shape === "Oval_Top") { SelectionImage = 'None'; return Bahama_Blue_Slant_Marker_Oval_Top; }
         return Bahama_Blue_Slant_Marker;
       }
     }
 
     // Flush_Marker
-    if (selection.type === "Flush_Marker" && selection.color === "Impala_Black") { return Impala_Black_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Barre_Grey") { return Barre_Grey_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "North_American_Pink") { return North_American_Pink_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Mahogany") { return Mahogany_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Cats_Eye") { return Cats_Eye_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Evergreen") { return Evergreen_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Jet_Black") { return Jet_Black_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Blue_Pearl") { return Blue_Pearl_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Tropical_Green") { return Tropical_Green_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Paradiso") { return Paradiso_Flush_Marker; }
-    if (selection.type === "Flush_Marker" && selection.color === "Bahama_Blue") { return Bahama_Blue_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Impala_Black") {SelectionImage = 'White'; return Impala_Black_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Barre_Grey") { SelectionImage = 'Moore'; return Barre_Grey_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "North_American_Pink") { SelectionImage = 'Trotman'; return North_American_Pink_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Mahogany") { SelectionImage = 'None'; return Mahogany_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Cats_Eye") { SelectionImage = 'None'; return Cats_Eye_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Evergreen") { SelectionImage = 'Wu'; return Evergreen_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Jet_Black") { SelectionImage = 'DeMeo'; return Jet_Black_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Blue_Pearl") { SelectionImage = 'None'; return Blue_Pearl_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Tropical_Green") { SelectionImage = 'None'; return Tropical_Green_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Paradiso") { SelectionImage = 'None'; return Paradiso_Flush_Marker; }
+    if (selection.type === "Flush_Marker" && selection.color === "Bahama_Blue") { SelectionImage = 'None'; return Bahama_Blue_Flush_Marker; }
 
     // Hickey_Marker
-    if (selection.type === "Hickey_Marker" && selection.color === "Impala_Black") { return Impala_Black_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Barre_Grey") { return Barre_Grey_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "North_American_Pink") { return North_American_Pink_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Mahogany") { return Mahogany_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Cats_Eye") { return Cats_Eye_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Evergreen") { return Evergreen_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Jet_Black") { return Jet_Black_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Blue_Pearl") { return Blue_Pearl_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Tropical_Green") { return Tropical_Green_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Paradiso") { return Paradiso_Hickey_Marker; }
-    if (selection.type === "Hickey_Marker" && selection.color === "Bahama_Blue") { return Bahama_Blue_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Impala_Black") { SelectionImage = 'None'; return Impala_Black_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Barre_Grey") { SelectionImage = 'None'; return Barre_Grey_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "North_American_Pink") { SelectionImage = 'Urban'; return North_American_Pink_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Mahogany") { SelectionImage = 'None'; return Mahogany_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Cats_Eye") { SelectionImage = 'None'; return Cats_Eye_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Evergreen") { SelectionImage = 'None'; return Evergreen_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Jet_Black") { SelectionImage = 'None'; return Jet_Black_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Blue_Pearl") { SelectionImage = 'Yessian'; return Blue_Pearl_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Tropical_Green") { SelectionImage = 'None'; return Tropical_Green_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Paradiso") { SelectionImage = 'None'; return Paradiso_Hickey_Marker; }
+    if (selection.type === "Hickey_Marker" && selection.color === "Bahama_Blue") { SelectionImage = 'None'; return Bahama_Blue_Hickey_Marker; }
 
     // Bench
-    if (selection.type === "Bench" && selection.color === "Impala_Black") { return Impala_Black_Bench; }
-    if (selection.type === "Bench" && selection.color === "Barre_Grey") { return Barre_Grey_Bench; }
-    if (selection.type === "Bench" && selection.color === "North_American_Pink") { return North_American_Pink_Bench; }
-    if (selection.type === "Bench" && selection.color === "Mahogany") { return Mahogany_Bench; }
-    if (selection.type === "Bench" && selection.color === "Cats_Eye") { return Cats_Eye_Bench; }
-    if (selection.type === "Bench" && selection.color === "Evergreen") { return Evergreen_Bench; }
-    if (selection.type === "Bench" && selection.color === "Jet_Black") { return Jet_Black_Bench; }
-    if (selection.type === "Bench" && selection.color === "Blue_Pearl") { return Blue_Pearl_Bench; }
-    if (selection.type === "Bench" && selection.color === "Tropical_Green") { return Tropical_Green_Bench; }
-    if (selection.type === "Bench" && selection.color === "Paradiso") { return Paradiso_Bench; }
-    if (selection.type === "Bench" && selection.color === "Bahama_Blue") { return Bahama_Blue_Bench; }
+    if (selection.type === "Bench" && selection.color === "Impala_Black") { SelectionImage = 'Capalbo';return Impala_Black_Bench; }
+    if (selection.type === "Bench" && selection.color === "Barre_Grey") { SelectionImage = 'Reynolds'; return Barre_Grey_Bench; }
+    if (selection.type === "Bench" && selection.color === "North_American_Pink") { SelectionImage = 'Gagliardi'; return North_American_Pink_Bench; }
+    if (selection.type === "Bench" && selection.color === "Mahogany") { SelectionImage = 'Schiavone'; return Mahogany_Bench; }
+    if (selection.type === "Bench" && selection.color === "Cats_Eye") { SelectionImage = 'None'; return Cats_Eye_Bench; }
+    if (selection.type === "Bench" && selection.color === "Evergreen") { SelectionImage = 'None'; return Evergreen_Bench; }
+    if (selection.type === "Bench" && selection.color === "Jet_Black") { SelectionImage = 'Mayer'; return Jet_Black_Bench; }
+    if (selection.type === "Bench" && selection.color === "Blue_Pearl") { SelectionImage = 'Giordano'; return Blue_Pearl_Bench; }
+    if (selection.type === "Bench" && selection.color === "Tropical_Green") { SelectionImage = 'None'; return Tropical_Green_Bench; }
+    if (selection.type === "Bench" && selection.color === "Paradiso") { SelectionImage = 'None'; return Paradiso_Bench; }
+    if (selection.type === "Bench" && selection.color === "Bahama_Blue") { SelectionImage = 'None'; return Bahama_Blue_Bench; }
+
+    // Bronze Plaque
+
+     if (selection.type === "Bronze_Plaque" && selection.color === "Impala_Black") { SelectionImage = 'None';return Impala_Black_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Barre_Grey") { SelectionImage = 'None'; return Barre_Grey_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "North_American_Pink") { SelectionImage = 'George'; return North_American_Pink_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Mahogany") { SelectionImage = 'None'; return Mahogany_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Cats_Eye") { SelectionImage = 'None'; return Cats_Eye_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Evergreen") { SelectionImage = 'None'; return Evergreen_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Jet_Black") { SelectionImage = 'None'; return Jet_Black_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Blue_Pearl") { SelectionImage = 'None'; return Blue_Pearl_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Tropical_Green") { SelectionImage = 'None'; return Tropical_Green_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Paradiso") { SelectionImage = 'None'; return Paradiso_Bronze_Plaque; }
+    if (selection.type === "Bronze_Plaque" && selection.color === "Bahama_Blue") { SelectionImage = 'None'; return Bahama_Blue_Bronze_Plaque; }
 
     // One-condition if statements
-    if (selection.type === "Die_And_Base") {document.getElementById('ColorOptionsList').style.display = 'block'; document.getElementById('ShapeOptionsList').style.display = 'block'; return Die_And_Base; }
-    if (selection.type === "Monolith") {document.getElementById('ColorOptionsList').style.display = 'block'; document.getElementById('ShapeOptionsList').style.display = 'block'; return Monolith; }
-    if (selection.type === "Slant_Marker") {document.getElementById('ColorOptionsList').style.display = 'block'; document.getElementById('ShapeOptionsList').style.display = 'block'; return Slant_Marker;  }
-    if (selection.type === "Flush_Marker") {document.getElementById('ColorOptionsList').style.display = 'block'; document.getElementById('ShapeOptionsList').style.display = 'none'; return Flush_Marker; }
-    if (selection.type === "Hickey_Marker") {document.getElementById('ColorOptionsList').style.display = 'block'; document.getElementById('ShapeOptionsList').style.display = 'none'; return Hickey_Marker; }
-    if (selection.type === "Bench") {document.getElementById('ColorOptionsList').style.display = 'block'; document.getElementById('ShapeOptionsList').style.display = 'none'; return Bench; }
-    if (selection.type === "Natural_Stone") {document.getElementById('ColorOptionsList').style.display = 'none'; document.getElementById('ShapeOptionsList').style.display = 'none'; return Natural_Stone; }
-    if (selection.type === "Bronze_Plaque") {document.getElementById('ColorOptionsList').style.display = 'none'; document.getElementById('ShapeOptionsList').style.display = 'none'; return Bronze_Plaque; }
+    if (selection.type === "Die_And_Base") {document.getElementById('ColorOptionsList').classList.add('active'); return Die_And_Base; }
+    if (selection.type === "Monolith") {document.getElementById('ColorOptionsList').classList.add('active');  return Monolith; }
+    if (selection.type === "Slant_Marker") {document.getElementById('ColorOptionsList').classList.add('active'); return Slant_Marker;  }
+    if (selection.type === "Flush_Marker") {document.getElementById('ColorOptionsList').classList.add('active');  return Flush_Marker; }
+    if (selection.type === "Hickey_Marker") {document.getElementById('ColorOptionsList').classList.add('active'); return Hickey_Marker; }
+    if (selection.type === "Bench") {document.getElementById('ColorOptionsList').classList.add('active');  return Bench; }
+    if (selection.type === "Natural_Stone") { SelectionImage = 'Natural Stone';  return Natural_Stone; }
+    if (selection.type === "Bronze_Plaque") { document.getElementById('ColorOptionsList').classList.add('active'); return Bronze_Plaque; }
 
     if (selection.color === "Impala_Black") { return Impala_Black; }
     if (selection.color === "Barre_Grey") { return Barre_Grey; }
     if (selection.color === "North_American_Pink") { return North_American_Pink; }
-    if (selection.color === "Mahogany") { return Mahogany; }
-    if (selection.color === "Cats_Eye") { return Cats_Eye; }
-    if (selection.color === "Evergreen") { return Evergreen; }
-    if (selection.color === "Jet_Black") { return Jet_Black; }
-    if (selection.color === "Blue_Pearl") { return Blue_Pearl; }
-    if (selection.color === "Tropical_Green") { return Tropical_Green; }
+    if (selection.color === "Mahogany") {  return Mahogany; }
+    if (selection.color === "Cats_Eye") {  return Cats_Eye; }
+    if (selection.color === "Evergreen") {  return Evergreen; }
+    if (selection.color === "Jet_Black") {  return Jet_Black; }
+    if (selection.color === "Blue_Pearl") {  return Blue_Pearl; }
+    if (selection.color === "Tropical_Green") {  return Tropical_Green; }
     if (selection.color === "Paradiso") { return Paradiso; }
     if (selection.color === "Bahama_Blue") { return Bahama_Blue; }
 
@@ -1069,75 +1130,144 @@ const Previewer = () => {
     return Logo; //default
   }
 
-    
+let SelectionImage = 'None'; 
+
+
+ const handleShapeRemoveOnSelection = (e) => {
+  setSelection({ ...selection, type: e.target.value, shape: null });
+  setTypeSelected(e.target.innerHTML);
+  document
+    .getElementById("ShapeOptionsList")
+    .classList.remove("active");
+    document.querySelectorAll('.NonSlantOptions').forEach(el => el.classList.remove('hidden'));
+};
+
+const handleShapeAndColorRemoveOnSelection = (e) => {
+  setSelection({ ...selection, type: e.target.value, color: null, shape: null });
+  setTypeSelected(e.target.innerHTML);
+  document
+    .getElementById("ShapeOptionsList")
+    .classList.remove("active");
+
+    document
+    .getElementById("ColorOptionsList")
+    .classList.remove("active");
+    document.querySelectorAll('.NonSlantOptions').forEach(el => el.classList.remove('hidden'));
+};
+
+  const initialType = "Select Type";
+  const initialColor = "Select Color";
+  const initialShape = "Select Shape";
+ const [typeSelected, setTypeSelected] = useState(initialType);
+ const [colorSelected, setColorSelected] = useState(initialColor);
+ const [shapeSelected, setShapeSelected] = useState(initialShape);
+
+  
   return (
     <>
       <h1>Welcome to the Headstone Previewer</h1>
       <div className="previewer-container">
         <div className='Preview-Options'>
-          <button onClick={resetSelections}>Reset Options</button>
+          <div>
+            <button className='TypeOptionSelected'>{typeSelected}</button>
+            <ul className='TypeOptionsList'>
+              <button id='Die And Base' onClick={(e) =>{
+                setSelection({ ...selection, type: e.target.value })
+                setTypeSelected(e.target.innerHTML);
+                }} value="Die_And_Base">Die and Base</button>
+              <button id='Monolith' onClick={(e) =>{
+                setSelection({ ...selection, type: e.target.value })
+                setTypeSelected(e.target.innerHTML);
+                }} value="Monolith">Monolith</button>
+              <button id='Slant_Marker' onClick={(e) =>{
+                setSelection({ ...selection, type: e.target.value})
+                setTypeSelected(e.target.innerHTML);
+                }} value="Slant_Marker">Slant Marker</button>
+              <button id='Flush_Marker' onClick={handleShapeRemoveOnSelection} value="Flush_Marker">Flush Marker</button>
+              <button id='Hickey_Marker' onClick={handleShapeRemoveOnSelection} value="Hickey_Marker">Hickey Marker</button>
+              <button id='Natural_Stone' onClick={handleShapeAndColorRemoveOnSelection} value="Natural_Stone">Natural Stone</button>
+              <button id='Bench' onClick={handleShapeRemoveOnSelection} value="Bench">Bench</button>
+              <button id='Bronze_Plaque' onClick={handleShapeRemoveOnSelection} value="Bronze_Plaque">Bronze Plaque</button>
+            </ul>
+          </div>
 
-          <ul className='TypeOptionsList'>
-            <button id='Die_And_Base' onClick={(e) => setSelection({ ...selection, type: e.target.value })} value="Die_And_Base">Die and Base</button>
-            <button id='Monolith' onClick={(e) => setSelection({ ...selection, type: e.target.value })} value="Monolith">Monolith</button>
-            <button id='Slant_Marker' onClick={(e) => setSelection({ ...selection, type: e.target.value })} value="Slant_Marker">Slant Marker</button>
-            <button id='Flush_Marker' onClick={(e) => setSelection({ ...selection, type: e.target.value })} value="Flush_Marker">Flush Marker</button>
-            <button id='Hickey_Marker' onClick={(e) => setSelection({ ...selection, type: e.target.value })} value="Hickey_Marker">Hickey Marker</button>
-            <button id='Natural_Stone' onClick={(e) => setSelection({ ...selection, type: e.target.value })} value="Natural_Stone">Natural Stone</button>
-            <button id='Bench' onClick={(e) => setSelection({ ...selection, type: e.target.value })} value="Bench">Bench</button>
-            <button id='Bronze_Plaque' onClick={(e) => setSelection({ ...selection, type: e.target.value })} value="Bronze_Plaque">Bronze Plaque</button>
-          </ul>
+          <div id='ColorOptionsList' className='ColorOptionsList'>
+            <button className='ColorOptionSelected'>{colorSelected}</button>
+            <ul>
+              <button id='Impala_Black' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Impala_Black">Impala Black</button>
+              <button id='Barre_Grey' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Barre_Grey">Barre Grey</button>
+              <button id='North_American_Pink' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="North_American_Pink">North American Pink</button>
+              <button id='Mahogany' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Mahogany">Mahogany</button>
+              <button id='Cats_Eye' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Cats_Eye">Cats Eye Brown</button>
+              <button id='Evergreen' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Evergreen">Evergreen</button>
+              <button id='Jet_Black' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Jet_Black">Jet Black</button>
+              <button id='Blue_Pearl' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Blue_Pearl">Blue Pearl</button>
+              <button id='Tropical_Green' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Tropical_Green">Tropical Green</button>
+              <button id='Paradiso' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Paradiso">Paradiso</button>
+              <button id='Bahama_Blue' onClick={(e) =>{ setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Bahama_Blue">Bahama Blue</button>
+            </ul>
+          </div>
 
-          <ul id='ColorOptionsList' className='ColorOptionsList'>
-            <button id='Impala_Black' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Impala_Black">Impala Black</button>
-            <button id='Barre_Grey' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Barre_Grey">Barre Grey</button>
-            <button id='North_American_Pink' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="North_American_Pink">North American Pink</button>
-            <button id='Mahogany' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Mahogany">Mahogany</button>
-            <button id='Cats_Eye' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Cats_Eye">Cats Eye</button>
-            <button id='Evergreen' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Evergreen">Evergreen</button>
-            <button id='Jet_Black' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Jet_Black">Jet Black</button>
-            <button id='Blue_Pearl' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Blue_Pearl">Blue Pearl</button>
-            <button id='Tropical_Green' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Tropical_Green">Tropical Green</button>
-            <button id='Paradiso' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Paradiso">Paradiso</button>
-            <button id='Bahama_Blue' onClick={(e) => setSelection({ ...selection, color: e.target.value })} value="Bahama_Blue">Bahama Blue</button>
-          </ul>
-
-          <ul id='ShapeOptionsList' className='ShapeOptionsList'>
-            <button id='Heart_Shape' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Heart_Shape">Heart Shape</button>
-            <button id='Angel_Carved' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Angel_Carved">Angel Carved</button>
-            <button id='Flat_Top' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Flat_Top">Flat Top</button>
-            <button id='Serpentine_Top' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Serpentine_Top">Serpentine Top</button>
-            <button id='Oval_Top' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Oval_Top">Oval Top</button>
-            <button id='Half_Serpentine_Top' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Half_Serpentine_Top">Half Serpentine Top</button>
-            <button id='Half_Oval_Top' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Half_Oval_Top">Half Oval Top</button>
-            <button id='Apex_Top' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Apex_Top">Apex Top</button>
-            <button id='Roof_Top' onClick={(e) => setSelection({ ...selection, shape: e.target.value })} value="Roof_Top">Roof Top</button>
-          </ul>
-
-          <select className='AccessoryOptionsList' multiple>
-            <option value="Vase"></option>
-
-            <option value="Etching"></option>
-
-            <option value="Porcelain_Photo"></option>
-
-            <option value="Bronze_Emblem"></option>
-
-          </select>
-
-          <textarea name="Wording" placeholder='All the wording that you would like to try and fit on a stone'></textarea>
+          <div id='ShapeOptionsList' className='ShapeOptionsList'>   
+            <button className='ShapeOptionSelected'>{shapeSelected}</button>
+            <ul >
+              <button className='NonSlantOptions' id='Heart_Shape' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Heart_Shape" disabled={selection.type === "Slant_Marker"}>Heart Shape</button>
+              <button className='NonSlantOptions' id='Angel_Carved' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Angel_Carved" disabled={selection.type === "Slant_Marker" || selection.type === "Monolith"}>Angel Carved</button>
+              <button id='Flat_Top' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Flat_Top">Flat Top</button>
+              <button id='Serpentine_Top' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Serpentine_Top">Serpentine Top</button>
+              <button id='Oval_Top' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Oval_Top">Oval Top</button>
+              <button className='NonSlantOptions' id='Half_Serpentine_Top' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Half_Serpentine_Top" disabled={selection.type === "Slant_Marker"}>Half Serpentine Top</button>
+              <button className='NonSlantOptions' id='Half_Oval_Top' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Half_Oval_Top" disabled={selection.type === "Slant_Marker"}>Half Oval Top</button>
+              <button className='NonSlantOptions' id='Apex_Top' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Apex_Top" disabled={selection.type === "Slant_Marker"}>Apex Top</button>
+              <button className='NonSlantOptions' id='Roof_Top' onClick={(e) =>{ setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Roof_Top" disabled={selection.type === "Slant_Marker"}>Roof Top</button>
+            </ul>
+          </div> 
         </div>
         <div className='Preview-Images'>
-          <img className='Image' id='Stone' src={imageSrc(selection)} alt="" />
+          <img className='Image' id='Stone' src={imageSrc(selection)} alt="" 
+          />
           <p className='NoCombonationMessage' id='NoCombonationMessage'>This combination has not been created yet.</p>
-          <p>{selection.shape}</p>
-          <p>{selection.color}</p>
-          <p>{selection.type}</p>
+          <button type='button' onClick={resetSelections}>Reset Options</button>
+           <label className='AccessoryOptionsLabel' htmlFor="AccessoryOptionsList">Accessory Options:</label>
+            
+            <div>
+              <input type="text" name='Image' id='ImageInput' value={SelectionImage} readOnly/>
+              <input type="text" name='Type' id='TypeInput' value={typeSelected} readOnly/>
+              <input type="text" name='Shape' id='ShapeInput' value={shapeSelected} readOnly/>
+              <input type="text" name='Color' id='ColorInput' value={colorSelected} readOnly/>
+            </div>
+            <div>
+              <button onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('VaseInput').value = 'Vase'}}>Vase</button>
+              <input id='VaseInput' type="text" value="" readOnly/>
+            </div>
+
+            <div>
+              <button onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('EtchingInput').value = 'Etching'}}>Etching</button>
+              <input id='EtchingInput' type="text" value="" readOnly/>
+            </div>
+
+            <div>
+              <button onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('BronzeEmblemInput').value = 'Bronze Emblem'}}>Bronze Emblem</button>
+              <input id='BronzeEmblemInput' type="text" value="" readOnly/>
+            </div>
+
+            <div>
+              <button onClick={(e) => {e.target.classList.toggle('Selected'); document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}>Porcelain Photo</button>
+              <input id='PorcelainPhotoInput' type="text" value="" readOnly/>
+            </div>
+            
+
+            <textarea name="Wording" placeholder='All the wording that you would like to try to fit on the stone'></textarea>
+          
 
           
 
         </div>
+
+        
       </div>
+
+      
     </>
   );
 }
