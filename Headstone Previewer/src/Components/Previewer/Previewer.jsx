@@ -1237,8 +1237,8 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
            <label className='AccessoryOptionsLabel' htmlFor="AccessoryOptionsList">Accessory Options:</label>
 
 
-                {/*
-            <form className='PreviewForm' method='POST' onSubmit="submit" name='Submission' netlify action="/">
+                
+            <form className='PreviewForm' method='POST' data-netlify="true" name='contact' action="/">
             <input type="hidden" name="form-name" value="contact" />
             <div>
               <input type="text" name='Image' id='ImageInput' value={SelectionImage} readOnly/>
@@ -1271,21 +1271,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
 
             <button type='submit'>Submit Options</button>
           
-            </form> */}
-
-            
-
-    <form name="contact" netlify>
-  <p>
-    <label>Name <input type="text" name="name" /></label>
-  </p>
-  <p>
-    <label>Email <input type="email" name="email" /></label>
-  </p>
-  <p>
-    <button type="submit">Send</button>
-  </p>
-</form>
+            </form>
           
           
 
