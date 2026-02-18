@@ -1161,10 +1161,16 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
  const [typeSelected, setTypeSelected] = useState(initialType);
  const [colorSelected, setColorSelected] = useState(initialColor);
  const [shapeSelected, setShapeSelected] = useState(initialShape);
+ const [vase, setVase] = useState("");
+  const [etching, setEtching] = useState("");
+  const [bronzeEmblem, setBronzeEmblem] = useState("");
+  const [porcelainPhoto, setPorcelainPhoto] = useState("");
+  const [wording, setWording] = useState("");
 
   
   return (
     <>
+    
       <h1>Welcome to the Headstone Previewer</h1>
       <div className="previewer-container">
         <div className='Preview-Options'>
@@ -1229,7 +1235,11 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           <p className='NoCombonationMessage' id='NoCombonationMessage'>This combination has not been created yet.</p>
           <button type='button' onClick={resetSelections}>Reset Options</button>
            <label className='AccessoryOptionsLabel' htmlFor="AccessoryOptionsList">Accessory Options:</label>
-            <form className='PreviewForm' method='POST' onSubmit="submit" name='Submission' data-netlify="true" action="/">
+
+
+                {/*
+            <form className='PreviewForm' method='POST' onSubmit="submit" name='Submission' netlify action="/">
+            <input type="hidden" name="form-name" value="contact" />
             <div>
               <input type="text" name='Image' id='ImageInput' value={SelectionImage} readOnly/>
               <input type="text" name='Type' id='TypeInput' value={typeSelected} readOnly/>
@@ -1261,9 +1271,103 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
 
             <button type='submit'>Submit Options</button>
           
-            </form>
+            </form> */}
+
+            <form
+      name="Submission"
+      method="POST"
+      data-netlify="true"
+      className="PreviewForm"
+    >
+      {/* Required hidden input for Netlify */}
+      <input type="hidden" name="form-name" value="Submission" />
+
+      {/* Basic selections */}
+      <div>
+        <input type="text" name="Image" value={SelectionImage} readOnly />
+        <input type="text" name="Type" value={typeSelected} readOnly />
+        <input type="text" name="Shape" value={shapeSelected} readOnly />
+        <input type="text" name="Color" value={colorSelected} readOnly />
+      </div>
+
+      {/* Button-controlled inputs */}
+      <div>
+        <button
+          type="button"
+          onClick={() => setVase(vase === "Vase" ? "" : "Vase")}
+          className={vase === "Vase" ? "Selected" : ""}
+        >
+          Vase
+        </button>
+        <input type="text" name="Vase Selection" value={vase} readOnly />
+      </div>
+
+      <div>
+        <button
+          type="button"
+          onClick={() => setEtching(etching === "Etching" ? "" : "Etching")}
+          className={etching === "Etching" ? "Selected" : ""}
+        >
+          Etching
+        </button>
+        <input type="text" name="Etching Selection" value={etching} readOnly />
+      </div>
+
+      <div>
+        <button
+          type="button"
+          onClick={() =>
+            setBronzeEmblem(
+              bronzeEmblem === "Bronze Emblem" ? "" : "Bronze Emblem"
+            )
+          }
+          className={bronzeEmblem === "Bronze Emblem" ? "Selected" : ""}
+        >
+          Bronze Emblem
+        </button>
+        <input
+          type="text"
+          name="Bronze Emblem Selection"
+          value={bronzeEmblem}
+          readOnly
+        />
+      </div>
+
+      <div>
+        <button
+          type="button"
+          onClick={() =>
+            setPorcelainPhoto(
+              porcelainPhoto === "Porcelain Photo" ? "" : "Porcelain Photo"
+            )
+          }
+          className={porcelainPhoto === "Porcelain Photo" ? "Selected" : ""}
+        >
+          Porcelain Photo
+        </button>
+        <input
+          type="text"
+          name="Porcelain Photo Selection"
+          value={porcelainPhoto}
+          readOnly
+        />
+      </div>
+
+      {/* Wording textarea */}
+      <div>
+        <textarea
+          name="Wording"
+          placeholder="All the wording that you would like to try to fit on the stone"
+          value={wording}
+          onChange={(e) => setWording(e.target.value)}
+        />
+      </div>
+
+      {/* Submit button */}
+      <button type="submit">Submit Options</button>
+    </form>
           
-          Did it work?
+          
 
         </div>
 
