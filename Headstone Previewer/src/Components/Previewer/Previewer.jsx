@@ -1263,6 +1263,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           
             </form>
           
+          Did it work?
 
         </div>
 
