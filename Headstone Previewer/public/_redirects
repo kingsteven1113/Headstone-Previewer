@@ -1,0 +1,9 @@
+/*
+  Netlify SPA redirect: always serve index.html for any route, so React Router can handle it.
+*/
+/* Place this file in your published folder (usually 'dist' or 'build') */
+/* This will also prevent 404s on form submit redirects */
+/*
+  /    /index.html   200
+*/
+/    /index.html   200
