@@ -12,7 +12,7 @@ import Jet_Black from '../../assets/Rivera.jpg';
 import Blue_Pearl from '../../assets/Anderson.JPG';
 import Tropical_Green from '../../assets/Meier.jpeg';
 import Paradiso from '../../assets/Krieger.jpg';
-import Bahama_Blue from '../../assets/Terleph.jpg';
+import Bahama_Blue from '../../assets/Terleph.JPG';
 
 import Heart_Shape from '../../assets/Martinez heart.jpg';
 import Angel_Carved from '../../assets/Rende.jpg';
