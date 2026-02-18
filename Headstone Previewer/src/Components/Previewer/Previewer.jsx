@@ -1237,22 +1237,22 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
               <input type="text" name='Color' id='ColorInput' value={colorSelected} readOnly/>
             </div>
             <div>
-              <button onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('VaseInput').value = 'Vase'}}>Vase</button>
+              <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('VaseInput').value = 'Vase'}}>Vase</button>
               <input type='text' id='VaseInput' name='Vase Selection' readOnly/>
             </div>
 
             <div>
-              <button onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('EtchingInput').value = 'Etching'}}>Etching</button>
+              <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('EtchingInput').value = 'Etching'}}>Etching</button>
               <input type='text' id='EtchingInput' name='Etching Selection' readOnly/>
             </div>
 
             <div>
-              <button onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('BronzeEmblemInput').value = 'Bronze Emblem'}}>Bronze Emblem</button>
+              <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('BronzeEmblemInput').value = 'Bronze Emblem'}}>Bronze Emblem</button>
               <input type='text' id='BronzeEmblemInput' name='Bronze Emblem Selection' readOnly/>
             </div>
 
             <div>
-              <button onClick={(e) => {e.target.classList.toggle('Selected'); document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}>Porcelain Photo</button>
+              <button type='button' onClick={(e) => {e.target.classList.toggle('Selected'); document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}>Porcelain Photo</button>
               <input type='text' id='PorcelainPhotoInput' name='Porcelain Photo Selection' placeholder='Yes or No?' readOnly/>
             </div>
             
