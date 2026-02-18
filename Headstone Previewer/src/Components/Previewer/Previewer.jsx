@@ -1229,7 +1229,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           <p className='NoCombonationMessage' id='NoCombonationMessage'>This combination has not been created yet.</p>
           <button type='button' onClick={resetSelections}>Reset Options</button>
            <label className='AccessoryOptionsLabel' htmlFor="AccessoryOptionsList">Accessory Options:</label>
-            <form className='PreviewForm' method='POST' onSubmit="submit" name='Submission' data-netlify="true">
+            <form className='PreviewForm' method='POST' onSubmit="submit" name='Submission' data-netlify="true" action="/">
             <div>
               <input type="text" name='Image' id='ImageInput' value={SelectionImage} readOnly/>
               <input type="text" name='Type' id='TypeInput' value={typeSelected} readOnly/>
