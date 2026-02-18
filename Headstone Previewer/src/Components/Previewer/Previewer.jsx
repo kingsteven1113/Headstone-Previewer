@@ -639,7 +639,7 @@ import North_American_Pink_Bench from '../../assets/Gagliari.JPG';
 import Mahogany_Bench from '../../assets/Schiavone Bench.jpg';
 import Cats_Eye_Bench from '../../assets/CJStonesLogo.jpg';
 import Evergreen_Bench from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Bench from '../../assets/Mayer Bench 2.JPG';
+import Jet_Black_Bench from '../../assets/Mayer bench 2.JPG';
 import Blue_Pearl_Bench from '../../assets/Giordano 1.jpg';
 import Tropical_Green_Bench from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Bench from '../../assets/CJStonesLogo.jpg';
