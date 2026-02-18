@@ -9,14 +9,14 @@ import Mahogany from '../../assets/Ferdinand V.jpeg';
 import Cats_Eye from '../../assets/Stockhamer.jpeg';
 import Evergreen from '../../assets/Seredynski.jpeg';
 import Jet_Black from '../../assets/Rivera.jpg';
-import Blue_Pearl from '../../assets/Anderson.jpg';
+import Blue_Pearl from '../../assets/Anderson.JPG';
 import Tropical_Green from '../../assets/Meier.jpeg';
 import Paradiso from '../../assets/Krieger.jpg';
 import Bahama_Blue from '../../assets/Terleph.jpg';
 
 import Heart_Shape from '../../assets/Martinez heart.jpg';
 import Angel_Carved from '../../assets/Rende.jpg';
-import Flat_Top from '../../assets/Weldon.jpg';
+import Flat_Top from '../../assets/Weldon.JPG';
 import Serpentine_Top from '../../assets/Conforti.jpeg';
 import Oval_Top from '../../assets/Carpenter 2.jpg';
 import Half_Serpentine_Top from '../../assets/Walker.jpg';
@@ -28,7 +28,7 @@ import Die_And_Base from '../../assets/Casillas 2.jpg';
 import Impala_Black_Die_And_Base from '../../assets/Casillas 2.jpg';
 import Impala_Black_Die_And_Base_Heart_Shape from '../../assets/Martinez heart.jpg';
 import Impala_Black_Die_And_Base_Angel_Carved from '../../assets/Weitsma 1.jpg';
-import Impala_Black_Die_And_Base_Flat_Top from '../../assets/Weldon.jpg';
+import Impala_Black_Die_And_Base_Flat_Top from '../../assets/Weldon.JPG';
 import Impala_Black_Die_And_Base_Serpentine_Top from '../../assets/Casillas 2.jpg';
 import Impala_Black_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
 import Impala_Black_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
@@ -94,7 +94,7 @@ import Evergreen_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
 import Jet_Black_Die_And_Base from '../../assets/Rivera.jpg';
 import Jet_Black_Die_And_Base_Heart_Shape from '../../assets/Mason.jpg';
 import Jet_Black_Die_And_Base_Angel_Carved from '../../assets/Weitsma 1.jpg';
-import Jet_Black_Die_And_Base_Flat_Top from '../../assets/Weldon.jpg';
+import Jet_Black_Die_And_Base_Flat_Top from '../../assets/Weldon.JPG';
 import Jet_Black_Die_And_Base_Serpentine_Top from '../../assets/Rivera.jpg';
 import Jet_Black_Die_And_Base_Oval_Top from '../../assets/Milkovich.jpeg';
 import Jet_Black_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
@@ -102,11 +102,11 @@ import Jet_Black_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg'
 import Jet_Black_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
 import Jet_Black_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
 
-import Blue_Pearl_Die_And_Base from '../../assets/Anderson.jpg';
+import Blue_Pearl_Die_And_Base from '../../assets/Anderson.JPG';
 import Blue_Pearl_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
 import Blue_Pearl_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
 import Blue_Pearl_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Die_And_Base_Serpentine_Top from '../../assets/Anderson.jpg';
+import Blue_Pearl_Die_And_Base_Serpentine_Top from '../../assets/Anderson.JPG';
 import Blue_Pearl_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
 import Blue_Pearl_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
 import Blue_Pearl_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
@@ -180,11 +180,11 @@ import North_American_Pink_Monolith_Half_Oval_Top from '../../assets/CJStonesLog
 import North_American_Pink_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
 import North_American_Pink_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
 
-import Mahogany_Monolith from '../../assets/Castellano.jpg';
+import Mahogany_Monolith from '../../assets/Castellano.JPG';
 import Mahogany_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
 import Mahogany_Monolith_Angel_Carved from '../../assets/CJStonesLogo.jpg';
 import Mahogany_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Monolith_Serpentine_Top from '../../assets/Castellano.jpg';
+import Mahogany_Monolith_Serpentine_Top from '../../assets/Castellano.JPG';
 import Mahogany_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
 import Mahogany_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
 import Mahogany_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
@@ -291,10 +291,10 @@ import Barre_Grey_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
 import Barre_Grey_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
 import Barre_Grey_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
 
-import North_American_Pink_Slant_Marker from '../../assets/Fitzpatrick.jpg';
+import North_American_Pink_Slant_Marker from '../../assets/Fitzpatrick.JPG';
 import North_American_Pink_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
 import North_American_Pink_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Slant_Marker_Flat_Top from '../../assets/Fitzpatrick.jpg';
+import North_American_Pink_Slant_Marker_Flat_Top from '../../assets/Fitzpatrick.JPG';
 import North_American_Pink_Slant_Marker_Serpentine_Top from '../../assets/Duah.jpg';
 import North_American_Pink_Slant_Marker_Oval_Top from '../../assets/Brockway front set.jpg';
 import North_American_Pink_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
@@ -390,7 +390,7 @@ import Bahama_Blue_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg'
 import Bahama_Blue_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
 import Bahama_Blue_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
 
-import Flush_Marker from '../../assets/Moore, Florence.jpg';
+import Flush_Marker from '../../assets/Moore, Florence.JPG';
 import Impala_Black_Flush_Marker from '../../assets/White.jpg';
 import Impala_Black_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
 import Impala_Black_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
@@ -402,7 +402,7 @@ import Impala_Black_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg
 import Impala_Black_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
 import Impala_Black_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
 
-import Barre_Grey_Flush_Marker from '../../assets/Moore, Florence.jpg';
+import Barre_Grey_Flush_Marker from '../../assets/Moore, Florence.JPG';
 import Barre_Grey_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
 import Barre_Grey_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
 import Barre_Grey_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
@@ -534,7 +534,7 @@ import Barre_Grey_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg'
 import Barre_Grey_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
 import Barre_Grey_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
 
-import North_American_Pink_Hickey_Marker from '../../assets/Urban.jpg';
+import North_American_Pink_Hickey_Marker from '../../assets/Urban.JPG';
 import North_American_Pink_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
 import North_American_Pink_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
 import North_American_Pink_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
@@ -632,23 +632,23 @@ import Bahama_Blue_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
 import Bahama_Blue_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
 
 import Natural_Stone from '../../assets/Lum.jpeg';
-import Bench from '../../assets/Barker 1.jpg';
+import Bench from '../../assets/Barker 1.JPG';
 import Impala_Black_Bench from '../../assets/Capalbo installed.jpg';
-import Barre_Grey_Bench from '../../assets/Reynolds.jpg';
+import Barre_Grey_Bench from '../../assets/Reynolds.JPG';
 import North_American_Pink_Bench from '../../assets/Gagliari.jpg';
 import Mahogany_Bench from '../../assets/Schiavone Bench.jpg';
 import Cats_Eye_Bench from '../../assets/CJStonesLogo.jpg';
 import Evergreen_Bench from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Bench from '../../assets/Mayer Bench 2.jpg';
+import Jet_Black_Bench from '../../assets/Mayer Bench 2.JPG';
 import Blue_Pearl_Bench from '../../assets/Giordano 1.jpg';
 import Tropical_Green_Bench from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Bench from '../../assets/CJStonesLogo.jpg';
 import Bahama_Blue_Bench from '../../assets/CJStonesLogo.jpg';
-import Bronze_Plaque from '../../assets/George.jpg';
+import Bronze_Plaque from '../../assets/George.JPG';
 
 import Impala_Black_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 import Barre_Grey_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import North_American_Pink_Bronze_Plaque from '../../assets/George.jpg';
+import North_American_Pink_Bronze_Plaque from '../../assets/George.JPG';
 import Mahogany_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 import Cats_Eye_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 import Evergreen_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
