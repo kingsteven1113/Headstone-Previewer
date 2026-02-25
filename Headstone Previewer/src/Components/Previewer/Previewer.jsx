@@ -1248,26 +1248,33 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
             </div>
             <div>
               <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('VaseInput').value = 'Vase'}}>Vase</button>
-              <input type='text' id='VaseInput' name='Vase Selection' readOnly/>
+              <input type='text' id='VaseInput' name='Would You Like a Vase?' readOnly/>
             </div>
 
             <div>
               <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('EtchingInput').value = 'Etching'}}>Etching</button>
-              <input type='text' id='EtchingInput' name='Etching Selection' readOnly/>
+              <input type='text' id='EtchingInput' name='Would You Like an Etching?' readOnly/>
             </div>
 
             <div>
               <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('BronzeEmblemInput').value = 'Bronze Emblem'}}>Bronze Emblem</button>
-              <input type='text' id='BronzeEmblemInput' name='Bronze Emblem Selection' readOnly/>
+              <input type='text' id='BronzeEmblemInput' name='Would You Like a Bronze Emblem?' readOnly/>
             </div>
 
             <div>
               <button type='button' onClick={(e) => {e.target.classList.toggle('Selected'); document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}>Porcelain Photo</button>
-              <input type='text' id='PorcelainPhotoInput' name='Porcelain Photo Selection' placeholder='Yes or No?' readOnly/>
+              <input type='text' id='PorcelainPhotoInput' name='Would You Like a Porcelain Photo?' placeholder='Yes or No?' readOnly/>
             </div>
             
             
             <textarea name="Wording" placeholder='All the wording that you would like to try to fit on the stone'/>
+
+            <p>Name:</p>    
+            <input type="text" name='Name' placeholder='What is your name?' />
+            <p>Phone Number:</p>
+            <input type="text" name='Phone Number' placeholder='What is your Phone Number?' />
+            <p>Email Address:</p>
+            <input type="text" name='Email Address' placeholder='What is your Email Address?' />
 
             <button type='submit'>Submit Options</button>
           
