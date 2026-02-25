@@ -9,10 +9,38 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <form name="contact" netlify hidden>
-  <input type="text" name="name" />
-  <input type="email" name="email" />
-  <textarea name="message"></textarea>
-</form>
+    <form netlify name='contact'>
+            <div>
+              <input type="text" name='Image'  readOnly/>
+              <input type="text" name='Type'  readOnly/>
+              <input type="text" name='Shape'   readOnly/>
+              <input type="text" name='Color'   readOnly/>
+            </div>
+            <div>
+              <button type='button'>Vase</button>
+              <input type='text'  name='Vase Selection' readOnly/>
+            </div>
+
+            <div>
+              <button type='button'>Etching</button>
+              <input type='text'  name='Etching Selection' readOnly/>
+            </div>
+
+            <div>
+              <button type='button'>Bronze Emblem</button>
+              <input type='text'  name='Bronze Emblem Selection' readOnly/>
+            </div>
+
+            <div>
+              <button type='button'>Porcelain Photo</button>
+              <input type='text'  name='Porcelain Photo Selection' placeholder='Yes or No?' readOnly/>
+            </div>
+            
+            
+            <textarea name="Wording" placeholder='All the wording that you would like to try to fit on the stone'></textarea>
+
+            <button type='submit'>Submit Options</button>
+          
+            </form>
   </body>
 </html>
