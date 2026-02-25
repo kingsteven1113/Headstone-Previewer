@@ -1270,7 +1270,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
             <textarea name="Wording" placeholder='All the wording that you would like to try to fit on the stone'/>
 
             <p>Name:</p>    
-            <input type="text" name='Name' placeholder='What is your name?' />
+            <input type="text" name='Name' placeholder='What is your name?' required/>
             <p>Phone Number:</p>
             <input type="text" name='Phone Number' placeholder='What is your Phone Number?' />
             <p>Email Address:</p>
