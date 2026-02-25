@@ -1158,10 +1158,10 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
   const initialType = "Select Type";
   const initialColor = "Select Color";
   const initialShape = "Select Shape";
- const [typeSelected, setTypeSelected] = useState(initialType);
- const [colorSelected, setColorSelected] = useState(initialColor);
- const [shapeSelected, setShapeSelected] = useState(initialShape);
- const [vase, setVase] = useState("");
+  const [typeSelected, setTypeSelected] = useState(initialType);
+  const [colorSelected, setColorSelected] = useState(initialColor);
+  const [shapeSelected, setShapeSelected] = useState(initialShape);
+  const [vase, setVase] = useState("");
   const [etching, setEtching] = useState("");
   const [bronzeEmblem, setBronzeEmblem] = useState("");
   const [porcelainPhoto, setPorcelainPhoto] = useState("");
@@ -1240,12 +1240,12 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
                 
             <form className='PreviewForm' method='POST' data-netlify="true" name='contact' action="/">
             <input type="hidden" name="form-name" value="contact" />
-            <div>
+            {/*<div>
               <input type="text" name='Image' id='ImageInput' value={SelectionImage} readOnly/>
               <input type="text" name='Type' id='TypeInput' value={typeSelected} readOnly/>
               <input type="text" name='Shape' id='ShapeInput' value={shapeSelected} readOnly/>
               <input type="text" name='Color' id='ColorInput' value={colorSelected} readOnly/>
-            </div>
+            </div>*/}
             <div>
               <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('VaseInput').value = 'Vase'}}>Vase</button>
               <input type='text' id='VaseInput' name='Vase Selection' readOnly/>
