@@ -1238,17 +1238,40 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
 
 
                 
-            <form name="contact" netlify>
-  <p>
-    <label>Name <input type="text" name="name" /></label>
-  </p>
-  <p>
-    <label>Email <input type="email" name="email" /></label>
-  </p>
-  <p>
-    <button type="submit">Send</button>
-  </p>
-</form>
+            <form className='PreviewForm' method='POST' data-netlify="true" name='contact' action="/">
+            <input type="hidden" name="form-name" value="contact" />
+            <div>
+              <input type="text" name='Image' id='ImageInput' value={SelectionImage} readOnly/>
+              <input type="text" name='Type' id='TypeInput' value={typeSelected} readOnly/>
+              <input type="text" name='Shape' id='ShapeInput' value={shapeSelected} readOnly/>
+              <input type="text" name='Color' id='ColorInput' value={colorSelected} readOnly/>
+            </div>
+            <div>
+              <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('VaseInput').value = 'Vase'}}>Vase</button>
+              <input type='text' id='VaseInput' name='Vase Selection' readOnly/>
+            </div>
+
+            <div>
+              <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('EtchingInput').value = 'Etching'}}>Etching</button>
+              <input type='text' id='EtchingInput' name='Etching Selection' readOnly/>
+            </div>
+
+            <div>
+              <button type='button' onClick={(e) => { e.target.classList.toggle('Selected'); document.getElementById('BronzeEmblemInput').value = 'Bronze Emblem'}}>Bronze Emblem</button>
+              <input type='text' id='BronzeEmblemInput' name='Bronze Emblem Selection' readOnly/>
+            </div>
+
+            <div>
+              <button type='button' onClick={(e) => {e.target.classList.toggle('Selected'); document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}>Porcelain Photo</button>
+              <input type='text' id='PorcelainPhotoInput' name='Porcelain Photo Selection' placeholder='Yes or No?' readOnly/>
+            </div>
+            
+            
+            <textarea name="Wording" placeholder='All the wording that you would like to try to fit on the stone'/>
+
+            <button type='submit'>Submit Options</button>
+          
+            </form>
           
           
 
