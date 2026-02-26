@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <p>Hello</p>
+      
         <Routes>
             <Route path="/" element={<Previewer />} />
         </Routes>
