@@ -1,13 +1,49 @@
 .Image {
-    max-width: 80%;
-    width: 60%;
-    height: auto;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    text-align: center;
+
 } 
 
 .previewer-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: left;
+    gap: 50px;
+}
+
+.Preview-Container {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    
+}
+
+.Preview-Images {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+
+.ResetButton {
+    padding: 10px 20px;
+    background-color: #ffc848;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-width: 2px;
+    padding-left: 40px;
+    padding-right: 40px;
+    align-self: center;
+    transition: 0.2s ease;
+}
+.ResetButton:hover {
+    background-color: #ffb347;
+    border: 2px solid white;
+    color: white;
+    transition: 0.2s ease;
 }
 
 .Preview-Options {
@@ -42,20 +78,25 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .ShapeOptionsList ul {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .ColorOptionsList ul {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 
@@ -80,4 +121,138 @@
     margin-top: 20px;
     display: block;
     visibility: hidden;
+}
+
+.TypeOptionsList button {
+    
+    border: 1px solid black;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    width: 100%;
+}
+
+.TypeOptionsList button:hover {
+    background-color: #ffc848;
+    border-color: #ffb347;
+    border-width: 2px;
+}
+
+.ColorOptionsList button {
+   
+    border: 1px solid black;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    width: 100%;
+}
+
+.ColorOptionsList button:hover {
+    background-color: #ffc848;
+    border-color: #ffb347;
+    border-width: 2px;
+}
+
+.ShapeOptionsList button {
+    
+    border: 1px solid black;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    width: 100%;
+}
+
+.ShapeOptionsList button:hover {
+    background-color: #ffc848;
+    border-color: #ffb347;
+    border-width: 2px;
+}
+
+
+
+.AccessoryOption {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    width: 50%;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.AccessoryOption:hover {
+    background-color: #ffc848;
+    border-color: #ffb347;
+    border-width: 2px;
+}
+
+.AccessoryOption:active {
+    
+    border-width: 0px;
+}
+
+.PreviewForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    align-items: center;
+}
+.PreviewForm button {
+    padding: 10px 20px;
+    
+}
+
+  
+
+.ShapeSelected {
+    background-color: #ffe29c;
+    color: black;
+    border: 2px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.TypeSelected {
+    background-color: #ffe29c;
+    color: black;
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+
+.ColorSelected {
+    background-color: #ffe29c;
+    color: black;
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+
+.AccessorySelected {
+    background-color: #ffe29c;
+    color: black;
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.AccessoryNForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+
+.TypeOptionSelected {
+    margin-bottom: 20px;
+}
+.ColorOptionSelected {
+    margin-bottom: 20px;
+}
+.ShapeOptionSelected {
+    margin-bottom: 20px;
 }
