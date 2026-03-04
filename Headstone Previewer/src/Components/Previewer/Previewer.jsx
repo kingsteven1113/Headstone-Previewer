@@ -1176,8 +1176,8 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
   return (
     <>
     
-      <h1>Welcome to the Headstone Previewer</h1>
-      <p>This is a project created to preview headstone designs and help you decide on the type of stone you'd like before an appointment with us. <b>If you have any questions about headstones/monuments, please feel free to give us a call at 914-234-6987 or email us at cj@cjstones.com.</b></p>
+      {/*<h1>Welcome to the Headstone Previewer</h1>
+      <p>This is a project created to preview headstone designs and help you decide on the type of stone you'd like before an appointment with us. <b>If you have any questions about headstones/monuments, please feel free to give us a call at 914-234-6987 or email us at cj@cjstones.com.</b></p> */}
       <div className="previewer-container">
         <div className='Preview-Options'>
           <div className='TypeOptionsList'>
@@ -1265,8 +1265,6 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           <div className='Preview-Container'><img className='Image' id='Stone' src={imageSrc(selection)} alt="" /></div>
           <p className='NoCombonationMessage' id='NoCombonationMessage'>This combination has not been created yet.</p>
           <button className='ResetButton' type='button' onClick={resetSelections}>Reset Options</button>
-          
-
         </div>
 
         <div className='AccessoryNForm'>

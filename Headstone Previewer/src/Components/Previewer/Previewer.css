@@ -1,3 +1,9 @@
+body {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 100vh;
+}
 .Image {
     aspect-ratio: 1 / 1;
     width: 100%;
@@ -8,10 +14,10 @@
 } 
 
 .previewer-container {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 0.5fr;
     align-items: left;
-    gap: 50px;
+    width: 100vw;
 }
 
 .Preview-Container {
@@ -25,6 +31,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    justify-self: stretch;
     
 }
 
@@ -53,7 +60,11 @@
 .TypeOptionsList {
     display: flex;
     flex-direction: column;
+    justify-content: start;
     gap: 10px;
+    background-color: #444444;
+    z-index: 3;
+    color: white;
 }
 
 .ShapeOptionsList {
@@ -62,7 +73,11 @@
     gap: 10px;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+    transform: translateX(-40px);
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s, transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    background-color: #666666;
+    z-index: 1;
+    color: white;
 }
 
 .ColorOptionsList {
@@ -71,32 +86,33 @@
     gap: 10px;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+    transform: translateX(-40px);
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s, transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    background-color: #555555;
+    z-index: 2;
+    color: white;
 }
 
 .TypeOptionsList ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    
+    padding: 0;
+    
 }
 
 .ShapeOptionsList ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    
+    padding: 0;
 }
 
 .ColorOptionsList ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    
+    padding: 0;
 }
 
 
@@ -104,9 +120,9 @@
 
 .active {
     opacity: 1;
-    transition: opacity 0.5s ease;
     visibility: visible;
-    
+    transform: translateX(0);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.77,0,0.175,1);
 }
 
 .hidden {
@@ -124,29 +140,35 @@
 }
 
 .TypeOptionsList button {
-    
-    border: 1px solid black;
+    background-color: none;
+    border-bottom: 3px solid white;
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    
+    border-radius: 0px;
     width: 100%;
+    background-color: #444444;
+    color: white;
 }
 
 .TypeOptionsList button:hover {
     background-color: #ffc848;
     border-color: #ffb347;
     border-width: 2px;
+    
+    
 }
 
 .ColorOptionsList button {
-   
-    border: 1px solid black;
+    background-color: none;
+    border-bottom: 3px solid white;
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    
+    border-radius: 0px;
     width: 100%;
+    background-color: #555555;
+    color: white;
 }
 
 .ColorOptionsList button:hover {
@@ -156,13 +178,15 @@
 }
 
 .ShapeOptionsList button {
-    
-    border: 1px solid black;
+    background-color: none;
+    border-bottom: 3px solid white;
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    
+    border-radius: 0px;
     width: 100%;
+    background-color: #666666;
+    color: white;
 }
 
 .ShapeOptionsList button:hover {
@@ -211,23 +235,23 @@
   
 
 .ShapeSelected {
-    background-color: #ffe29c;
-    color: black;
+    background-color: #ffe29c !important;
+    color: black !important;
     border: 2px;
     transition: background-color 0.2s ease-in-out;
 }
 
 .TypeSelected {
-    background-color: #ffe29c;
-    color: black;
+    background-color: #ffe29c !important;
+    color: black !important;
     border: none;
     transition: background-color 0.2s ease-in-out;
 }
 
 
 .ColorSelected {
-    background-color: #ffe29c;
-    color: black;
+    background-color: #ffe29c !important;
+    color: black !important;
     border: none;
     transition: background-color 0.2s ease-in-out;
 }
@@ -244,7 +268,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    
 }
 
 .TypeOptionSelected {
