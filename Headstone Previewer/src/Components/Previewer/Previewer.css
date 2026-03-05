@@ -10,21 +10,30 @@ body {
     height: 100%;
     object-fit: contain;
     text-align: center;
+    border-radius: 25px;
 
 } 
 
 .previewer-container {
     display: grid;
-    grid-template-columns: 1fr 1.5fr 0.5fr;
-    align-items: left;
+    grid-template-columns: 0.75fr 1.25fr 0.5fr;
     width: 100vw;
+    height: 100vh;
+    gap: 20px;
 }
 
 .Preview-Container {
     width: 100%;
-    height: 500px;
+    height: 640px;
     overflow: hidden;
     
+}
+
+.SubmitResetContainer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .Preview-Images {
@@ -32,12 +41,15 @@ body {
     flex-direction: column;
     gap: 20px;
     justify-self: stretch;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    justify-content: center;
     
 }
 
 .ResetButton {
-    padding: 10px 20px;
-    background-color: #ffc848;
+    font-size: 20px;
+    background-color: #2467b4 !important;
     cursor: pointer;
     transition: background-color 0.2s ease;
     border-width: 2px;
@@ -45,10 +57,12 @@ body {
     padding-right: 40px;
     align-self: center;
     transition: 0.2s ease;
+    border-top: white 2px solid;
+    margin-top: 10px;
 }
 .ResetButton:hover {
-    background-color: #ffb347;
-    border: 2px solid white;
+    background-color: #052044!important;
+    border: 2px solid white !important;
     color: white;
     transition: 0.2s ease;
 }
@@ -155,6 +169,7 @@ body {
     background-color: #ffc848;
     border-color: #ffb347;
     border-width: 2px;
+    color: black;
     
     
 }
@@ -174,6 +189,7 @@ body {
 .ColorOptionsList button:hover {
     background-color: #ffc848;
     border-color: #ffb347;
+    color: black;
     border-width: 2px;
 }
 
@@ -187,19 +203,31 @@ body {
     width: 100%;
     background-color: #666666;
     color: white;
+
+}
+
+.ShapeOptionsList button:disabled {
+    background-color: #333333;
+    cursor: not-allowed;
+    color: #777777;
+    border-color: #333333;
 }
 
 .ShapeOptionsList button:hover {
     background-color: #ffc848;
     border-color: #ffb347;
     border-width: 2px;
+    color: black;
 }
 
-
+.AccessoriesH2 {
+    text-align: center;
+    color: white;
+    margin: 0;
+}
 
 .AccessoryOption {
     background-color: #f0f0f0;
-    border: 1px solid #ccc;
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -226,6 +254,7 @@ body {
     gap: 20px;
     padding: 20px;
     align-items: center;
+    
 }
 .PreviewForm button {
     padding: 10px 20px;
@@ -237,12 +266,14 @@ body {
 .ShapeSelected {
     background-color: #ffe29c !important;
     color: black !important;
-    border: 2px;
+    border-color: #ffb347 !important;
+    border: 2px ;
     transition: background-color 0.2s ease-in-out;
 }
 
 .TypeSelected {
     background-color: #ffe29c !important;
+    border-color: #ffb347 !important;
     color: black !important;
     border: none;
     transition: background-color 0.2s ease-in-out;
@@ -251,6 +282,7 @@ body {
 
 .ColorSelected {
     background-color: #ffe29c !important;
+    border-color: #ffb347 !important;
     color: black !important;
     border: none;
     transition: background-color 0.2s ease-in-out;
@@ -258,16 +290,26 @@ body {
 
 
 .AccessorySelected {
-    background-color: #ffe29c;
-    color: black;
-    border: none;
+    background-color: #ffe29c !important;
+    color: black !important;
+    border: none !important;
     transition: background-color 0.2s ease-in-out;
 }
+
+.AccessoryOption:disabled {
+    background-color: #333333;
+    cursor: not-allowed;
+    color: #777777;
+    border-color: #333333;
+}
+
 
 .AccessoryNForm {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    background-color: #333333;
+    text-align: left;
 }
 
 .TypeOptionSelected {
@@ -278,4 +320,40 @@ body {
 }
 .ShapeOptionSelected {
     margin-bottom: 20px;
+}
+
+
+.SubmitButton {
+    font-size: 20px;
+    background-color:#ffc848;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-width: 2px;
+    padding-left: 40px;
+    padding-right: 40px;
+    align-self: center;
+    transition: 0.2s ease;
+}
+.SubmitButton:hover {
+    background-color: #ffb347;
+    border: 2px solid white;
+    color: white;
+    transition: 0.2s ease;
+}
+
+.WordingInput {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+
+
+.FormParagraph {
+    color: white;
+    text-align: left;
+    max-width: 100%;
 }

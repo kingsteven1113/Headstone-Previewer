@@ -1182,7 +1182,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
         <div className='Preview-Options'>
           <div className='TypeOptionsList'>
             <h2>Stone Types</h2>
-            <p className='TypeOptionSelected'>You selected: <b>{typeSelected}</b></p>
+            <p className='TypeOptionSelected'>You selected: <br /><b>{typeSelected}</b></p>
             <ul>
               <button id='Die And Base' onClick={(e) =>{ document.querySelectorAll('.TypeSelected').forEach(el => el.classList.remove('TypeSelected'));
               e.target.classList.toggle('TypeSelected'), 200;
@@ -1205,11 +1205,23 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
               <button id='Bench' onClick={handleShapeRemoveOnSelection} value="Bench">Bench</button>
               <button id='Bronze_Plaque' onClick={handleShapeRemoveOnSelection} value="Bronze_Plaque">Bronze Plaque</button>
             </ul>
+            
+
+            <h2 className='AccessoriesH2'>Accessories</h2>
+            <button className='AccessoryOption' type='button' disabled={selection.type === 'Natural_Stone' || selection.type ==='Monolith' || selection.type ==='Hickey_Marker'} onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('VaseInput').value === 'Vase') {document.getElementById('VaseInput').value = ''} else {document.getElementById('VaseInput').value = 'Vase'}}}>Vase</button>
+           
+              <button className='AccessoryOption' type='button' disabled={selection.color === 'Mahogany' || selection.color === 'Barre_Grey'|| selection.color === 'North_American_Pink'|| selection.color === 'Cats_Eye'|| selection.color === 'Paradiso'|| selection.type === 'Natural_Stone'} onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('EtchingInput').value === 'Etching') {document.getElementById('EtchingInput').value = ''} else {document.getElementById('EtchingInput').value = 'Etching'}}}>Etching</button>
+              
+              <button className='AccessoryOption' type='button'  onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('BronzeEmblemInput').value === 'Bronze Emblem') {document.getElementById('BronzeEmblemInput').value = ''} else {document.getElementById('BronzeEmblemInput').value = 'Bronze Emblem'}}}>Bronze Emblem</button>
+              
+              <button className='AccessoryOption' type='button' onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('PorcelainPhotoInput').value === 'Porcelain Photo') {document.getElementById('PorcelainPhotoInput').value = ''} else {document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}}>Porcelain Photo</button>
+
+              <button className='ResetButton' type='button' onClick={resetSelections}>Reset Selection</button>
           </div>
 
           <div id='ColorOptionsList' className='ColorOptionsList'>
             <h2>Stone Colors</h2>
-            <p className='ColorOptionSelected'>You selected: <b>{colorSelected}</b></p>
+            <p className='ColorOptionSelected'>You selected: <br /><b>{colorSelected}</b></p>
             <ul>
               <button id='Impala_Black' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value })}} value="Impala_Black">Impala Black</button>
@@ -1238,7 +1250,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
 
           <div id='ShapeOptionsList' className='ShapeOptionsList'>
             <h2>Stone Shapes</h2>
-            <p className='ShapeOptionSelected'>You selected: <b>{shapeSelected}</b></p>
+            <p className='ShapeOptionSelected'>You selected: <br /><b>{shapeSelected}</b></p>
             <ul >
               <button className='NonSlantOptions' id='Heart_Shape' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Heart_Shape" disabled={selection.type === "Slant_Marker"}>Heart Shape</button>
@@ -1262,17 +1274,19 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           </div> 
         </div>
         <div className='Preview-Images'>
+          
           <div className='Preview-Container'><img className='Image' id='Stone' src={imageSrc(selection)} alt="" /></div>
-          <p className='NoCombonationMessage' id='NoCombonationMessage'>This combination has not been created yet.</p>
-          <button className='ResetButton' type='button' onClick={resetSelections}>Reset Options</button>
+          <div className='SubmitResetContainer'>
+            
+            
+          </div>
         </div>
 
         <div className='AccessoryNForm'>
-           <label className='AccessoryOptionsLabel' htmlFor="AccessoryOptionsList">Accessory Options:</label>
 
 
                 
-            <form className='PreviewForm' method='POST' data-netlify="true" name='contact' action="/">
+            <form id='Form' className='PreviewForm' method='POST' data-netlify="true" name='contact' action="/">
             <input type="hidden" name="form-name" value="contact" />
             <div>
               <input type="text" name='Image' id='ImageInput' value={SelectionImage} hidden readOnly/>
@@ -1285,27 +1299,24 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
               <input type='text' id='PorcelainPhotoInput' name='Would You Like a Porcelain Photo?' placeholder='Yes or No?' hidden readOnly/>
             </div>
            
-              <button className='AccessoryOption' type='button' onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('VaseInput').value === 'Vase') {document.getElementById('VaseInput').value = ''} else {document.getElementById('VaseInput').value = 'Vase'}}}>Vase</button>
-           
-              <button className='AccessoryOption' type='button' onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('EtchingInput').value === 'Etching') {document.getElementById('EtchingInput').value = ''} else {document.getElementById('EtchingInput').value = 'Etching'}}}>Etching</button>
               
-              <button className='AccessoryOption' type='button' onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('BronzeEmblemInput').value === 'Bronze Emblem') {document.getElementById('BronzeEmblemInput').value = ''} else {document.getElementById('BronzeEmblemInput').value = 'Bronze Emblem'}}}>Bronze Emblem</button>
-              
-              <button className='AccessoryOption' type='button' onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('PorcelainPhotoInput').value === 'Porcelain Photo') {document.getElementById('PorcelainPhotoInput').value = ''} else {document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}}>Porcelain Photo</button>
               
             
             
-            
-            <textarea name="Wording" placeholder='All the wording that you would like to try to fit on the stone'/>
+            <h2>Form</h2>
+            <h3>Please fill out the form below:</h3>
+            <p className='FormParagraph'>We will reach out to you at the contact information you provide to schedule an appointment.</p>
+            <h3>Wording:</h3>
+            <textarea className='WordingInput' name="Wording" placeholder='All the wording that you would like to try to fit on the stone!'/>
 
-            <p>Name:</p>    
+            <p>Your Name:</p>    
             <input type="text" name='Name' placeholder='What is your name?' required/>
             <p>Phone Number:</p>
-            <input type="tel" name='Phone Number' placeholder='What is your Phone Number?' />
+            <input type="tel" name='Phone Number' placeholder='What is your Phone Number?' required/>
             <p>Email Address:</p>
-            <input type="email" name='Email Address' placeholder='What is your Email Address?' />
+            <input type="email" name='Email Address' placeholder='What is your Email Address?' required/>
 
-            <button type='submit'>Submit Options</button>
+            <button className='SubmitButton' form='Form' type='submit'>Submit Options</button>
           
             </form>
           
