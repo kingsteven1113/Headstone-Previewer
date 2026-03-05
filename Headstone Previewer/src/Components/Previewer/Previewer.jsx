@@ -1272,6 +1272,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value })}} value="Roof_Top" disabled={selection.type === "Slant_Marker"}>Roof Top</button>
             </ul>
           </div> 
+          
         </div>
         <div className='Preview-Images'>
           
