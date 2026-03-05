@@ -10,13 +10,11 @@ body {
     height: 100%;
     object-fit: contain;
     text-align: center;
-    border-radius: 25px;
-
 } 
 
 .previewer-container {
     display: grid;
-    grid-template-columns: 0.75fr 1.25fr 0.5fr;
+    grid-template-columns: 1fr 1.25fr 0.5fr;
     width: 100vw;
     height: 100vh;
     gap: 20px;
@@ -25,7 +23,7 @@ body {
 
 .Preview-Container {
     width: 100%;
-    height: 870px;
+    height: 800px;
     overflow: hidden;
     
 }
@@ -108,6 +106,19 @@ body {
     color: white;
 }
 
+.AccessoriesOptionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-40px);
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s, transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    background-color: #777777;
+    z-index: 0;
+    color: white;
+}
+
 .TypeOptionsList ul {
     display: flex;
     flex-direction: column;
@@ -130,6 +141,13 @@ body {
     padding: 0;
 }
 
+.AccessoriesOptionsList ul {
+    display: flex;
+    flex-direction: column;
+    
+    padding: 0;
+}
+
 
 
 
@@ -146,12 +164,12 @@ body {
     transition: opacity 0.5s ease, visibility 0s linear 0.5s;
 }
 
-.NoCombonationMessage {
-    font-size: 1.5rem;
+.NoCombinationMessage {
+    font-size: 1rem;
     color: red;
     margin-top: 20px;
     display: block;
-    visibility: hidden;
+    
 }
 
 .TypeOptionsList button {
@@ -192,6 +210,39 @@ body {
     border-color: #ffb347;
     color: black;
     border-width: 2px;
+}
+
+.ColorOptionsList button:disabled {
+    background-color: #333333;
+    cursor: not-allowed;
+    color: #777777;
+    border-color: #333333;
+}
+
+.AccessoriesOptionsList button {
+    background-color: none;
+    border-bottom: 3px solid white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 0px;
+    width: 100%;
+    background-color: #777777;
+    color: white;
+}
+
+.AccessoriesOptionsList button:hover {
+    background-color: #ffc848;
+    border-color: #ffb347;
+    color: black;
+    border-width: 2px;
+}
+
+.AccessoriesOptionsList button:disabled {
+    background-color: #333333;
+    cursor: not-allowed;
+    color: #777777;
+    border-color: #333333;
 }
 
 .ShapeOptionsList button {
@@ -252,9 +303,9 @@ body {
 .PreviewForm {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    align-items: center;
+    text-align: left;
+    
+    
     
 }
 .PreviewForm button {
@@ -308,11 +359,14 @@ body {
 .AccessoryNForm {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    padding: 20px;
     background-color: #333333;
-    text-align: left;
+    
     overflow-y: scroll;
+    
 }
+
+
 
 .TypeOptionSelected {
     margin-bottom: 20px;
@@ -344,13 +398,54 @@ body {
 }
 
 .WordingInput {
-    width: 100%;
+    
     height: 100px;
     padding: 10px;
     font-size: 14px;
     border-radius: 5px;
     border: 1px solid #ccc;
     resize: none;
+}
+
+.PreviewForm input[type="text"],
+.PreviewForm input[type="tel"],
+.PreviewForm input[type="email"] {
+    background-color: #555555;
+    color: white;
+    border: 3px solid white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 0px;
+    
+    margin-bottom: 10px;
+}
+
+
+
+.PreviewForm textarea {
+    background-color: #555555;
+    color: white;
+    border: 3px solid white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 0px;
+    
+    height: 100px;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+
+.PreviewForm input[type="text"]:focus,
+.PreviewForm input[type="tel"]:focus,
+.PreviewForm input[type="email"]:focus,
+.PreviewForm textarea:focus {
+    outline: none;
+    background-color: #ffc848;
+    border-color: #ffb347;
+    color: black;
 }
 
 
