@@ -33,8 +33,8 @@ function Modal({ isOpen, onClose }) {
           <h3>Here's how to use it:</h3>
           <ul>
             <li><strong>Select a Stone Type:</strong> Choose from our available granite colors and finishes on the left panel.</li>
-            <li><strong>Choose a Shape:</strong> Select the headstone shape that matches your preference.</li>
             <li><strong>Pick a Color:</strong> Browse through available color options to customize your design.</li>
+            <li><strong>Choose a Shape:</strong> Select the headstone shape that matches your preference.</li>
             <li><strong>Preview:</strong> Watch the preview update in real-time as you make changes.</li>
             <li><strong>Reset:</strong> Click the Reset button at any time to start over with default selections.</li>
           </ul>

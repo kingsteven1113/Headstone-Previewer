@@ -271,366 +271,145 @@ import Bahama_Blue_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
 
 import Slant_Marker from '../../assets/Brunetto.jpg';
 import Impala_Black_Slant_Marker from '../../assets/Orellana.jpg';
-import Impala_Black_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Impala_Black_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Impala_Black_Slant_Marker_Flat_Top from '../../assets/Pharr.jpg';
 import Impala_Black_Slant_Marker_Serpentine_Top from '../../assets/Orellana.jpg';
 import Impala_Black_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Barre_Grey_Slant_Marker from '../../assets/Brunetto.jpg';
-import Barre_Grey_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Barre_Grey_Slant_Marker_Flat_Top from '../../assets/Robinson.jpg';
 import Barre_Grey_Slant_Marker_Serpentine_Top from '../../assets/Brunetto.jpg';
 import Barre_Grey_Slant_Marker_Oval_Top from '../../assets/Kimbark.JPG';
-import Barre_Grey_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import North_American_Pink_Slant_Marker from '../../assets/Fitzpatrick.JPG';
-import North_American_Pink_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import North_American_Pink_Slant_Marker_Flat_Top from '../../assets/Fitzpatrick.JPG';
 import North_American_Pink_Slant_Marker_Serpentine_Top from '../../assets/Duah.jpg';
 import North_American_Pink_Slant_Marker_Oval_Top from '../../assets/Brockway front set.jpg';
-import North_American_Pink_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Mahogany_Slant_Marker from '../../assets/Watson.webp';
-import Mahogany_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Mahogany_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Mahogany_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
 import Mahogany_Slant_Marker_Serpentine_Top from '../../assets/Watson.webp';
 import Mahogany_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Cats_Eye_Slant_Marker from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Cats_Eye_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
 import Cats_Eye_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
 import Cats_Eye_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Evergreen_Slant_Marker from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Evergreen_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Evergreen_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
 import Evergreen_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
 import Evergreen_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Jet_Black_Slant_Marker from '../../assets/Sheehy.JPG';
-import Jet_Black_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Jet_Black_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Jet_Black_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
 import Jet_Black_Slant_Marker_Serpentine_Top from '../../assets/Sheehy.JPG';
 import Jet_Black_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Blue_Pearl_Slant_Marker from '../../assets/Hernandez R.jpg';
-import Blue_Pearl_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Blue_Pearl_Slant_Marker_Flat_Top from '../../assets/Hernandez R.jpg';
 import Blue_Pearl_Slant_Marker_Serpentine_Top from '../../assets/DOnofrio.jpg';
 import Blue_Pearl_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Tropical_Green_Slant_Marker from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Tropical_Green_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
 import Tropical_Green_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
 import Tropical_Green_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Paradiso_Slant_Marker from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Paradiso_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
+
 import Paradiso_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Bahama_Blue_Slant_Marker from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Slant_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Slant_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
 import Bahama_Blue_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
 import Bahama_Blue_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
 import Bahama_Blue_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Slant_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Slant_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Slant_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Slant_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Flush_Marker from '../../assets/Moore, Florence.JPG';
 import Impala_Black_Flush_Marker from '../../assets/White.jpg';
-import Impala_Black_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Impala_Black_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Impala_Black_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Barre_Grey_Flush_Marker from '../../assets/Moore, Florence.JPG';
-import Barre_Grey_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import North_American_Pink_Flush_Marker from '../../assets/Trotman.jpg';
-import North_American_Pink_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Mahogany_Flush_Marker from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Mahogany_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Mahogany_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Cats_Eye_Flush_Marker from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Evergreen_Flush_Marker from '../../assets/Wu.jpeg';
-import Evergreen_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Evergreen_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Evergreen_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Jet_Black_Flush_Marker from '../../assets/DeMeo.jpg';
-import Jet_Black_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Jet_Black_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Jet_Black_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Blue_Pearl_Flush_Marker from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Tropical_Green_Flush_Marker from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Paradiso_Flush_Marker from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Paradiso_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Paradiso_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 import Bahama_Blue_Flush_Marker from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Flush_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Flush_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Flush_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Flush_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Flush_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Flush_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Flush_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Flush_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Flush_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Hickey_Marker from '../../assets/Meek installed.jpg';
 import Impala_Black_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Impala_Black_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Impala_Black_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Barre_Grey_Hickey_Marker from '../../assets/Meek installed.jpg';
-import Barre_Grey_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Barre_Grey_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import North_American_Pink_Hickey_Marker from '../../assets/Urban.JPG';
-import North_American_Pink_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Mahogany_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Mahogany_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Mahogany_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Mahogany_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Cats_Eye_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Cats_Eye_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Evergreen_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Evergreen_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Evergreen_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Evergreen_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Jet_Black_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Jet_Black_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Jet_Black_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Jet_Black_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Blue_Pearl_Hickey_Marker from '../../assets/Yessian.jpg';
-import Blue_Pearl_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Tropical_Green_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Tropical_Green_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 import Paradiso_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Paradiso_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Paradiso_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Paradiso_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 import Bahama_Blue_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Hickey_Marker_Heart_Shape from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Hickey_Marker_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Hickey_Marker_Flat_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Hickey_Marker_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Hickey_Marker_Oval_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Hickey_Marker_Half_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Hickey_Marker_Half_Oval_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Hickey_Marker_Apex_Top from '../../assets/Casillas 2.jpg';
-import Bahama_Blue_Hickey_Marker_Roof_Top from '../../assets/Casillas 2.jpg';
+
 
 import Natural_Stone from '../../assets/Lum.jpeg';
 import Bench from '../../assets/Barker 1.JPG';
@@ -1370,7 +1149,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
             <p>Email Address:</p>
             <input type="email" name='Email Address' placeholder='What is your Email Address?' required/>
 
-            <button className='SubmitButton' form='Form' type='submit'>Submit Options</button>
+            <button className='SubmitButton' form='Form' type='submit'>Submit Selections</button>
           
             </form>
           
