@@ -3,6 +3,7 @@ body {
     justify-content: space-between;
     width: 100vw;
     height: 100vh;
+    font-family: Montserrat;
 }
 .Image {
     aspect-ratio: 1 / 1;
@@ -382,9 +383,11 @@ body {
 .SubmitButton {
     font-size: 20px;
     background-color:#ffc848;
+    color: black;
     cursor: pointer;
     transition: background-color 0.2s ease;
     border-width: 2px;
+    margin-top: 40px;
     padding-left: 40px;
     padding-right: 40px;
     align-self: center;
@@ -393,7 +396,6 @@ body {
 .SubmitButton:hover {
     background-color: #ffb347;
     border: 2px solid white;
-    color: white;
     transition: 0.2s ease;
 }
 

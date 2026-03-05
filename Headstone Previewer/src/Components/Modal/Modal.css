@@ -1,0 +1,146 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 60px;
+  max-width: 700px;
+  width: 95%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  font-family: Montserrat, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #666666;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: #2467b4;
+}
+
+.modal-title {
+  color: #2467b4;
+  margin: 0 0 30px 0;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.modal-body {
+  color: #333333;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.modal-body p {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.modal-body h3 {
+  color: #444444;
+  font-size: 18px;
+  margin: 20px 0 15px 0;
+}
+
+.modal-body ul {
+  list-style-position: inside;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.modal-body li {
+  margin-bottom: 12px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.modal-got-it-btn {
+  width: 100%;
+  padding: 16px 20px;
+  background-color: #2467b4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: Montserrat, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.modal-got-it-btn:hover {
+  background-color: #052044;
+}
+
+.modal-got-it-btn:active {
+  transform: scale(0.98);
+}
+
+/* Scrollbar styling for the modal body */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #2467b4;
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #052044;
+}

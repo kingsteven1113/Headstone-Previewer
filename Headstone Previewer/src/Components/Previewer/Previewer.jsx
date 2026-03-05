@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import './Previewer.css';
+import Modal from '../Modal/Modal';
 import Logo from '../../assets/CJStonesLogo.jpg';
 import Impala_Black from '../../assets/Casillas 2.jpg';
 import Barre_Grey from '../../assets/Coakley.jpeg';
@@ -1201,6 +1202,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
     setColorSelected(initialColor);
     setShapeSelected(initialShape);
     document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+    document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
 };
 
   const initialType = "Select Type";
@@ -1214,10 +1216,12 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
   const [bronzeEmblem, setBronzeEmblem] = useState("");
   const [porcelainPhoto, setPorcelainPhoto] = useState("");
   const [wording, setWording] = useState("");
+  const [showHowItWorksModal, setShowHowItWorksModal] = useState(true);
 
   
   return (
     <>
+      <Modal isOpen={showHowItWorksModal} onClose={() => setShowHowItWorksModal(false)} />
     
       {/*<h1>Welcome to the Headstone Previewer</h1>
       <p>This is a project created to preview headstone designs and help you decide on the type of stone you'd like before an appointment with us. <b>If you have any questions about headstones/monuments, please feel free to give us a call at 914-234-6987 or email us at cj@cjstones.com.</b></p> */}
