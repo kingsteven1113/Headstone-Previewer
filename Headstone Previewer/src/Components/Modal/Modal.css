@@ -116,6 +116,7 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   font-family: Montserrat, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  animation: fadeIn 0.4s ease;
 }
 
 .modal-got-it-btn:hover {
@@ -124,6 +125,16 @@
 
 .modal-got-it-btn:active {
   transform: scale(0.98);
+}
+
+.modal-button-placeholder {
+  width: 100%;
+  padding: 16px 20px;
+  text-align: center;
+  color: #999999;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: Montserrat, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 /* Scrollbar styling for the modal body */

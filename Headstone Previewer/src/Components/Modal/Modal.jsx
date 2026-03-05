@@ -1,15 +1,30 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import './Modal.css';
 
 function Modal({ isOpen, onClose }) {
+  const [showButtons, setShowButtons] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShowButtons(false);
+      const timer = setTimeout(() => {
+        setShowButtons(true);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={showButtons ? onClose : null}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-btn" onClick={onClose}>
-          ✕
-        </button>
+        {showButtons && (
+          <button className="modal-close-btn" onClick={onClose}>
+            ✕
+          </button>
+        )}
         <h2 className="modal-title">How It Works</h2>
         <div className="modal-body">
           <p>
@@ -27,9 +42,16 @@ function Modal({ isOpen, onClose }) {
             Once you've completed your design, please fill out and submit the form on the right side of the page. This will allow us to contact you about scheduling an appointment to discuss your perfect headstone design.
           </p>
         </div>
-        <button className="modal-got-it-btn" onClick={onClose}>
-          Got It
-        </button>
+        {showButtons && (
+          <button className="modal-got-it-btn" onClick={onClose}>
+            Got It
+          </button>
+        )}
+        {!showButtons && (
+          <div className="modal-button-placeholder">
+            Please read the instructions above...
+          </div>
+        )}
       </div>
     </div>
   );
