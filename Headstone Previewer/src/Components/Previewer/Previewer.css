@@ -63,7 +63,7 @@ body {
 .ResetButton:hover {
     background-color: #052044!important;
     border: 2px solid white !important;
-    color: white;
+    color: white !important;
     transition: 0.2s ease;
 }
 
