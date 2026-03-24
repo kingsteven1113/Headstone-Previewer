@@ -449,11 +449,20 @@ const Previewer = () => {
     setTypeSelected(initialType);
     setColorSelected(initialColor);
     setShapeSelected(initialShape);
-    document.getElementById('ColorOptionsList').classList.remove('active');
-    document.getElementById('ShapeOptionsList').classList.remove('active');
-    document.getElementById('AccessoriesOptionsList').classList.remove('active');
+    document.getElementsByClassName('ColorOptionsList').style.opacity = '0';
+    document.getElementsByClassName('ShapeOptionsList').style.opacity = '0';
+    document.getElementsByClassName('AccessoriesOptionsList').style.opacity = '0';
+
+    document.getElementById('ColorOptionsList').classList.remove('active'), 1500;
+    document.getElementById('ShapeOptionsList').classList.remove('active'), 1500;
+    document.getElementById('AccessoriesOptionsList').classList.remove('active'), 1500;
+    
     document.querySelectorAll('.AccessorySelected, .TypeSelected, .ColorSelected, .ShapeSelected').forEach(element => element.classList.remove('AccessorySelected', 'TypeSelected', 'ColorSelected', 'ShapeSelected'));
     document.getElementById('NoCombinationMessage').classList.add('hidden');
+    if (window.innerWidth < 915) {
+      
+    }
+
   }
 
 
@@ -988,6 +997,7 @@ useEffect(() => {
 const handleShapeAndColorRemoveOnSelection = (e) => {
   document.querySelectorAll('.TypeSelected').forEach(el => el.classList.remove('TypeSelected'));
   e.target.classList.toggle('TypeSelected'), 500;
+  
   setSelection({ ...selection, type: e.target.value, color: null, shape: null });
   setTypeSelected(e.target.innerHTML);
   document
@@ -1127,7 +1137,8 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
               
               <button className='AccessoryOption' type='button' onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('PorcelainPhotoInput').value === 'Porcelain Photo') {document.getElementById('PorcelainPhotoInput').value = ''} else {document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}}>Porcelain Photo</button>
             </ul>
-          </div> 
+          </div>
+          <button className='ResetButton MobileReset' type='button' onClick={resetSelections}>Reset Selection</button> 
           
         </div>
         <div className='Preview-Images'>

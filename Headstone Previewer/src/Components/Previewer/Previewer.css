@@ -82,7 +82,7 @@ body {
 }
 
 .ShapeOptionsList {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 10px;
     opacity: 0;
@@ -95,7 +95,7 @@ body {
 }
 
 .ColorOptionsList {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 10px;
     opacity: 0;
@@ -108,7 +108,7 @@ body {
 }
 
 .AccessoriesOptionsList {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 10px;
     opacity: 0;
@@ -153,6 +153,7 @@ body {
 
 
 .active {
+    display: flex !important;
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
@@ -457,4 +458,45 @@ body {
     color: white;
     text-align: left;
     max-width: 100%;
+}
+
+.MobileReset {
+    display: none;
+}
+
+@media only screen and (max-width: 915px) {
+    .previewer-container {
+        display: flex ;
+        flex-direction: column;
+        align-items: center;
+        overflow: auto;
+
+    }
+    .ResetButton {
+        display: none;
+    }
+   
+    
+     .Preview-Images {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .Preview-Options {
+        flex-direction: column;
+        align-items: center;
+        
+    }
+     .TypeOptionsList, .ShapeOptionsList, .ColorOptionsList, .AccessoriesOptionsList {
+        width: 100%;
+        
+    }
+     .SubmitResetContainer {
+        flex-direction: column;
+    }
+    .MobileReset {
+        display: block;
+        width: 100vw;
+        color: white;
+    }
 }
