@@ -14,8 +14,8 @@ body {
 } 
 
 .previewer-container {
-    display: grid;
-    grid-template-columns: 1fr 1.25fr 0.5fr;
+    display: flex;
+    justify-content: space-between;
     width: 100vw;
     height: 100vh;
     gap: 20px;
@@ -82,42 +82,45 @@ body {
 }
 
 .ShapeOptionsList {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 10px;
     opacity: 0;
     visibility: hidden;
     transform: translateX(-40px);
-    transition: opacity 0.5s ease, visibility 0s linear 0.5s, transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    transition: 0.5s ease;
     background-color: #666666;
     z-index: 1;
     color: white;
+    width: 0px;
 }
 
 .ColorOptionsList {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 10px;
     opacity: 0;
     visibility: hidden;
     transform: translateX(-40px);
-    transition: opacity 0.5s ease, visibility 0s linear 0.5s, transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    transition: 0.5s ease;
     background-color: #555555;
     z-index: 2;
     color: white;
+    width: 0px;
 }
 
 .AccessoriesOptionsList {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 10px;
     opacity: 0;
     visibility: hidden;
     transform: translateX(-40px);
-    transition: opacity 0.5s ease, visibility 0s linear 0.5s, transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    transition: 0.5s ease;
     background-color: #777777;
     z-index: 0;
     color: white;
+    width: 0px;
 }
 
 .TypeOptionsList ul {
@@ -153,11 +156,12 @@ body {
 
 
 .active {
-    display: flex !important;
+    
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    transition: 0.5s ease;
+    width: fit-content;
 }
 
 .hidden {
@@ -365,7 +369,7 @@ body {
     flex-direction: column;
     padding: 20px;
     background-color: #333333;
-    
+    width: 15%;
     overflow-y: scroll;
     
 }
@@ -464,12 +468,32 @@ body {
     display: none;
 }
 
+.ColorOptionSelectedMobile {
+    display: none;
+}
+
+.TypeOptionSelectedMobile {
+    display: none;
+}
+
+.ShapeOptionSelectedMobile {
+    display: none;
+}
+
 @media only screen and (max-width: 915px) {
+
+    body {
+        display: flex;
+        justify-content: center;
+        width: 100vw;
+        height: auto;
+    }
     .previewer-container {
-        display: flex ;
+        display: flex;
         flex-direction: column;
-        align-items: center;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
 
     }
     .ResetButton {
@@ -488,7 +512,7 @@ body {
         
     }
      .TypeOptionsList, .ShapeOptionsList, .ColorOptionsList, .AccessoriesOptionsList {
-        width: 100%;
+        width: 100vw;
         
     }
      .SubmitResetContainer {
@@ -496,7 +520,53 @@ body {
     }
     .MobileReset {
         display: block;
-        width: 100vw;
+        position: fixed;
+        width: 90vw;
         color: white;
+        z-index: 5;
+        bottom: 20px;
+        border: 2px solid white;
     }
+    .ColorOptionsList, .ShapeOptionsList, .AccessoriesOptionsList {
+        display: flex;
+        transform: translateY(-40px);
+        transition: 0.5s ease;
+        height: 0px;
+    }
+    .active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition: 0.5s ease;
+        height: auto;
+    }
+
+    .AccessoryNForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background-color: #333333;
+    width: 100%;
+    overflow-y: auto;
+    
+    }
+
+    .disappear {
+        display: none !important;
+    }
+
+    .ColorOptionSelectedMobile {
+    display: block;
+}
+
+.TypeOptionSelectedMobile {
+    display: block;
+}
+
+.ShapeOptionSelectedMobile {
+    display: block;
+}
+
+
 }

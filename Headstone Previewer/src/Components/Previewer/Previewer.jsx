@@ -442,6 +442,8 @@ import Bahama_Blue_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 
 const Previewer = () => {
 
+  
+
 
 
   function resetSelections() {
@@ -449,18 +451,15 @@ const Previewer = () => {
     setTypeSelected(initialType);
     setColorSelected(initialColor);
     setShapeSelected(initialShape);
-    document.getElementsByClassName('ColorOptionsList').style.opacity = '0';
-    document.getElementsByClassName('ShapeOptionsList').style.opacity = '0';
-    document.getElementsByClassName('AccessoriesOptionsList').style.opacity = '0';
-
-    document.getElementById('ColorOptionsList').classList.remove('active'), 500;
-    document.getElementById('ShapeOptionsList').classList.remove('active'), 500;
-    document.getElementById('AccessoriesOptionsList').classList.remove('active'), 500;
+    
+    document.getElementById('ColorOptionsList').classList.remove('active'), 1500;
+    document.getElementById('ShapeOptionsList').classList.remove('active'), 1500;
+    document.getElementById('AccessoriesOptionsList').classList.remove('active'), 1500;
     
     document.querySelectorAll('.AccessorySelected, .TypeSelected, .ColorSelected, .ShapeSelected').forEach(element => element.classList.remove('AccessorySelected', 'TypeSelected', 'ColorSelected', 'ShapeSelected'));
     document.getElementById('NoCombinationMessage').classList.add('hidden');
     if (window.innerWidth < 915) {
-      
+      document.querySelectorAll('.TypeOptionsList ul, .ColorOptionsList ul, .ShapeOptionsList ul, .TypeOptionsList p, .ColorOptionsList p, .ShapeOptionsList p, .TypeOptionsList h2, .ColorOptionsList h2, .ShapeOptionsList h2, ').forEach(element => element.classList.remove('disappear'));
     }
 
   }
@@ -967,7 +966,25 @@ useEffect(() => {
   
 
   
+document.addEventListener('DOMContentLoaded', () => {
+    const triggerElement = document.querySelector('#trigger');
+    const disappearingElement = document.querySelector('#sidebar');
 
+    // Only start observing if both elements actually exist
+    if (triggerElement && disappearingElement) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    disappearingElement.classList.add('hidden');
+                }
+            });
+        });
+
+        observer.observe(triggerElement);
+    } else {
+        console.error("One of the elements was not found in the DOM.");
+    }
+});
 
     
     
@@ -1034,12 +1051,16 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
     
     <>
       <Modal isOpen={showHowItWorksModal} onClose={() => setShowHowItWorksModal(false)} />
-    
+      
       <div className="previewer-container">
+        <button className='ResetButton MobileReset' id='MobileResetButton' type='button' onClick={resetSelections}>Reset Selection</button>
         <div className='Preview-Options'>
           <div className='TypeOptionsList'>
             <h2>Stone <br />Types</h2>
             <p className='TypeOptionSelected'>You selected: <br /><b>{typeSelected}</b></p>
+            <button type='button' className='TypeOptionSelectedMobile' onClick={(e) => {document.querySelector('.TypeOptionsList ul').classList.toggle('disappear');
+              
+            }}>{typeSelected}</button>
             <ul>
               <button id='Die And Base' onClick={(e) =>{ document.querySelectorAll('.TypeSelected').forEach(el => el.classList.remove('TypeSelected'));
               e.target.classList.toggle('TypeSelected'), 200;
@@ -1075,28 +1096,30 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           <div id='ColorOptionsList' className='ColorOptionsList'>
             <h2>Stone <br />Colors</h2>
             <p className='ColorOptionSelected'>You selected: <br /><b>{colorSelected}</b></p>
+            <button className='ColorOptionSelectedMobile' type='button' onClick={(e) => {document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
+            }}>{colorSelected}</button>
             <ul>
-              <button id='Impala_Black' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Impala_Black' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Impala_Black" disabled={selection.type === "Natural_Stone"}>Impala Black</button>
-              <button id='Barre_Grey' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Barre_Grey' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Barre_Grey" disabled={selection.type === "Natural_Stone"}>Barre Grey</button>
-              <button id='North_American_Pink' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='North_American_Pink' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="North_American_Pink" disabled={selection.type === "Natural_Stone"}>North American Pink</button>
-              <button id='Mahogany' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Mahogany' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Mahogany" disabled={selection.type === "Natural_Stone"}>Mahogany</button>
-              <button id='Cats_Eye' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Cats_Eye' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Cats_Eye" disabled={selection.type === "Natural_Stone"}>Cats Eye Brown</button>
-              <button id='Evergreen' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Evergreen' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Evergreen" disabled={selection.type === "Natural_Stone"}>Evergreen</button>
-              <button id='Jet_Black' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Jet_Black' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Jet_Black" disabled={selection.type === "Natural_Stone"}>Jet Black</button>
-              <button id='Blue_Pearl' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Blue_Pearl' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Blue_Pearl" disabled={selection.type === "Natural_Stone"}>Blue Pearl</button>
-              <button id='Tropical_Green' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Tropical_Green' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Tropical_Green" disabled={selection.type === "Natural_Stone"}>Tropical Green</button>
-              <button id='Paradiso' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Paradiso' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Paradiso" disabled={selection.type === "Natural_Stone"}>Paradiso</button>
-              <button id='Bahama_Blue' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected'));
+              <button id='Bahama_Blue' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (combinationMessage === true) {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Bahama_Blue" disabled={selection.type === "Natural_Stone"}>Bahama Blue</button>
             </ul>
           </div>
@@ -1104,24 +1127,26 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           <div id='ShapeOptionsList' className='ShapeOptionsList'>
             <h2>Stone <br />Shapes</h2>
             <p className='ShapeOptionSelected'>You selected: <br /><b>{shapeSelected}</b></p>
+            <button className='ShapeOptionSelectedMobile' type='button' onClick={(e) => {document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
+            }}>{shapeSelected}</button>
             <ul >
-              <button className='NonSlantOptions' id='Heart_Shape' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button className='NonSlantOptions' id='Heart_Shape' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Heart_Shape" disabled={selection.type === "Slant_Marker" || selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Heart Shape</button>
-              <button className='NonSlantOptions' id='Angel_Carved' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button className='NonSlantOptions' id='Angel_Carved' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Angel_Carved" disabled={selection.type === "Slant_Marker" || selection.type === "Monolith" || selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Angel Carved</button>
-              <button id='Flat_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button id='Flat_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Flat_Top" disabled={selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Flat Top</button>
-              <button id='Serpentine_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button id='Serpentine_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Serpentine_Top" disabled={selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Serpentine Top</button>
-              <button id='Oval_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button id='Oval_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Oval_Top" disabled={selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Oval Top</button>
-              <button className='NonSlantOptions' id='Half_Serpentine_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button className='NonSlantOptions' id='Half_Serpentine_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Half_Serpentine_Top" disabled={selection.type === "Slant_Marker" || selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Half Serpentine Top</button>
-              <button className='NonSlantOptions' id='Half_Oval_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button className='NonSlantOptions' id='Half_Oval_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Half_Oval_Top" disabled={selection.type === "Slant_Marker" || selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Half Oval Top</button>
-              <button className='NonSlantOptions' id='Apex_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button className='NonSlantOptions' id='Apex_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Apex_Top" disabled={selection.type === "Slant_Marker" || selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Apex Top</button>
-              <button className='NonSlantOptions' id='Roof_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected'));
+              <button className='NonSlantOptions' id='Roof_Top' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Roof_Top" disabled={selection.type === "Slant_Marker" || selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Roof Top</button>
             </ul>
           </div>
@@ -1138,7 +1163,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
               <button className='AccessoryOption' type='button' onClick={(e) => { e.target.classList.toggle('AccessorySelected'); if (document.getElementById('PorcelainPhotoInput').value === 'Porcelain Photo') {document.getElementById('PorcelainPhotoInput').value = ''} else {document.getElementById('PorcelainPhotoInput').value = 'Porcelain Photo'}}}>Porcelain Photo</button>
             </ul>
           </div>
-          <button className='ResetButton MobileReset' type='button' onClick={resetSelections}>Reset Selection</button> 
+           
           
         </div>
         <div className='Preview-Images'>
@@ -1146,7 +1171,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           <p id='NoCombinationMessage'  className='NoCombinationMessage hidden'>This combination has not been made yet. But if you'd like to see it, please let us know!</p>
         </div>
 
-        <div className='AccessoryNForm'>
+        <div className='AccessoryNForm' id='Form'>
 
 
                 
