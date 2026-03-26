@@ -453,9 +453,9 @@ const Previewer = () => {
     document.getElementsByClassName('ShapeOptionsList').style.opacity = '0';
     document.getElementsByClassName('AccessoriesOptionsList').style.opacity = '0';
 
-    document.getElementById('ColorOptionsList').classList.remove('active'), 1500;
-    document.getElementById('ShapeOptionsList').classList.remove('active'), 1500;
-    document.getElementById('AccessoriesOptionsList').classList.remove('active'), 1500;
+    document.getElementById('ColorOptionsList').classList.remove('active'), 500;
+    document.getElementById('ShapeOptionsList').classList.remove('active'), 500;
+    document.getElementById('AccessoriesOptionsList').classList.remove('active'), 500;
     
     document.querySelectorAll('.AccessorySelected, .TypeSelected, .ColorSelected, .ShapeSelected').forEach(element => element.classList.remove('AccessorySelected', 'TypeSelected', 'ColorSelected', 'ShapeSelected'));
     document.getElementById('NoCombinationMessage').classList.add('hidden');
