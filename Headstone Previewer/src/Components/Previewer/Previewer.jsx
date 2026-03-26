@@ -1060,7 +1060,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
             <p className='TypeOptionSelected'>You selected: <br /><b>{typeSelected}</b></p>
             <button type='button' className='TypeOptionSelectedMobile' onClick={(e) => {document.querySelector('.TypeOptionsList ul').classList.toggle('disappear');
               
-            }}>{typeSelected}</button>
+            }}>Type: {typeSelected}</button>
             <ul>
               <button id='Die And Base' onClick={(e) =>{ document.querySelectorAll('.TypeSelected').forEach(el => el.classList.remove('TypeSelected'));
               e.target.classList.toggle('TypeSelected'), 200;
@@ -1097,7 +1097,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
             <h2>Stone <br />Colors</h2>
             <p className='ColorOptionSelected'>You selected: <br /><b>{colorSelected}</b></p>
             <button className='ColorOptionSelectedMobile' type='button' onClick={(e) => {document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
-            }}>{colorSelected}</button>
+            }}>Color: {colorSelected}</button>
             <ul>
               <button id='Impala_Black' onClick={(e) =>{ document.querySelectorAll('.ColorSelected').forEach(el => el.classList.remove('ColorSelected')); document.querySelectorAll(' .ColorOptionsList ul, .ColorOptionsList p, .ColorOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ColorSelected'), 200; setColorSelected(e.target.innerHTML); setSelection({ ...selection, color: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Impala_Black" disabled={selection.type === "Natural_Stone"}>Impala Black</button>
@@ -1128,7 +1128,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
             <h2>Stone <br />Shapes</h2>
             <p className='ShapeOptionSelected'>You selected: <br /><b>{shapeSelected}</b></p>
             <button className='ShapeOptionSelectedMobile' type='button' onClick={(e) => {document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
-            }}>{shapeSelected}</button>
+            }}>Shape: {shapeSelected}</button>
             <ul >
               <button className='NonSlantOptions' id='Heart_Shape' onClick={(e) =>{ document.querySelectorAll('.ShapeSelected').forEach(el => el.classList.remove('ShapeSelected')); document.querySelectorAll(' .ShapeOptionsList ul, .ShapeOptionsList p, .ShapeOptionsList h2').forEach(element => element.classList.toggle('disappear'));
   e.target.classList.toggle('ShapeSelected'), 200; setShapeSelected(e.target.innerHTML); setSelection({ ...selection, shape: e.target.value }); if (selection.name === 'None') {document.getElementById('NoCombinationMessage').classList.remove('hidden') } else {document.getElementById('NoCombinationMessage').classList.add('hidden')}}} value="Heart_Shape" disabled={selection.type === "Slant_Marker" || selection.type === "Flush_Marker" || selection.type === "Hickey_Marker" || selection.type === "Bench" || selection.type === "Bronze_Plaque" || selection.type === "Natural_Stone"}>Heart Shape</button>
