@@ -547,7 +547,7 @@ body {
     align-items: center;
     padding: 30px;
     background-color: #333333;
-    width: 100%;
+    width: auto;
     overflow-y: auto;
     
     }
@@ -560,12 +560,37 @@ body {
     display: block;
 }
 
+.ColorOptionSelectedMobile:hover {
+    .FaAngleDown {
+        transform: translateY(5px);
+        transition: 0.3s ease;
+    }
+}
+
 .TypeOptionSelectedMobile {
     display: block;
 }
 
+.TypeOptionSelectedMobile:hover {
+    .FaAngleDown {
+        transform: translateY(5px);
+        transition: 0.3s ease;
+    }
+}
+
 .ShapeOptionSelectedMobile {
     display: block;
+}
+
+.ShapeOptionSelectedMobile:hover {
+    .FaAngleDown {
+        transform: translateY(5px);
+        transition: 0.3s ease;
+    }
+}
+
+.FaAngleDown {
+    transition: transform 0.3s ease;
 }
 
 
