@@ -1076,8 +1076,9 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
   }, []);
 
   useEffect(() => {
-    // Update the hidden image input whenever selection changes
-    setSelectionImage(imageSrc(selection));
+    // Update the hidden image input with the selection name whenever selection changes
+    imageSrc(selection); // Call this to trigger the name assignment
+    setSelectionImage(selection.name);
   }, [selection]);
   
   return (
