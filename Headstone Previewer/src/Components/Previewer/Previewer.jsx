@@ -1045,16 +1045,60 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
   const [porcelainPhoto, setPorcelainPhoto] = useState("");
   const [wording, setWording] = useState("");
   const [showHowItWorksModal, setShowHowItWorksModal] = useState(true);
+  const [showMobileResetButton, setShowMobileResetButton] = useState(true);
+  const [selectionImage, setSelectionImage] = useState('');
  
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if we're on mobile
+      if (window.innerWidth <= 768) {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        const distanceFromBottom = docHeight - (scrollTop + windowHeight);
+        
+        // Hide button if within 100px of bottom, show otherwise
+        if (distanceFromBottom < 100) {
+          setShowMobileResetButton(false);
+        } else {
+          setShowMobileResetButton(true);
+        }
+      }
+    };
+
+    // Set initial state based on screen size
+    if (window.innerWidth > 768) {
+      setShowMobileResetButton(false);
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // Update the hidden image input whenever selection changes
+    setSelectionImage(imageSrc(selection));
+  }, [selection]);
   
-  let SelectionImage = '';
   return (
     
     <>
       <Modal isOpen={showHowItWorksModal} onClose={() => setShowHowItWorksModal(false)} />
       
       <div className="previewer-container">
-        <button className='ResetButton MobileReset' id='MobileResetButton' type='button' onClick={resetSelections}>Reset Selection</button>
+        <button 
+          className={`ResetButton MobileReset ${!showMobileResetButton ? 'hidden-mobile-reset' : ''}`} 
+          id='MobileResetButton' 
+          type='button' 
+          onClick={resetSelections}
+          style={{
+            opacity: showMobileResetButton ? 1 : 0,
+            pointerEvents: showMobileResetButton ? 'auto' : 'none',
+            transition: 'opacity 0.4s ease'
+          }}
+        >
+          Reset Selection
+        </button>
         <div className='Preview-Options'>
           <div className='TypeOptionsList'>
             <h2>Stone <br />Types</h2>
@@ -1188,7 +1232,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
             <form id='Form' className='PreviewForm' method='POST' data-netlify="true" name='contact' action="/">
             <input type="hidden" name="form-name" value="contact" />
             <div>
-              <input type="text" name='Image' id='ImageInput' value={SelectionImage} hidden readOnly/>
+              <input type="text" name='Image' id='ImageInput' value={selectionImage} hidden readOnly/>
               <input type="text" name='Type' id='TypeInput' value={typeSelected} hidden readOnly/>
               <input type="text" name='Shape' id='ShapeInput' value={shapeSelected} hidden readOnly/>
               <input type="text" name='Color' id='ColorInput' value={colorSelected} hidden readOnly/>
