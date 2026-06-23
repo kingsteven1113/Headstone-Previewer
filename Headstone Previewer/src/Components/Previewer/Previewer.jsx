@@ -1181,7 +1181,7 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           <p id='NoCombinationMessage'  className='NoCombinationMessage hidden'>This combination has not been made yet. But if you'd like to see it, please let us know!</p>
         </div>
 
-        <div className='AccessoryNForm' id='Form'>
+        <div className='AccessoryNForm'>
 
 
                 
