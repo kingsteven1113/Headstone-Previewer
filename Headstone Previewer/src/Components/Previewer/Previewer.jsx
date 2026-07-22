@@ -1,8 +1,13 @@
 import React from 'react';
 import {FaAngleDown} from 'react-icons/fa';
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Previewer.css';
 import Modal from '../Modal/Modal';
+import { saveProject, getSavedProjects, deleteProject, updateProject } from '../../utils/savedProjects';
+import { useAuth } from '../../context/AuthContext';
+import { canSaveProjects, canUseAdvancedPreviewer, getAdvancedPreviewerMessage, getSaveProjectMessage } from '../../utils/accessRules';
+import { DEFAULT_DESIGN_STYLE, DESIGN_STYLE_OPTIONS, getDesignStyleDetails, formatDesignStyleLabel } from '../../utils/designStyles';
 import Logo from '../../assets/CJStonesLogo.jpg';
 import Impala_Black from '../../assets/Casillas 2.jpg';
 import Barre_Grey from '../../assets/Coakley.jpeg';
@@ -439,6 +444,52 @@ import Tropical_Green_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 import Bahama_Blue_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 
+const COLOR_REQUIRED_TYPES = ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque'];
+
+const ADVANCED_TYPE_OPTIONS = [
+  { value: 'Die_And_Base', label: 'Die and Base' },
+  { value: 'Monolith', label: 'Monolith' },
+  { value: 'Slant_Marker', label: 'Slant Marker' },
+  { value: 'Flush_Marker', label: 'Flush Marker' },
+  { value: 'Hickey_Marker', label: 'Hickey Marker' },
+  { value: 'Natural_Stone', label: 'Natural Stone' },
+  { value: 'Bench', label: 'Bench' },
+  { value: 'Bronze_Plaque', label: 'Bronze Plaque' },
+];
+
+const ADVANCED_COLOR_OPTIONS = [
+  { value: 'Impala_Black', label: 'Impala Black' },
+  { value: 'Barre_Grey', label: 'Barre Grey' },
+  { value: 'North_American_Pink', label: 'North American Pink' },
+  { value: 'Mahogany', label: 'Mahogany' },
+  { value: 'Cats_Eye', label: 'Cats Eye Brown' },
+  { value: 'Evergreen', label: 'Evergreen' },
+  { value: 'Jet_Black', label: 'Jet Black' },
+  { value: 'Blue_Pearl', label: 'Blue Pearl' },
+  { value: 'Tropical_Green', label: 'Tropical Green' },
+  { value: 'Paradiso', label: 'Paradiso' },
+  { value: 'Bahama_Blue', label: 'Bahama Blue' },
+];
+
+const ADVANCED_SHAPE_OPTIONS = [
+  { value: 'Heart_Shape', label: 'Heart Shape' },
+  { value: 'Angel_Carved', label: 'Angel Carved' },
+  { value: 'Flat_Top', label: 'Flat Top' },
+  { value: 'Serpentine_Top', label: 'Serpentine Top' },
+  { value: 'Oval_Top', label: 'Oval Top' },
+  { value: 'Half_Serpentine_Top', label: 'Half Serpentine Top' },
+  { value: 'Half_Oval_Top', label: 'Half Oval Top' },
+  { value: 'Apex_Top', label: 'Apex Top' },
+  { value: 'Roof_Top', label: 'Roof Top' },
+];
+
+const ADVANCED_ACCESSORY_OPTIONS = [
+  { value: 'Vase', label: 'Vase' },
+  { value: 'Etching', label: 'Etching' },
+  { value: 'Bronze Emblem', label: 'Bronze Emblem' },
+  { value: 'Porcelain Photo', label: 'Porcelain Photo' },
+];
+
 
 
 const Previewer = () => {
@@ -452,15 +503,19 @@ const Previewer = () => {
     setTypeSelected(initialType);
     setColorSelected(initialColor);
     setShapeSelected(initialShape);
+    setDesignStyleSelected(initialDesignStyle);
+    setActiveAdvancedStep('type');
+    clearAccessorySelections();
     
     document.getElementById('ColorOptionsList').classList.remove('active'), 1500;
     document.getElementById('ShapeOptionsList').classList.remove('active'), 1500;
+    document.getElementById('StyleOptionsList')?.classList.remove('active'), 1500;
     document.getElementById('AccessoriesOptionsList').classList.remove('active'), 1500;
     
-    document.querySelectorAll('.AccessorySelected, .TypeSelected, .ColorSelected, .ShapeSelected').forEach(element => element.classList.remove('AccessorySelected', 'TypeSelected', 'ColorSelected', 'ShapeSelected'));
+    document.querySelectorAll('.AccessorySelected, .TypeSelected, .ColorSelected, .ShapeSelected, .StyleSelected').forEach(element => element.classList.remove('AccessorySelected', 'TypeSelected', 'ColorSelected', 'ShapeSelected', 'StyleSelected'));
     document.getElementById('NoCombinationMessage').classList.add('hidden');
     if (window.innerWidth < 915) {
-      document.querySelectorAll('.TypeOptionsList ul, .ColorOptionsList ul, .ShapeOptionsList ul, .TypeOptionsList p, .ColorOptionsList p, .ShapeOptionsList p, .TypeOptionsList h2, .ColorOptionsList h2, .ShapeOptionsList h2, ').forEach(element => element.classList.remove('disappear'));
+      document.querySelectorAll('.TypeOptionsList ul, .ColorOptionsList ul, .ShapeOptionsList ul, .StyleOptionsList ul, .TypeOptionsList p, .ColorOptionsList p, .ShapeOptionsList p, .StyleOptionsList p, .TypeOptionsList h2, .ColorOptionsList h2, .ShapeOptionsList h2, .StyleOptionsList h2').forEach(element => element.classList.remove('disappear'));
     }
 
   }
@@ -470,6 +525,7 @@ const Previewer = () => {
     type: null,
     color: null,
     shape: null,
+    designStyle: null,
     name: null
   }
 
@@ -492,9 +548,16 @@ useEffect(() => {
     // Manage column visibility based on selection state
     const colorRequiredTypes = ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque'];
     const isColorRequiredType = colorRequiredTypes.includes(selection.type);
+    const hasBaseSelection = selection.type === 'Natural_Stone' || (isColorRequiredType && selection.color) || (!isColorRequiredType && selection.type !== 'Natural_Stone' && selection.shape);
     
+    if (hasAdvancedPreviewerAccess && hasBaseSelection) {
+      document.getElementById('StyleOptionsList')?.classList.add('active');
+    } else {
+      document.getElementById('StyleOptionsList')?.classList.remove('active');
+    }
+
     // Show Accessories for Natural_Stone immediately, or for colorRequiredTypes when color is selected, or for other types when shape is selected
-    if (selection.type === 'Natural_Stone' || (isColorRequiredType && selection.color) || (!isColorRequiredType && selection.type !== 'Natural_Stone' && selection.shape)) {
+    if ((hasAdvancedPreviewerAccess && hasBaseSelection && selection.designStyle) || (!hasAdvancedPreviewerAccess && hasBaseSelection)) {
       document.getElementById('AccessoriesOptionsList')?.classList.add('active');
     } else {
       document.getElementById('AccessoriesOptionsList')?.classList.remove('active');
@@ -1036,26 +1099,634 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
   const initialType = "Select Type";
   const initialColor = "Select Color";
   const initialShape = "Select Shape";
+  const initialDesignStyle = 'Select Design Style';
+  const navigate = useNavigate();
+  const { isAuthenticated, plan } = useAuth();
+  const hasAdvancedPreviewerAccess = canUseAdvancedPreviewer({ isAuthenticated, plan });
   const [typeSelected, setTypeSelected] = useState(initialType);
   const [colorSelected, setColorSelected] = useState(initialColor);
   const [shapeSelected, setShapeSelected] = useState(initialShape);
+  const [designStyleSelected, setDesignStyleSelected] = useState(initialDesignStyle);
   const [vase, setVase] = useState("");
   const [etching, setEtching] = useState("");
   const [bronzeEmblem, setBronzeEmblem] = useState("");
   const [porcelainPhoto, setPorcelainPhoto] = useState("");
+  const [designName, setDesignName] = useState("");
   const [wording, setWording] = useState("");
   const [showHowItWorksModal, setShowHowItWorksModal] = useState(true);
- 
+  const [saveMessage, setSaveMessage] = useState('');
+  const [savedProjectCount, setSavedProjectCount] = useState(0);
+  const [currentProjectId, setCurrentProjectId] = useState(null);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [activeAdvancedStep, setActiveAdvancedStep] = useState('type');
+
+  const selectedAccessories = [vase, etching, bronzeEmblem, porcelainPhoto].filter(Boolean);
+  const requiresColorStep = Boolean(selection.type) && selection.type !== 'Natural_Stone';
+  const requiresShapeStep = Boolean(selection.type) && !COLOR_REQUIRED_TYPES.includes(selection.type) && selection.type !== 'Natural_Stone';
+
+  const advancedSteps = [
+    {
+      key: 'type',
+      label: 'Stone Type',
+      description: 'Start by choosing the memorial structure you want to build from.',
+      summary: selection.type ? typeSelected : 'Not selected',
+      isComplete: Boolean(selection.type),
+    },
+    ...(requiresColorStep
+      ? [{
+          key: 'color',
+          label: 'Stone Color',
+          description: 'Choose the granite or finish color for this memorial concept.',
+          summary: selection.color ? colorSelected : 'Not selected',
+          isComplete: Boolean(selection.color),
+        }]
+      : []),
+    ...(requiresShapeStep
+      ? [{
+          key: 'shape',
+          label: 'Stone Shape',
+          description: 'Refine the silhouette to match the memorial style you want to present.',
+          summary: selection.shape ? shapeSelected : 'Not selected',
+          isComplete: Boolean(selection.shape),
+        }]
+      : []),
+    {
+      key: 'designStyle',
+      label: 'Design Style',
+      description: 'Apply the premium composition layer that makes the advanced previewer feel distinct.',
+      summary: selection.designStyle ? designStyleSelected : 'Not selected',
+      isComplete: Boolean(selection.designStyle),
+    },
+    {
+      key: 'accessories',
+      label: 'Accessories',
+      description: 'Add optional memorial details once the main composition is locked in.',
+      summary: selectedAccessories.length ? selectedAccessories.join(', ') : 'Optional',
+      isComplete: true,
+    },
+  ];
+
+  const currentAdvancedStep = advancedSteps.find((step) => step.key === activeAdvancedStep) || advancedSteps[0];
+
+  const setHiddenInputValue = (id, value) => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const input = document.getElementById(id);
+    if (input) {
+      input.value = value;
+    }
+  };
+
+  const clearAccessorySelections = () => {
+    setVase('');
+    setEtching('');
+    setBronzeEmblem('');
+    setPorcelainPhoto('');
+    setHiddenInputValue('VaseInput', '');
+    setHiddenInputValue('EtchingInput', '');
+    setHiddenInputValue('BronzeEmblemInput', '');
+    setHiddenInputValue('PorcelainPhotoInput', '');
+  };
+
+  const handleAdvancedTypeSelect = (typeValue, typeLabel) => {
+    setSelection((currentSelection) => ({
+      ...currentSelection,
+      type: typeValue,
+      color: null,
+      shape: null,
+      designStyle: null,
+      name: null,
+    }));
+    setTypeSelected(typeLabel);
+    setColorSelected(initialColor);
+    setShapeSelected(initialShape);
+    setDesignStyleSelected(initialDesignStyle);
+    clearAccessorySelections();
+  };
+
+  const handleAdvancedColorSelect = (colorValue, colorLabel) => {
+    setSelection((currentSelection) => ({
+      ...currentSelection,
+      color: colorValue,
+      shape: null,
+      designStyle: null,
+      name: null,
+    }));
+    setColorSelected(colorLabel);
+    setShapeSelected(initialShape);
+    setDesignStyleSelected(initialDesignStyle);
+    clearAccessorySelections();
+  };
+
+  const handleAdvancedShapeSelect = (shapeValue, shapeLabel) => {
+    setSelection((currentSelection) => ({
+      ...currentSelection,
+      shape: shapeValue,
+      designStyle: null,
+      name: null,
+    }));
+    setShapeSelected(shapeLabel);
+    setDesignStyleSelected(initialDesignStyle);
+    clearAccessorySelections();
+  };
+
+  const handleAdvancedDesignStyleSelect = (styleValue, styleLabel) => {
+    setSelection((currentSelection) => ({
+      ...currentSelection,
+      designStyle: styleValue,
+    }));
+    setDesignStyleSelected(styleLabel);
+  };
+
+  const toggleAdvancedAccessory = (accessoryValue) => {
+    const isSelected = selectedAccessories.includes(accessoryValue);
+    const nextValue = isSelected ? '' : accessoryValue;
+
+    if (accessoryValue === 'Vase') {
+      setVase(nextValue);
+      setHiddenInputValue('VaseInput', nextValue);
+    }
+
+    if (accessoryValue === 'Etching') {
+      setEtching(nextValue);
+      setHiddenInputValue('EtchingInput', nextValue);
+    }
+
+    if (accessoryValue === 'Bronze Emblem') {
+      setBronzeEmblem(nextValue);
+      setHiddenInputValue('BronzeEmblemInput', nextValue);
+    }
+
+    if (accessoryValue === 'Porcelain Photo') {
+      setPorcelainPhoto(nextValue);
+      setHiddenInputValue('PorcelainPhotoInput', nextValue);
+    }
+  };
+
+  const isAdvancedShapeDisabled = (shapeValue) => {
+    if (!selection.type) {
+      return true;
+    }
+
+    const disabledByType = {
+      Heart_Shape: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+      Angel_Carved: ['Slant_Marker', 'Monolith', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+      Flat_Top: ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+      Serpentine_Top: ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+      Oval_Top: ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+      Half_Serpentine_Top: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+      Half_Oval_Top: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+      Apex_Top: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+      Roof_Top: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
+    };
+
+    return disabledByType[shapeValue]?.includes(selection.type) || false;
+  };
+
+  const isAdvancedAccessoryDisabled = (accessoryValue) => {
+    if (accessoryValue === 'Vase') {
+      return selection.type === 'Natural_Stone' || selection.type === 'Monolith' || selection.type === 'Hickey_Marker';
+    }
+
+    if (accessoryValue === 'Etching') {
+      return selection.color === 'Mahogany' || selection.color === 'Barre_Grey' || selection.color === 'North_American_Pink' || selection.color === 'Cats_Eye' || selection.color === 'Paradiso' || selection.type === 'Natural_Stone';
+    }
+
+    return false;
+  };
+
+  useEffect(() => {
+    if (!hasAdvancedPreviewerAccess) {
+      return;
+    }
+
+    const stepStillVisible = advancedSteps.some((step) => step.key === activeAdvancedStep);
+    if (!stepStillVisible) {
+      setActiveAdvancedStep(advancedSteps[0]?.key || 'type');
+      return;
+    }
+
+    const firstIncompleteStep = advancedSteps.find((step) => !step.isComplete);
+    if (!firstIncompleteStep) {
+      return;
+    }
+
+    const activeStepIndex = advancedSteps.findIndex((step) => step.key === activeAdvancedStep);
+    const incompleteStepIndex = advancedSteps.findIndex((step) => step.key === firstIncompleteStep.key);
+
+    if (activeStepIndex !== -1 && incompleteStepIndex > activeStepIndex && advancedSteps[activeStepIndex]?.isComplete) {
+      setActiveAdvancedStep(firstIncompleteStep.key);
+    }
+  }, [
+    hasAdvancedPreviewerAccess,
+    activeAdvancedStep,
+    advancedSteps,
+  ]);
+
+  useEffect(() => {
+    const loadProjectCount = async () => {
+      try {
+        const projects = await getSavedProjects();
+        setSavedProjectCount(projects.length);
+      } catch (error) {
+        console.error('Failed to load project count:', error);
+        setSavedProjectCount(0);
+      }
+    };
+    loadProjectCount();
+  }, []);
   
+  const handleSaveProject = async () => {
+    if (!canSaveProjects({ isAuthenticated, plan, projectCount: savedProjectCount, currentProjectId })) {
+      setSaveMessage(getSaveProjectMessage({ isAuthenticated, plan, projectCount: savedProjectCount, currentProjectId }));
+
+      if (!isAuthenticated) {
+        navigate('/signup');
+      } else {
+        navigate('/pricing');
+      }
+
+      return;
+    }
+
+    if (!designName.trim()) {
+      setSaveMessage('Please give this design a name before saving it.');
+      return;
+    }
+
+    try {
+      setSaveMessage('Saving design...');
+      const projectTitle = designName.trim()
+        ? designName.trim().slice(0, 60)
+        : wording.trim()
+          ? wording.trim().slice(0, 40)
+          : `${typeSelected !== initialType ? typeSelected : 'Custom design'} • ${colorSelected !== initialColor ? colorSelected : 'Custom color'} • ${shapeSelected !== initialShape ? shapeSelected : 'Custom shape'}`;
+
+      const projectData = {
+        title: projectTitle,
+        type: selection.type || typeSelected,
+        color: selection.color || colorSelected,
+        shape: selection.shape || shapeSelected,
+        designStyle: selection.designStyle || DEFAULT_DESIGN_STYLE,
+        name: selection.name || '',
+        wording: wording.trim(),
+        accessories: [
+          document.getElementById('VaseInput')?.value === 'Vase' ? 'Vase' : null,
+          document.getElementById('EtchingInput')?.value === 'Etching' ? 'Etching' : null,
+          document.getElementById('BronzeEmblemInput')?.value === 'Bronze Emblem' ? 'Bronze Emblem' : null,
+          document.getElementById('PorcelainPhotoInput')?.value === 'Porcelain Photo' ? 'Porcelain Photo' : null,
+        ].filter(Boolean),
+      };
+
+      let result;
+      if (currentProjectId) {
+        // Update existing project
+        await updateProject(currentProjectId, projectData);
+        setSaveMessage('Design updated successfully!');
+      } else {
+        // Create new project
+        const updatedProjects = await saveProject(projectData);
+        setSavedProjectCount(updatedProjects.length);
+        setSaveMessage('Design saved successfully!');
+      }
+      
+      setTimeout(() => setSaveMessage(''), 3000);
+    } catch (error) {
+      setSaveMessage(error.message || 'Failed to save design. Please try again.');
+      console.error('Error saving project:', error);
+    }
+  };
+
+  const handleDeleteProject = async () => {
+    if (!currentProjectId) {
+      return;
+    }
+
+    if (window.confirm('Are you sure you want to delete this design? This action cannot be undone.')) {
+      try {
+        await deleteProject(currentProjectId);
+        const projects = await getSavedProjects();
+        setSavedProjectCount(projects.length);
+        setCurrentProjectId(null);
+        resetSelections();
+        setSaveMessage('Design deleted successfully.');
+        setTimeout(() => setSaveMessage(''), 3000);
+      } catch (error) {
+        setSaveMessage('Failed to delete design. Please try again.');
+        console.error('Error deleting project:', error);
+      }
+    }
+  };
+
+  const handleRenameProject = async () => {
+    if (!currentProjectId || !designName.trim()) {
+      return;
+    }
+
+    try {
+      await updateProject(currentProjectId, { title: designName.trim() });
+      setSaveMessage('Design renamed successfully.');
+      setIsEditingName(false);
+      setTimeout(() => setSaveMessage(''), 3000);
+    } catch (error) {
+      setSaveMessage('Failed to rename design. Please try again.');
+      console.error('Error renaming project:', error);
+    }
+  };
+
+  const getSelectedAccessoryValues = () => {
+    return [
+      document.getElementById('VaseInput')?.value === 'Vase' ? 'Vase' : null,
+      document.getElementById('EtchingInput')?.value === 'Etching' ? 'Etching' : null,
+      document.getElementById('BronzeEmblemInput')?.value === 'Bronze Emblem' ? 'Bronze Emblem' : null,
+      document.getElementById('PorcelainPhotoInput')?.value === 'Porcelain Photo' ? 'Porcelain Photo' : null,
+    ].filter(Boolean);
+  };
+
+  const handleRequestQuote = () => {
+    const quoteRequestDraft = {
+      title: designName.trim() || 'Untitled memorial design',
+      type: selection.type || null,
+      color: selection.color || null,
+      shape: selection.shape || null,
+      designStyle: selection.designStyle || DEFAULT_DESIGN_STYLE,
+      wording: wording.trim(),
+      accessories: getSelectedAccessoryValues(),
+    };
+
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem('headstone-previewer-quote-request', JSON.stringify(quoteRequestDraft));
+    }
+
+    navigate('/quote-request', {
+      state: {
+        quoteRequestDraft,
+      },
+    });
+  };
+
+  const formatSelectionLabel = (value) => {
+    if (!value) {
+      return '';
+    }
+
+    return value
+      .split('_')
+      .filter(Boolean)
+      .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase())
+      .join(' ');
+  };
+
+  const applyLoadedProject = (project) => {
+    if (!project) {
+      return;
+    }
+
+    setCurrentProjectId(project.id);
+
+    const nextSelection = {
+      type: project.type || null,
+      color: project.color || null,
+      shape: project.shape || null,
+      designStyle: project.designStyle || DEFAULT_DESIGN_STYLE,
+      name: project.name || null,
+    };
+
+    setSelection(nextSelection);
+    setTypeSelected(project.type ? formatSelectionLabel(project.type) : initialType);
+    setColorSelected(project.color ? formatSelectionLabel(project.color) : initialColor);
+    setShapeSelected(project.shape ? formatSelectionLabel(project.shape) : initialShape);
+    setDesignStyleSelected(project.designStyle ? formatDesignStyleLabel(project.designStyle) : initialDesignStyle);
+    setDesignName(project.title || '');
+    setWording(project.wording || '');
+    setVase(project.accessories?.includes('Vase') ? 'Vase' : '');
+    setEtching(project.accessories?.includes('Etching') ? 'Etching' : '');
+    setBronzeEmblem(project.accessories?.includes('Bronze Emblem') ? 'Bronze Emblem' : '');
+    setPorcelainPhoto(project.accessories?.includes('Porcelain Photo') ? 'Porcelain Photo' : '');
+    setActiveAdvancedStep('accessories');
+
+    document.getElementById('VaseInput').value = project.accessories?.includes('Vase') ? 'Vase' : '';
+    document.getElementById('EtchingInput').value = project.accessories?.includes('Etching') ? 'Etching' : '';
+    document.getElementById('BronzeEmblemInput').value = project.accessories?.includes('Bronze Emblem') ? 'Bronze Emblem' : '';
+    document.getElementById('PorcelainPhotoInput').value = project.accessories?.includes('Porcelain Photo') ? 'Porcelain Photo' : '';
+
+    document.querySelectorAll('.TypeSelected, .ColorSelected, .ShapeSelected, .StyleSelected, .AccessorySelected').forEach((element) => element.classList.remove('TypeSelected', 'ColorSelected', 'ShapeSelected', 'StyleSelected', 'AccessorySelected'));
+
+    if (project.type) {
+      document.getElementById(project.type)?.classList.add('TypeSelected');
+    }
+
+    if (project.color) {
+      document.getElementById(project.color)?.classList.add('ColorSelected');
+    }
+
+    if (project.shape) {
+      document.getElementById(project.shape)?.classList.add('ShapeSelected');
+    }
+
+    if (project.designStyle) {
+      document.getElementById(project.designStyle)?.classList.add('StyleSelected');
+    }
+
+    document.querySelectorAll('.AccessoryOption').forEach((button) => {
+      const isSelected = project.accessories?.includes(button.textContent?.trim());
+      button.classList.toggle('AccessorySelected', Boolean(isSelected));
+    });
+
+    document.getElementById('NoCombinationMessage')?.classList.add('hidden');
+  };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const pendingProject = window.sessionStorage.getItem('headstone-previewer-pending-project');
+
+    if (!pendingProject) {
+      return;
+    }
+
+    try {
+      const parsedProject = JSON.parse(pendingProject);
+      applyLoadedProject(parsedProject);
+      window.sessionStorage.removeItem('headstone-previewer-pending-project');
+    } catch (error) {
+      console.warn('Unable to load saved project', error);
+    }
+  }, []);
+
+  const renderAdvancedStepOptions = () => {
+    if (currentAdvancedStep.key === 'type') {
+      return ADVANCED_TYPE_OPTIONS.map((typeOption) => (
+        <button
+          key={typeOption.value}
+          type='button'
+          className={`AdvancedOptionButton${selection.type === typeOption.value ? ' selected' : ''}`}
+          onClick={() => handleAdvancedTypeSelect(typeOption.value, typeOption.label)}
+        >
+          <strong>{typeOption.label}</strong>
+          <span>Start your memorial layout from this base structure.</span>
+        </button>
+      ));
+    }
+
+    if (currentAdvancedStep.key === 'color') {
+      return ADVANCED_COLOR_OPTIONS.map((colorOption) => (
+        <button
+          key={colorOption.value}
+          type='button'
+          className={`AdvancedOptionButton${selection.color === colorOption.value ? ' selected' : ''}`}
+          onClick={() => handleAdvancedColorSelect(colorOption.value, colorOption.label)}
+        >
+          <strong>{colorOption.label}</strong>
+          <span>Apply this stone color to the memorial presentation.</span>
+        </button>
+      ));
+    }
+
+    if (currentAdvancedStep.key === 'shape') {
+      return ADVANCED_SHAPE_OPTIONS.map((shapeOption) => {
+        const disabled = isAdvancedShapeDisabled(shapeOption.value);
+
+        return (
+          <button
+            key={shapeOption.value}
+            type='button'
+            className={`AdvancedOptionButton${selection.shape === shapeOption.value ? ' selected' : ''}`}
+            onClick={() => handleAdvancedShapeSelect(shapeOption.value, shapeOption.label)}
+            disabled={disabled}
+          >
+            <strong>{shapeOption.label}</strong>
+            <span>{disabled ? 'This shape is not available for the current stone type.' : 'Use this silhouette to shape the memorial concept.'}</span>
+          </button>
+        );
+      });
+    }
+
+    if (currentAdvancedStep.key === 'designStyle') {
+      return DESIGN_STYLE_OPTIONS.map((styleOption) => (
+        <button
+          key={styleOption.value}
+          type='button'
+          className={`AdvancedOptionButton${selection.designStyle === styleOption.value ? ' selected' : ''}`}
+          onClick={() => handleAdvancedDesignStyleSelect(styleOption.value, styleOption.label)}
+        >
+          <strong>{styleOption.label}</strong>
+          <span>{styleOption.description}</span>
+          <em>Advanced surcharge: ${styleOption.surcharge}</em>
+        </button>
+      ));
+    }
+
+    return ADVANCED_ACCESSORY_OPTIONS.map((accessoryOption) => {
+      const disabled = isAdvancedAccessoryDisabled(accessoryOption.value);
+      const selected = selectedAccessories.includes(accessoryOption.value);
+
+      return (
+        <button
+          key={accessoryOption.value}
+          type='button'
+          className={`AdvancedOptionButton${selected ? ' selected' : ''}`}
+          onClick={() => toggleAdvancedAccessory(accessoryOption.value)}
+          disabled={disabled}
+        >
+          <strong>{accessoryOption.label}</strong>
+          <span>{disabled ? 'This accessory is not available for the current memorial configuration.' : selected ? 'Currently included in this memorial concept.' : 'Optional add-on for this concept.'}</span>
+        </button>
+      );
+    });
+  };
+
   let SelectionImage = '';
+  const selectedDesignStyleDetails = getDesignStyleDetails(selection.designStyle || DEFAULT_DESIGN_STYLE);
   return (
     
     <>
       <Modal isOpen={showHowItWorksModal} onClose={() => setShowHowItWorksModal(false)} />
       
       <div className="previewer-container">
-        <button className='ResetButton MobileReset' id='MobileResetButton' type='button' onClick={resetSelections}>Reset Selection</button>
-        <div className='Preview-Options'>
+        <div className='PreviewerActions'> 
+          <div className='DesignNameSaveGroup'>
+            <label htmlFor='designNameInput' className='DesignNameLabel'>Design Name</label>
+            <div className='DesignNameInputWrapper'>
+              <input
+                id='designNameInput'
+                type='text'
+                className={`DesignNameInput ${isEditingName ? 'editing' : ''}`}
+                value={designName}
+                onChange={(event) => setDesignName(event.target.value)}
+                placeholder='Name this memorial design'
+                disabled={!isEditingName && currentProjectId}
+              />
+              {currentProjectId && (
+                <button 
+                  className='EditNameButton' 
+                  type='button' 
+                  onClick={() => {
+                    if (isEditingName) {
+                      handleRenameProject();
+                    } else {
+                      setIsEditingName(true);
+                    }
+                  }}
+                >
+                  {isEditingName ? 'Save' : 'Edit'}
+                </button>
+              )}
+            </div>
+            <div className='DesignActionButtons'>
+              <button className='SaveButton' type='button' onClick={handleSaveProject}>Save Design</button>
+              {currentProjectId && <button className='DeleteButton' type='button' onClick={handleDeleteProject}>Delete Design</button>}
+              <button className='QuoteRequestButton' type='button' onClick={handleRequestQuote}>Request Quote</button>
+            </div>
+          </div>
+          <p className='SavedProjectCount'>{savedProjectCount} saved project{savedProjectCount === 1 ? '' : 's'}</p>
+          {saveMessage ? <p className='SaveMessage'>{saveMessage}</p> : null}
+          <p className='AdvancedPreviewMessage'>{hasAdvancedPreviewerAccess ? 'Advanced preview mode unlocked. Add a design style before accessories to explore a richer memorial concept.' : getAdvancedPreviewerMessage({ isAuthenticated, plan })}</p>
+          <button className='ResetButton MobileReset' id='MobileResetButton' type='button' onClick={resetSelections}>Reset Selection</button>
+        </div>
+        {hasAdvancedPreviewerAccess ? (
+          <div className='AdvancedPreviewWizard'>
+            <aside className='AdvancedPreviewSummary'>
+              <div>
+                <p className='AdvancedPreviewLabel'>Advanced Previewer</p>
+                <h2>Selections</h2>
+                <p className='AdvancedPreviewDescription'>The left panel tracks each decision. The right panel always advances you to the next category.</p>
+              </div>
+              <div className='AdvancedPreviewStepList'>
+                {advancedSteps.map((step, index) => (
+                  <button
+                    key={step.key}
+                    type='button'
+                    className={`AdvancedStepCard${step.key === currentAdvancedStep.key ? ' active' : ''}${step.isComplete ? ' complete' : ''}`}
+                    onClick={() => setActiveAdvancedStep(step.key)}
+                  >
+                    <span className='AdvancedStepIndex'>0{index + 1}</span>
+                    <span className='AdvancedStepText'>
+                      <strong>{step.label}</strong>
+                      <em>{step.summary}</em>
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <button className='ResetButton AdvancedResetButton' type='button' onClick={resetSelections}>Reset Selection</button>
+            </aside>
+            <section className='AdvancedPreviewPanel'>
+              <div className='AdvancedPreviewPanelHeader'>
+                <p className='AdvancedPreviewLabel'>Step {advancedSteps.findIndex((step) => step.key === currentAdvancedStep.key) + 1} of {advancedSteps.length}</p>
+                <h3>{currentAdvancedStep.label}</h3>
+                <p>{currentAdvancedStep.description}</p>
+              </div>
+              <div className='AdvancedOptionGrid'>
+                {renderAdvancedStepOptions()}
+              </div>
+            </section>
+          </div>
+        ) : null}
+        <div className='Preview-Options' style={{ display: hasAdvancedPreviewerAccess ? 'none' : undefined }} aria-hidden={hasAdvancedPreviewerAccess}>
           <div className='TypeOptionsList'>
             <h2>Stone <br />Types</h2>
             <p className='TypeOptionSelected'>You selected: <br /><b>{typeSelected}</b></p>
@@ -1161,6 +1832,34 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
             </ul>
           </div>
 
+          {hasAdvancedPreviewerAccess ? (
+            <div id='StyleOptionsList' className='StyleOptionsList'>
+              <h2>Design <br />Style</h2>
+              <p className='StyleOptionSelected'>You selected: <br /><b>{designStyleSelected}</b></p>
+              <button className='StyleOptionSelectedMobile' type='button' onClick={() => {document.querySelectorAll('.StyleOptionsList ul, .StyleOptionsList p, .StyleOptionsList h2').forEach(element => element.classList.toggle('disappear'));}}>
+                Style: {designStyleSelected} <FaAngleDown className='FaAngleDown' />
+              </button>
+              <ul>
+                {DESIGN_STYLE_OPTIONS.map((styleOption) => (
+                  <button
+                    key={styleOption.value}
+                    id={styleOption.value}
+                    type='button'
+                    onClick={(event) => {
+                      document.querySelectorAll('.StyleSelected').forEach((element) => element.classList.remove('StyleSelected'));
+                      document.querySelectorAll('.StyleOptionsList ul, .StyleOptionsList p, .StyleOptionsList h2').forEach((element) => element.classList.toggle('disappear'));
+                      event.target.classList.toggle('StyleSelected');
+                      setDesignStyleSelected(styleOption.label);
+                      setSelection({ ...selection, designStyle: styleOption.value });
+                    }}
+                  >
+                    {styleOption.label}
+                  </button>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
           <div id='AccessoriesOptionsList' className='AccessoriesOptionsList'>
             <h2>Accessories</h2>
             <ul>
@@ -1177,49 +1876,29 @@ const handleShapeAndColorRemoveOnSelection = (e) => {
           
         </div>
         <div className='Preview-Images'>
-          <div className='Preview-Container'><img className='Image' id='Stone' src={imageSrc(selection)} alt="" /></div>
+          <div className={`Preview-Container ${hasAdvancedPreviewerAccess ? selectedDesignStyleDetails.previewClassName : ''}`}>
+            <div className='PreviewStyleBadge'>{hasAdvancedPreviewerAccess ? selectedDesignStyleDetails.label : 'Core Previewer'}</div>
+            <img className='Image' id='Stone' src={imageSrc(selection)} alt="" />
+          </div>
           <p id='NoCombinationMessage'  className='NoCombinationMessage hidden'>This combination has not been made yet. But if you'd like to see it, please let us know!</p>
+          <div className='PreviewStyleCard'>
+            <h3>{hasAdvancedPreviewerAccess ? selectedDesignStyleDetails.label : 'Simple preview flow'}</h3>
+            <p>{hasAdvancedPreviewerAccess ? selectedDesignStyleDetails.description : 'Professional keeps the faster three-step previewer. Studio unlocks the more complex version with an added design-style layer before accessories.'}</p>
+            {hasAdvancedPreviewerAccess ? <p className='PreviewStyleMeta'>Advanced style surcharge: ${selectedDesignStyleDetails.surcharge}</p> : null}
+          </div>
         </div>
 
-        <div className='AccessoryNForm' id='Form'>
-
-
-                
-            <form id='Form' className='PreviewForm' method='POST' data-netlify="true" name='contact' action="/">
-            <input type="hidden" name="form-name" value="contact" />
-            <div>
-              <input type="text" name='Image' id='ImageInput' value={SelectionImage} hidden readOnly/>
-              <input type="text" name='Type' id='TypeInput' value={typeSelected} hidden readOnly/>
-              <input type="text" name='Shape' id='ShapeInput' value={shapeSelected} hidden readOnly/>
-              <input type="text" name='Color' id='ColorInput' value={colorSelected} hidden readOnly/>
-              <input type='text' id='VaseInput' name='Would You Like a Vase?' hidden readOnly/>
-              <input type='text' id='EtchingInput' name='Would You Like an Etching?' hidden readOnly/>
-              <input type='text' id='BronzeEmblemInput' name='Would You Like a Bronze Emblem?' hidden readOnly/>
-              <input type='text' id='PorcelainPhotoInput' name='Would You Like a Porcelain Photo?' placeholder='Yes or No?' hidden readOnly/>
-            </div>
-           
-              
-              
-            
-            
-            <h2>Contact Us:</h2>
-            <h3>Please fill out the form below:</h3>
-            <p className='FormParagraph'>We will reach out to you at the contact information you provide to schedule an appointment.</p>
-            <h3>Wording:</h3>
-            <textarea className='WordingInput' name="Wording" placeholder='All the wording that you would like to try to fit on the stone!'/>
-
-            <p>Your Name:</p>    
-            <input type="text" name='Name' placeholder='What is your name?' required/>
-            <p>Phone Number:</p>
-            <input type="tel" name='Phone Number' placeholder='What is your Phone Number?' required/>
-            <p>Email Address:</p>
-            <input type="email" name='Email Address' placeholder='What is your Email Address?' required/>
-
-            <button className='SubmitButton' form='Form' type='submit'>Submit Selections</button>
-          
-            </form>
-          
-          </div>
+        <div className='PreviewHiddenFields' aria-hidden='true'>
+          <input type='text' name='Image' id='ImageInput' value={SelectionImage} hidden readOnly />
+          <input type='text' name='Type' id='TypeInput' value={typeSelected} hidden readOnly />
+          <input type='text' name='Shape' id='ShapeInput' value={shapeSelected} hidden readOnly />
+          <input type='text' name='Color' id='ColorInput' value={colorSelected} hidden readOnly />
+          <input type='text' name='Design Style' id='DesignStyleInput' value={designStyleSelected === initialDesignStyle ? DEFAULT_DESIGN_STYLE : designStyleSelected} hidden readOnly />
+          <input type='text' id='VaseInput' name='Would You Like a Vase?' hidden readOnly />
+          <input type='text' id='EtchingInput' name='Would You Like an Etching?' hidden readOnly />
+          <input type='text' id='BronzeEmblemInput' name='Would You Like a Bronze Emblem?' hidden readOnly />
+          <input type='text' id='PorcelainPhotoInput' name='Would You Like a Porcelain Photo?' hidden readOnly />
+        </div>
         
       </div>
 

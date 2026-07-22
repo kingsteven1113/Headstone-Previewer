@@ -1,9 +1,8 @@
 body {
-    display: flex;
-    justify-content: space-between;
-    width: 100vw;
-    height: 100vh;
+    margin: 0;
     font-family: Montserrat;
+    background: #f7f4ef;
+    color: #1f2937;
 }
 .Image {
     aspect-ratio: 1 / 1;
@@ -16,8 +15,8 @@ body {
 .previewer-container {
     display: flex;
     justify-content: space-between;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: calc(100vh - 120px);
     gap: 20px;
     overflow: hidden;
 }
@@ -44,6 +43,8 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
     justify-content: center;
+    min-width: 0;
+    overflow: hidden;
     
 }
 
@@ -67,8 +68,100 @@ body {
     transition: 0.2s ease;
 }
 
+.PreviewerActions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-self: flex-start;
+    margin-right: 1rem;
+}
+
+.DesignNameSaveGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
+.SaveButton {
+    font-size: 1rem;
+    background-color: #0f766e !important;
+    color: white;
+    cursor: pointer;
+    border-width: 2px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    border: 2px solid white;
+}
+
+.SaveButton:hover {
+    background-color: #115e59 !important;
+}
+
+.DesignActionButtons {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.DeleteButton {
+    font-size: 1rem;
+    background-color: #dc2626 !important;
+    color: white;
+    cursor: pointer;
+    border-width: 2px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    border: 2px solid white;
+    flex: 1;
+}
+
+.DeleteButton:hover {
+    background-color: #b91c1c !important;
+}
+
+.QuoteRequestButton {
+    font-size: 1rem;
+    background-color: #1d4ed8 !important;
+    color: white;
+    cursor: pointer;
+    border-width: 2px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    border: 2px solid white;
+}
+
+.QuoteRequestButton:hover {
+    background-color: #1e40af !important;
+}
+
+.DesignNameLabel {
+    color: #0f766e;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.SavedProjectCount,
+.SaveMessage {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #0f766e;
+    font-weight: 600;
+}
+
 .Preview-Options {
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
 }
 
 .TypeOptionsList {
@@ -79,6 +172,8 @@ body {
     background-color: #444444;
     z-index: 3;
     color: white;
+    width: 100%;
+    min-width: 0;
 }
 
 .ShapeOptionsList {
@@ -92,7 +187,8 @@ body {
     background-color: #666666;
     z-index: 1;
     color: white;
-    width: 0px;
+    width: 100%;
+    min-width: 0;
 }
 
 .ColorOptionsList {
@@ -106,7 +202,8 @@ body {
     background-color: #555555;
     z-index: 2;
     color: white;
-    width: 0px;
+    width: 100%;
+    min-width: 0;
 }
 
 .AccessoriesOptionsList {
@@ -120,7 +217,23 @@ body {
     background-color: #777777;
     z-index: 0;
     color: white;
-    width: 0px;
+    width: 100%;
+    min-width: 0;
+}
+
+.StyleOptionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-40px);
+    transition: 0.5s ease;
+    background-color: #5d506f;
+    z-index: 0;
+    color: white;
+    width: 100%;
+    min-width: 0;
 }
 
 .TypeOptionsList ul {
@@ -152,6 +265,12 @@ body {
     padding: 0;
 }
 
+.StyleOptionsList ul {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
 
 
 
@@ -161,7 +280,7 @@ body {
     visibility: visible;
     transform: translateX(0);
     transition: 0.5s ease;
-    width: fit-content;
+    width: 100%;
 }
 
 .hidden {
@@ -189,6 +308,260 @@ body {
     width: 100%;
     background-color: #444444;
     color: white;
+}
+
+.StyleOptionsList button {
+    border-bottom: 3px solid white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 0px;
+    width: 100%;
+    background-color: #5d506f;
+    color: white;
+}
+
+.StyleSelected {
+    background-color: #ffe29c !important;
+    color: #000000 !important;
+}
+
+.AdvancedPreviewMessage {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #5f5f5f;
+    font-weight: 600;
+    max-width: 420px;
+}
+
+.AdvancedPreviewWizard {
+    display: grid;
+    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+    gap: 1rem;
+    width: 100%;
+    align-items: start;
+}
+
+.AdvancedPreviewSummary,
+.AdvancedPreviewPanel {
+    background: #333333;
+    border: 1px solid #555555;
+    border-radius: 1.25rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.AdvancedPreviewSummary {
+    padding: 1.25rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.AdvancedPreviewPanel {
+    padding: 1.4rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.AdvancedPreviewLabel {
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #ffc848;
+}
+
+.AdvancedPreviewDescription,
+.AdvancedPreviewPanelHeader p {
+    margin: 0;
+    color: #dddddd;
+}
+
+.AdvancedPreviewPanelHeader h3,
+.AdvancedPreviewSummary h2 {
+    margin: 0 0 0.35rem;
+    color: #ffffff;
+}
+
+.AdvancedPreviewStepList {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.AdvancedStepCard {
+    border: 1px solid #666666;
+    background: #444444;
+    border-radius: 1rem;
+    padding: 0.9rem 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    align-items: start;
+    text-align: left;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.AdvancedStepCard.active {
+    border-color: #ffc848;
+    box-shadow: 0 0 0 1px #ffc848;
+}
+
+.AdvancedStepCard.complete .AdvancedStepIndex {
+    background: #ffc848;
+    color: #000000;
+}
+
+.AdvancedStepIndex {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: #555555;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.AdvancedStepText {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.AdvancedStepText strong {
+    font-size: 0.98rem;
+}
+
+.AdvancedStepText em {
+    font-style: normal;
+    color: #cccccc;
+    font-size: 0.9rem;
+}
+
+.AdvancedOptionGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.85rem;
+}
+
+.AdvancedOptionButton {
+    border: 1px solid #666666;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: #555555;
+    color: #ffffff;
+    display: grid;
+    gap: 0.45rem;
+    text-align: left;
+    cursor: pointer;
+    min-height: 150px;
+}
+
+.AdvancedOptionButton strong {
+    font-size: 1rem;
+}
+
+.AdvancedOptionButton span {
+    color: #dddddd;
+    line-height: 1.4;
+}
+
+.AdvancedOptionButton em {
+    font-style: normal;
+    font-weight: 700;
+    color: #ffc848;
+}
+
+.AdvancedOptionButton.selected {
+    border-color: #ffc848;
+    box-shadow: 0 0 0 1px #ffc848;
+    background: #ffe29c;
+    color: #000000;
+}
+
+.AdvancedOptionButton.selected span,
+.AdvancedOptionButton.selected em {
+    color: #000000;
+}
+
+.AdvancedOptionButton:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.AdvancedResetButton {
+    width: 100%;
+    margin-top: 0;
+}
+
+.PreviewStyleBadge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: #ffc848;
+    color: #000000;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.PreviewStyleCard {
+    padding: 1rem 1.2rem;
+    border-radius: 1rem;
+    background: #333333;
+    border: 1px solid #555555;
+    color: #ffffff;
+    max-width: 720px;
+}
+
+.PreviewStyleCard h3 {
+    margin: 0 0 0.5rem;
+}
+
+.PreviewStyleCard p {
+    margin: 0;
+}
+
+.PreviewStyleMeta {
+    margin-top: 0.75rem !important;
+    font-weight: 700;
+    color: #ffc848;
+}
+
+.Preview-Container {
+    position: relative;
+}
+
+.preview-style-standard {
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.96), rgba(236, 236, 236, 0.98));
+    border-radius: 1.25rem;
+}
+
+.preview-style-portrait {
+    background: linear-gradient(180deg, rgba(241, 232, 221, 0.9), rgba(252, 248, 243, 0.98));
+    border-radius: 1.25rem;
+    box-shadow: inset 0 0 0 2px rgba(148, 98, 62, 0.18);
+}
+
+.preview-style-garden {
+    background: linear-gradient(180deg, rgba(231, 241, 231, 0.92), rgba(247, 244, 239, 0.98));
+    border-radius: 1.25rem;
+    box-shadow: inset 0 0 0 2px rgba(73, 111, 79, 0.18);
+}
+
+.preview-style-legacy {
+    background: linear-gradient(180deg, rgba(234, 234, 237, 0.96), rgba(248, 245, 238, 0.99));
+    border-radius: 1.25rem;
+    box-shadow: inset 0 0 0 2px rgba(80, 73, 108, 0.25), 0 14px 28px rgba(31, 41, 55, 0.12);
+}
+
+@media (max-width: 1100px) {
+    .AdvancedPreviewWizard {
+        grid-template-columns: 1fr;
+    }
 }
 
 .TypeOptionsList button:hover {
@@ -369,9 +742,22 @@ body {
     flex-direction: column;
     padding: 20px;
     background-color: #333333;
-    width: 15%;
-    overflow-y: scroll;
+    width: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
     
+}
+
+.PreviewHiddenFields {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .previewer-container {
+        height: auto;
+        overflow: hidden;
+    }
 }
 
 
@@ -407,13 +793,79 @@ body {
 }
 
 .WordingInput {
-    
     height: 100px;
     padding: 10px;
     font-size: 14px;
     border-radius: 5px;
     border: 1px solid #ccc;
     resize: none;
+}
+
+.DesignNameInput {
+    background-color: #0f766e;
+    color: white;
+    border: 2px solid #0f766e;
+    padding: 12px 16px;
+    font-size: 15px;
+    border-radius: 8px;
+    resize: none;
+    font-family: Montserrat;
+    transition: all 0.2s ease;
+    height: auto;
+}
+
+.DesignNameInput::placeholder {
+    color: #b0e4e1;
+}
+
+.DesignNameInput:focus {
+    outline: none;
+    background-color: #115e59;
+    border-color: #ffc848;
+    box-shadow: 0 0 8px rgba(255, 200, 72, 0.3);
+}
+
+.DesignNameInput:hover:not(:disabled) {
+    background-color: #115e59;
+    border-color: #ffb347;
+}
+
+.DesignNameInput:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.DesignNameInput.editing {
+    background-color: #115e59;
+    border-color: #ffc848;
+}
+
+.DesignNameInputWrapper {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+.DesignNameInputWrapper input {
+    flex: 1;
+}
+
+.EditNameButton {
+    font-size: 0.9rem;
+    background-color: #ffc848 !important;
+    color: black;
+    cursor: pointer;
+    border: 2px solid #ffb347;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.EditNameButton:hover {
+    background-color: #ffb347 !important;
+    border-color: #ff9800;
 }
 
 .PreviewForm input[type="text"],

@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  FREE
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  displayName  String?
+  role         UserRole     @default(MEMBER)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  projects     Project[]
+  subscription Subscription?
+  payments     Payment[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  type        String   @default("Custom")
+  color       String   @default("Custom")
+  shape       String   @default("Custom")
+  designStyle String   @default("Standard")
+  name        String   @default("")
+  wording     String   @default("")
+  accessories Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt(sort: Desc)])
+}
+
+model Subscription {
+  id                 String             @id @default(cuid())
+  planName           String             @default("trial")
+  status             SubscriptionStatus @default(TRIAL)
+  trialEndsAt        DateTime?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  payments Payment[]
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  provider          String        @default("manual")
+  providerPaymentId String?
+  amountCents       Int
+  currency          String        @default("usd")
+  status            PaymentStatus @default(PENDING)
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  subscriptionId String?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([status, createdAt(sort: Desc)])
+}
