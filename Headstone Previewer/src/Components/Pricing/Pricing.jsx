@@ -21,6 +21,13 @@ function Pricing() {
       features: ['Unlimited designs', 'Saved projects', 'Quote generation'],
     },
     {
+      key: 'studio',
+      name: 'Studio',
+      price: '$79/mo',
+      description: 'Built for teams that want the advanced preview workflow and richer design control.',
+      features: ['Advanced previewer', 'Design-style controls', 'Quote generation'],
+    },
+    {
       key: 'enterprise',
       name: 'Enterprise',
       price: 'Custom',

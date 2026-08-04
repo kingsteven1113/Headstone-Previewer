@@ -1,9 +1,3 @@
-body {
-    margin: 0;
-    font-family: Montserrat;
-    background: #f7f4ef;
-    color: #1f2937;
-}
 .Image {
     aspect-ratio: 1 / 1;
     width: 100%;
@@ -19,6 +13,7 @@ body {
     height: calc(100vh - 120px);
     gap: 20px;
     overflow: hidden;
+    min-height: 0;
 }
 
 .Preview-Container {
@@ -43,6 +38,7 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
     justify-content: center;
+    flex: 1 1 0;
     min-width: 0;
     overflow: hidden;
     
@@ -51,6 +47,7 @@ body {
 .ResetButton {
     font-size: 20px;
     background-color: #2467b4 !important;
+    color: #ffffff;
     cursor: pointer;
     transition: background-color 0.2s ease;
     border-width: 2px;
@@ -336,10 +333,18 @@ body {
 
 .AdvancedPreviewWizard {
     display: grid;
-    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+    grid-template-columns: minmax(220px, 260px) minmax(300px, 360px);
     gap: 1rem;
-    width: 100%;
-    align-items: start;
+    width: min(640px, 100%);
+    max-width: 640px;
+    flex: 0 1 640px;
+    min-width: 0;
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
+    align-items: stretch;
+    overflow: hidden;
+    
 }
 
 .AdvancedPreviewSummary,
@@ -348,6 +353,8 @@ body {
     border: 1px solid #555555;
     border-radius: 1.25rem;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    min-height: 0;
+    margin-bottom: 20px;
 }
 
 .AdvancedPreviewSummary {
@@ -359,7 +366,11 @@ body {
 .AdvancedPreviewPanel {
     padding: 1.4rem;
     display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
     gap: 1rem;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 .AdvancedPreviewLabel {
@@ -385,6 +396,7 @@ body {
 
 .AdvancedPreviewStepList {
     display: grid;
+    grid-template-columns: 1fr;
     gap: 0.75rem;
 }
 
@@ -440,8 +452,20 @@ body {
 
 .AdvancedOptionGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: 1fr;
     gap: 0.85rem;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.35rem;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+
+.AdvancedOptionGrid::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .AdvancedOptionButton {
@@ -492,6 +516,14 @@ body {
 .AdvancedResetButton {
     width: 100%;
     margin-top: 0;
+}
+
+.CorePreviewWizard .AdvancedPreviewLabel {
+    color: #9ad8ff;
+}
+
+.LegacyStateShim {
+    display: none;
 }
 
 .PreviewStyleBadge {
@@ -595,7 +627,7 @@ body {
 .ColorOptionsList button:disabled {
     background-color: #333333;
     cursor: not-allowed;
-    color: #777777;
+    color: #d1d5db;
     border-color: #333333;
 }
 
@@ -621,7 +653,7 @@ body {
 .AccessoriesOptionsList button:disabled {
     background-color: #333333;
     cursor: not-allowed;
-    color: #777777;
+    color: #d1d5db;
     border-color: #333333;
 }
 
@@ -641,7 +673,7 @@ body {
 .ShapeOptionsList button:disabled {
     background-color: #333333;
     cursor: not-allowed;
-    color: #777777;
+    color: #d1d5db;
     border-color: #333333;
 }
 
@@ -732,7 +764,7 @@ body {
 .AccessoryOption:disabled {
     background-color: #333333;
     cursor: not-allowed;
-    color: #777777;
+    color: #d1d5db;
     border-color: #333333;
 }
 
@@ -815,7 +847,7 @@ body {
 }
 
 .DesignNameInput::placeholder {
-    color: #b0e4e1;
+    color: #e6fffb;
 }
 
 .DesignNameInput:focus {
@@ -933,13 +965,6 @@ body {
 }
 
 @media only screen and (max-width: 915px) {
-
-    body {
-        display: flex;
-        justify-content: center;
-        width: 100vw;
-        height: auto;
-    }
     .previewer-container {
         display: flex;
         flex-direction: column;

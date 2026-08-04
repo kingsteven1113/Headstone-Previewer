@@ -1,5 +1,6 @@
 #root {
   margin: 0;
+  width: 100%;
   min-height: 100vh;
   background: #f7f4ef;
 }
@@ -12,6 +13,7 @@ body {
 }
 
 .app-shell {
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -70,6 +72,8 @@ body {
 }
 
 .app-main {
+  width: 100%;
+  box-sizing: border-box;
   padding: 2rem;
   flex: 1;
 }
