@@ -170,6 +170,40 @@ class ApiClient {
       body: JSON.stringify(paymentData),
     });
   }
+
+  // Billing endpoints
+  async getBillingPlans() {
+    return this.request('/billing/plans', {
+      method: 'GET',
+    });
+  }
+
+  async getBillingSubscription() {
+    return this.request('/billing/subscription', {
+      method: 'GET',
+    });
+  }
+
+  async createCheckoutSession(planName) {
+    return this.request('/billing/checkout-session', {
+      method: 'POST',
+      body: JSON.stringify({ planName }),
+    });
+  }
+
+  async createPortalSession() {
+    return this.request('/billing/portal-session', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    });
+  }
+
+  async completeCheckoutSession(sessionId) {
+    return this.request('/billing/checkout-complete', {
+      method: 'POST',
+      body: JSON.stringify({ sessionId }),
+    });
+  }
 }
 
 export const apiClient = new ApiClient();

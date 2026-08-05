@@ -95,7 +95,7 @@ function QuoteRequest() {
           <p><strong>Accessories:</strong> {accessorySummary}</p>
           {draft.wording ? <p><strong>Wording draft:</strong> {draft.wording}</p> : null}
           <div className='quote-request-links'>
-            <Link className='secondary-link' to='/'>Back to previewer</Link>
+            <Link className='secondary-link' to='/preview'>Back to previewer</Link>
             <Link className='secondary-link' to='/quote'>Open proposal builder</Link>
           </div>
         </article>

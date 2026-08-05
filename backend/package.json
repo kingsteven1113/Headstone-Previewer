@@ -7,7 +7,10 @@
   "scripts": {
     "build": "prisma generate",
     "start": "prisma migrate deploy && node server.js",
-    "dev": "nodemon server.js",
+    "dev": "prisma migrate deploy && prisma generate && nodemon server.js",
+    "stripe:whoami": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/stripe-cli.ps1 whoami",
+    "stripe:login": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/stripe-cli.ps1 login",
+    "stripe:listen": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/stripe-cli.ps1 listen --forward-to localhost:5000/api/billing/webhook",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
     "prisma:migrate:dev": "prisma migrate dev",
@@ -26,7 +29,8 @@
     "dotenv": "^16.0.0",
     "express": "^4.18.0",
     "jsonwebtoken": "^9.0.0",
-    "prisma": "^6.11.1"
+    "prisma": "^6.11.1",
+    "stripe": "^22.4.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

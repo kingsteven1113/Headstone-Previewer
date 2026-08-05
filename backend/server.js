@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import projectsRouter from './routes/projects.js';
 import authRouter from './routes/auth.js';
 import adminRouter from './routes/admin.js';
+import billingRouter, { stripeWebhookHandler } from './routes/billing.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 dotenv.config();
@@ -44,12 +45,17 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+// Stripe webhook requires the raw request body for signature validation.
+app.post('/api/billing/webhook', express.raw({ type: 'application/json' }), stripeWebhookHandler);
+
 app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/projects', projectsRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/billing', billingRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

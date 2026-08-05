@@ -1,4 +1,4 @@
-const PLAN_RULES = {
+export const PLAN_RULES = {
   trial: {
     label: 'Trial',
     projectLimit: 3,
@@ -42,4 +42,8 @@ export function getProjectLimitMessage(planName) {
   }
 
   return `${rules.label} includes up to ${rules.projectLimit} saved designs. Upgrade to Professional to save more.`;
+}
+
+export function isUnlimitedPlan(planName) {
+  return getProjectLimitForPlan(planName) === null;
 }

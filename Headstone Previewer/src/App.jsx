@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, NavLink, Route, Routes, BrowserRouter } from 'react-router-dom';
 import Previewer from './Components/Previewer/Previewer.jsx';
+import Landing from './Components/Landing/Landing.jsx';
 import Login from './Components/Auth/Login.jsx';
 import Signup from './Components/Auth/Signup.jsx';
 import ProtectedRoute from './Components/Auth/ProtectedRoute.jsx';
@@ -9,8 +10,10 @@ import Dashboard from './Components/Dashboard/Dashboard.jsx';
 import AdminDashboard from './Components/Dashboard/AdminDashboard.jsx';
 import Pricing from './Components/Pricing/Pricing.jsx';
 import Quote from './Components/Quote/Quote.jsx';
+import QuoteFeaturePage from './Components/Quote/QuoteFeaturePage.jsx';
 import QuoteRequest from './Components/Quote/QuoteRequest.jsx';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { canGenerateQuotes } from './utils/accessRules';
 import './App.css';
 
 class ErrorBoundary extends React.Component {
@@ -42,7 +45,9 @@ class ErrorBoundary extends React.Component {
 }
 
 function AppShell() {
-  const { isAuthenticated, logout, user } = useAuth();
+  const { isAuthenticated, logout, user, plan } = useAuth();
+  const quoteToolEnabled = canGenerateQuotes({ isAuthenticated, plan });
+  const quoteNavTarget = quoteToolEnabled ? '/quote' : '/quote-feature';
 
   return (
     <div className="app-shell">
@@ -52,13 +57,15 @@ function AppShell() {
         </Link>
 
         <nav className="nav-links">
-          <NavLink className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')} to="/">
-            Preview
-          </NavLink>
+          {isAuthenticated ? (
+            <NavLink className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')} to="/preview">
+              Preview
+            </NavLink>
+          ) : null}
           <NavLink className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')} to="/pricing">
             Pricing
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')} to="/quote">
+          <NavLink className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')} to={quoteNavTarget}>
             Quote
           </NavLink>
 
@@ -92,11 +99,31 @@ function AppShell() {
 
       <main className="app-main">
         <Routes>
-          <Route path="/" element={<Previewer />} />
+          <Route path="/" element={<Landing />} />
+          <Route
+            path="/preview"
+            element={
+              <ProtectedRoute>
+                <Previewer />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/pricing" element={<Pricing />} />
-          <Route path="/quote" element={<Quote />} />
+          <Route path="/quote-feature" element={<QuoteFeaturePage />} />
+          <Route
+            path="/quote"
+            element={
+              quoteToolEnabled ? (
+                <ProtectedRoute>
+                  <Quote />
+                </ProtectedRoute>
+              ) : (
+                <QuoteFeaturePage />
+              )
+            }
+          />
           <Route path="/quote-request" element={<QuoteRequest />} />
           <Route
             path="/dashboard"

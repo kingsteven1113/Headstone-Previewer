@@ -1,19 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { canGenerateQuotes, canUseAdvancedPreviewer, getAdvancedPreviewerMessage, getQuoteAccessMessage, getUsageSummary } from '../../utils/accessRules';
 import { formatDesignStyleLabel } from '../../utils/designStyles';
 import { getSavedProjects, deleteProject, updateProject } from '../../utils/savedProjects';
+import { apiClient } from '../../utils/apiClient';
+
+function formatDisplayDate(dateString) {
+  if (!dateString) {
+    return 'Not set';
+  }
+
+  const parsed = new Date(dateString);
+  if (Number.isNaN(parsed.getTime())) {
+    return 'Not set';
+  }
+
+  return parsed.toLocaleDateString();
+}
 
 function Dashboard() {
-  const { user, plan, subscriptionStatus } = useAuth();
+  const { user, plan, subscriptionStatus, refreshAuthUser } = useAuth();
   const [projects, setProjects] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editingName, setEditingName] = useState('');
+  const [billingPlans, setBillingPlans] = useState([]);
+  const [billingSubscription, setBillingSubscription] = useState(null);
+  const [billingConfig, setBillingConfig] = useState({
+    checkoutConfigured: false,
+    webhookConfigured: false,
+    fullyConfigured: false,
+  });
+  const [billingError, setBillingError] = useState('');
+  const [billingNotice, setBillingNotice] = useState('');
+  const [isBillingLoading, setIsBillingLoading] = useState(false);
+  const [isRedirectingBilling, setIsRedirectingBilling] = useState(false);
+  const handledBillingSuccessRef = useRef(false);
   const navigate = useNavigate();
 
   const planCopy = {
     trial: ['3 saved designs', 'Basic preview access', 'Upgrade path into paid workflow'],
+    free: ['3 saved designs', 'Basic preview access', 'Upgrade path into paid workflow'],
     professional: ['Unlimited design sessions', 'Saved projects', 'Quote generation'],
     studio: ['Advanced design-style controls', 'Richer preview workflow', 'Quote generation'],
     enterprise: ['Multi-user workspace', 'Branded client experience', 'Priority onboarding'],
@@ -36,11 +63,125 @@ function Dashboard() {
     loadProjects();
   }, []);
 
+  useEffect(() => {
+    const loadBilling = async () => {
+      try {
+        setBillingError('');
+        setIsBillingLoading(true);
+        const [plansResponse, subscriptionResponse] = await Promise.all([
+          apiClient.getBillingPlans(),
+          apiClient.getBillingSubscription(),
+        ]);
+        setBillingPlans(plansResponse.plans || []);
+        setBillingConfig({
+          checkoutConfigured: Boolean(plansResponse.checkoutConfigured),
+          webhookConfigured: Boolean(plansResponse.webhookConfigured),
+          fullyConfigured: Boolean(plansResponse.fullyConfigured),
+        });
+        setBillingSubscription(subscriptionResponse.subscription || null);
+      } catch (error) {
+        console.error('Failed to load billing details:', error);
+        setBillingError(error.message || 'Unable to load billing details.');
+      } finally {
+        setIsBillingLoading(false);
+      }
+    };
+
+    loadBilling();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (handledBillingSuccessRef.current) {
+      return;
+    }
+
+    const query = new URLSearchParams(window.location.search);
+    if (query.get('billing') === 'success') {
+      handledBillingSuccessRef.current = true;
+      const sessionId = query.get('session_id');
+
+      const finalizeCheckout = async () => {
+        try {
+          if (sessionId) {
+            const completion = await apiClient.completeCheckoutSession(sessionId);
+            setBillingSubscription(completion.subscription || null);
+            setBillingNotice('Subscription updated successfully.');
+          } else {
+            const data = await apiClient.getBillingSubscription();
+            setBillingSubscription(data.subscription || null);
+          }
+          await refreshAuthUser();
+        } catch (error) {
+          console.error('Failed to refresh billing after checkout:', error);
+          setBillingError(error.message || 'Unable to finalize checkout.');
+        }
+      };
+
+      finalizeCheckout();
+
+      query.delete('billing');
+      query.delete('session_id');
+      const nextQuery = query.toString();
+      const nextUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ''}${window.location.hash || ''}`;
+      window.history.replaceState({}, '', nextUrl);
+    }
+  }, [refreshAuthUser]);
+
+  const checkoutTargets = billingPlans.filter((tier) => tier.checkoutEnabled);
+  const hasCheckoutTargets = checkoutTargets.length > 0;
+
+  const handleUpgrade = async (planName) => {
+    try {
+      setBillingError('');
+      setBillingNotice('');
+      setIsRedirectingBilling(true);
+      const session = await apiClient.createCheckoutSession(planName);
+      if (session?.url) {
+        window.location.assign(session.url);
+        return;
+      }
+
+      if (session?.subscription) {
+        setBillingSubscription(session.subscription);
+      }
+
+      await refreshAuthUser();
+      setBillingNotice(session?.message || 'Subscription updated successfully.');
+    } catch (error) {
+      console.error('Failed to start checkout:', error);
+      setBillingError(error.message || 'Unable to start checkout.');
+    } finally {
+      setIsRedirectingBilling(false);
+    }
+  };
+
+  const handleManageBilling = async () => {
+    try {
+      setBillingError('');
+      setIsRedirectingBilling(true);
+      const session = await apiClient.createPortalSession();
+      if (session?.url) {
+        window.location.assign(session.url);
+        return;
+      }
+      setBillingError('Billing portal did not return a redirect URL.');
+    } catch (error) {
+      console.error('Failed to open billing portal:', error);
+      setBillingError(error.message || 'Unable to open billing portal.');
+    } finally {
+      setIsRedirectingBilling(false);
+    }
+  };
+
   const handleLoadProject = (project) => {
     if (typeof window !== 'undefined') {
       window.sessionStorage.setItem('headstone-previewer-pending-project', JSON.stringify(project));
     }
-    navigate('/');
+    navigate('/preview');
   };
 
   const handleDeleteProject = async (projectId) => {
@@ -174,14 +315,66 @@ function Dashboard() {
         <article className="panel">
           <h3>Advanced preview</h3>
           <p>{advancedPreviewEnabled ? 'Your account can use the extra design-style layer in the previewer for more premium memorial concepts.' : 'Your current plan keeps the simpler preview flow. Studio unlocks the more complex previewer before Enterprise.'}</p>
-          {!advancedPreviewEnabled ? <Link className="secondary-link" to="/pricing">Upgrade for advanced preview</Link> : <Link className="secondary-link" to="/">Open advanced previewer</Link>}
+          {!advancedPreviewEnabled ? <Link className="secondary-link" to="/pricing">Upgrade for advanced preview</Link> : <Link className="secondary-link" to="/preview">Open advanced previewer</Link>}
           <p className="panel-note">{quoteAccessEnabled ? 'Quote generation is also enabled on this account.' : 'Quote generation remains locked until you move above Trial.'}</p>
+        </article>
+        <article className="panel">
+          <h3>Billing</h3>
+          {isBillingLoading ? <p>Loading billing details...</p> : null}
+          {!isBillingLoading ? (
+            <>
+              <p className="panel-note">Current plan: <strong>{billingSubscription?.planName || plan}</strong></p>
+              <p className="panel-note">Subscription status: <strong>{(billingSubscription?.status || subscriptionStatus || 'trial').toLowerCase()}</strong></p>
+              <p className="panel-note">Renews on: <strong>{formatDisplayDate(billingSubscription?.currentPeriodEnd)}</strong></p>
+              {!billingConfig.checkoutConfigured ? (
+                <p className="panel-note billing-error">
+                  Billing checkout is not configured yet. Add STRIPE_SECRET_KEY in backend/.env and restart the backend.
+                </p>
+              ) : null}
+              {billingConfig.checkoutConfigured && !hasCheckoutTargets ? (
+                <p className="panel-note billing-error">
+                  No paid tiers are currently enabled. Add STRIPE_PRICE_PROFESSIONAL_MONTHLY and STRIPE_PRICE_STUDIO_MONTHLY in backend/.env and restart the backend.
+                </p>
+              ) : null}
+              {billingConfig.checkoutConfigured && !billingConfig.webhookConfigured ? (
+                <p className="panel-note billing-error">
+                  Webhook sync is not configured yet. Add STRIPE_WEBHOOK_SECRET to backend/.env while running stripe listen.
+                </p>
+              ) : null}
+
+              {billingError ? <p className="panel-note billing-error">{billingError}</p> : null}
+              {billingNotice ? <p className="panel-note">{billingNotice}</p> : null}
+
+              <div className="billing-actions">
+                {checkoutTargets.map((tier) => (
+                  <button
+                    key={tier.planName}
+                    className="secondary-link billing-action-button"
+                    type="button"
+                    onClick={() => handleUpgrade(tier.planName)}
+                    disabled={isRedirectingBilling || tier.planName === (billingSubscription?.planName || plan)}
+                  >
+                    {tier.planName === (billingSubscription?.planName || plan) ? `${tier.label} active` : `Upgrade to ${tier.label}`}
+                  </button>
+                ))}
+
+                <button
+                  className="secondary-link billing-action-button"
+                  type="button"
+                  onClick={handleManageBilling}
+                  disabled={isRedirectingBilling}
+                >
+                  Manage billing
+                </button>
+              </div>
+            </>
+          ) : null}
         </article>
       </div>
 
       <div className="dashboard-actions">
         <Link className="secondary-link" to="/pricing">View pricing</Link>
-        <Link className="secondary-link" to="/">Back to previewer</Link>
+        <Link className="secondary-link" to="/preview">Back to previewer</Link>
       </div>
     </section>
   );

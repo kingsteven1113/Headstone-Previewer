@@ -99,6 +99,31 @@ export function AuthProvider({ children }) {
     }));
   };
 
+  const refreshAuthUser = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      if (!token) {
+        return;
+      }
+
+      const result = await apiClient.verifyToken(token);
+      if (!result.valid) {
+        return;
+      }
+
+      apiClient.setToken(token);
+      setAuthState((currentState) => ({
+        ...currentState,
+        isAuthenticated: true,
+        user: result.user,
+        plan: result.user.plan || currentState.plan || 'trial',
+        subscriptionStatus: result.user.subscriptionStatus || currentState.subscriptionStatus || 'free',
+      }));
+    } catch (err) {
+      console.error('Failed to refresh auth user:', err);
+    }
+  };
+
   const logout = () => {
     apiClient.logout();
     clearStoredAuthState();
@@ -113,6 +138,7 @@ export function AuthProvider({ children }) {
       login,
       signup,
       selectPlan,
+      refreshAuthUser,
       logout,
     }),
     [authState, isLoading, error],
