@@ -103,16 +103,22 @@ function Dashboard() {
     if (query.get('billing') === 'success') {
       handledBillingSuccessRef.current = true;
       const sessionId = query.get('session_id');
+      const hasResolvedSessionId = Boolean(
+        sessionId &&
+        sessionId !== '{CHECKOUT_SESSION_ID}' &&
+        sessionId.startsWith('cs_')
+      );
 
       const finalizeCheckout = async () => {
         try {
-          if (sessionId) {
+          if (hasResolvedSessionId) {
             const completion = await apiClient.completeCheckoutSession(sessionId);
             setBillingSubscription(completion.subscription || null);
             setBillingNotice('Subscription updated successfully.');
           } else {
             const data = await apiClient.getBillingSubscription();
             setBillingSubscription(data.subscription || null);
+            setBillingNotice('Subscription refresh is in progress. If plan details are unchanged, refresh again in a few seconds.');
           }
           await refreshAuthUser();
         } catch (error) {

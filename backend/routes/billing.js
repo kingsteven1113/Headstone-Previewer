@@ -34,15 +34,13 @@ function withCheckoutSessionId(successUrl) {
     return successUrl;
   }
 
-  try {
-    const parsed = new URL(successUrl);
-    parsed.searchParams.set('billing', 'success');
-    parsed.searchParams.set('session_id', '{CHECKOUT_SESSION_ID}');
-    return parsed.toString();
-  } catch {
-    const separator = successUrl.includes('?') ? '&' : '?';
-    return `${successUrl}${separator}session_id={CHECKOUT_SESSION_ID}`;
-  }
+  // Keep the placeholder raw in the URL string so Stripe can substitute it.
+  const withBilling = successUrl.includes('billing=success')
+    ? successUrl
+    : `${successUrl}${successUrl.includes('?') ? '&' : '?'}billing=success`;
+
+  const separator = withBilling.includes('?') ? '&' : '?';
+  return `${withBilling}${separator}session_id={CHECKOUT_SESSION_ID}`;
 }
 
 function assertStripeEnabled(next) {
