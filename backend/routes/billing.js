@@ -95,9 +95,28 @@ async function upsertSubscriptionFromStripe(userId, stripeSubscription) {
   });
 }
 
-function canUpdateExistingSubscription(status) {
-  const normalized = String(status || '').toLowerCase();
-  return normalized === 'active' || normalized === 'trialing' || normalized === 'past_due' || normalized === 'unpaid';
+async function cancelPreviousSubscriptionIfReplaced(stripe, session, newStripeSubscriptionId) {
+  const previousStripeSubscriptionId = String(session?.metadata?.previousStripeSubscriptionId || '').trim();
+
+  if (!previousStripeSubscriptionId || previousStripeSubscriptionId === newStripeSubscriptionId) {
+    return;
+  }
+
+  try {
+    const previousSubscription = await stripe.subscriptions.retrieve(previousStripeSubscriptionId);
+    const previousStatus = String(previousSubscription?.status || '').toLowerCase();
+
+    if (previousStatus === 'active' || previousStatus === 'trialing' || previousStatus === 'past_due' || previousStatus === 'unpaid') {
+      await stripe.subscriptions.cancel(previousStripeSubscriptionId, {
+        prorate: true,
+      });
+    }
+  } catch (error) {
+    // Ignore cancellation races and missing resources when webhook + callback finalize close together.
+    if (error?.code !== 'resource_missing') {
+      throw error;
+    }
+  }
 }
 
 router.get('/plans', verifyToken, (req, res) => {
@@ -161,11 +180,12 @@ router.post('/checkout-session', verifyToken, async (req, res, next) => {
       stripeCustomerId = customer.id;
     }
 
+    let previousStripeSubscriptionId = null;
     if (user.subscription?.stripeSubscriptionId) {
       try {
         const currentStripeSubscription = await stripe.subscriptions.retrieve(user.subscription.stripeSubscriptionId);
-
         const currentPriceId = currentStripeSubscription.items?.data?.[0]?.price?.id || null;
+
         if (currentPriceId === priceId) {
           const syncedSubscription = await upsertSubscriptionFromStripe(user.id, currentStripeSubscription);
           return res.json({
@@ -175,35 +195,7 @@ router.post('/checkout-session', verifyToken, async (req, res, next) => {
           });
         }
 
-        if (canUpdateExistingSubscription(currentStripeSubscription.status)) {
-          const existingItemId = currentStripeSubscription.items?.data?.[0]?.id;
-
-          if (!existingItemId) {
-            return next(new ApiError(409, 'Existing Stripe subscription has no line item to update. Use Manage billing.'));
-          }
-
-          const updatedStripeSubscription = await stripe.subscriptions.update(currentStripeSubscription.id, {
-            items: [
-              {
-                id: existingItemId,
-                price: priceId,
-              },
-            ],
-            proration_behavior: 'create_prorations',
-            metadata: {
-              ...(currentStripeSubscription.metadata || {}),
-              userId: user.id,
-              planName,
-            },
-          });
-
-          const syncedSubscription = await upsertSubscriptionFromStripe(user.id, updatedStripeSubscription);
-          return res.json({
-            mode: 'updated',
-            message: 'Subscription updated successfully.',
-            subscription: syncedSubscription,
-          });
-        }
+        previousStripeSubscriptionId = currentStripeSubscription.id;
       } catch (error) {
         if (error?.code !== 'resource_missing') {
           throw error;
@@ -229,11 +221,13 @@ router.post('/checkout-session', verifyToken, async (req, res, next) => {
       metadata: {
         userId: user.id,
         planName,
+        previousStripeSubscriptionId: previousStripeSubscriptionId || '',
       },
       subscription_data: {
         metadata: {
           userId: user.id,
           planName,
+          previousStripeSubscriptionId: previousStripeSubscriptionId || '',
         },
       },
     });
@@ -291,6 +285,7 @@ router.post('/checkout-complete', verifyToken, async (req, res, next) => {
       : session.subscription;
 
     const updatedSubscription = await upsertSubscriptionFromStripe(req.userId, stripeSubscription);
+    await cancelPreviousSubscriptionIfReplaced(stripe, session, stripeSubscription.id);
 
     res.json({
       subscription: updatedSubscription,
@@ -378,6 +373,7 @@ export async function stripeWebhookHandler(req, res) {
         if (userId && session.subscription) {
           const stripeSubscription = await stripe.subscriptions.retrieve(session.subscription);
           await upsertSubscriptionFromStripe(userId, stripeSubscription);
+          await cancelPreviousSubscriptionIfReplaced(stripe, session, stripeSubscription.id);
         }
         break;
       }
