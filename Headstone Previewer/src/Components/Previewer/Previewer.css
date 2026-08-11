@@ -360,7 +360,10 @@
 .AdvancedPreviewSummary {
     padding: 1.25rem;
     display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
     gap: 1rem;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .AdvancedPreviewPanel {
@@ -398,6 +401,17 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.75rem;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.35rem;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+
+.AdvancedPreviewStepList::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .AdvancedStepCard {

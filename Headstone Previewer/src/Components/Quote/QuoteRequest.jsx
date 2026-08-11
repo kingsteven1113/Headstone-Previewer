@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { buildQuoteRequestIntake, saveQuoteRequestIntake } from '../../utils/quoteRequestIntake';
 
 const DEFAULT_DRAFT = {
   title: 'Untitled memorial design',
@@ -32,6 +33,9 @@ function QuoteRequest() {
     phone: '',
     appointmentWindow: '',
     notes: '',
+    cemeteryName: '',
+    preferredDealer: '',
+    referralCode: '',
   });
 
   useEffect(() => {
@@ -75,7 +79,20 @@ function QuoteRequest() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setMessage('Quote request draft ready. Next step is wiring this form to backend inquiry endpoints.');
+
+    const intakePayload = buildQuoteRequestIntake({
+      draft,
+      formData,
+    });
+
+    saveQuoteRequestIntake(intakePayload);
+
+    if (intakePayload.referralAttribution.commissionEligible) {
+      setMessage('Quote intake saved with dealer referral attribution. Next step is wiring this form to backend inquiry endpoints.');
+      return;
+    }
+
+    setMessage('Quote intake saved. Add a preferred dealer or referral code to track commission attribution in this workflow.');
   };
 
   return (
@@ -145,6 +162,39 @@ function QuoteRequest() {
               value={formData.appointmentWindow}
               onChange={handleChange}
               placeholder='Example: Weekday afternoons'
+            />
+          </label>
+
+          <label>
+            Cemetery name
+            <input
+              type='text'
+              name='cemeteryName'
+              value={formData.cemeteryName}
+              onChange={handleChange}
+              placeholder='Example: Oak Hill Memorial Park'
+            />
+          </label>
+
+          <label>
+            Preferred monument dealer
+            <input
+              type='text'
+              name='preferredDealer'
+              value={formData.preferredDealer}
+              onChange={handleChange}
+              placeholder='Used for referral attribution and quote routing'
+            />
+          </label>
+
+          <label>
+            Dealer referral code (optional)
+            <input
+              type='text'
+              name='referralCode'
+              value={formData.referralCode}
+              onChange={handleChange}
+              placeholder='Example: LEGACY-2026'
             />
           </label>
 

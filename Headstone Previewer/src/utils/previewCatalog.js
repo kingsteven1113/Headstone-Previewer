@@ -44,6 +44,96 @@ export const ADVANCED_ACCESSORY_OPTIONS = [
   { value: 'Porcelain Photo', label: 'Porcelain Photo' },
 ];
 
+export const ADVANCED_ADDITIONAL_CATEGORY_OPTIONS = {
+  letteringStyle: [
+    { value: 'Skinfrosted_Lettering', label: 'Skinfrosted Lettering' },
+    { value: 'Deep_Cut_Lettering', label: 'Deep Cut Lettering' },
+    { value: 'Raised_Lettering', label: 'Raised Lettering' },
+    { value: 'Frosted_Outlined_Lettering', label: 'Frosted Outlined Lettering' },
+    { value: 'Shallow_Blown_Lettering', label: 'Shallow Blown Lettering' },
+  ],
+  dieSidesFinish: [
+    { value: 'Rock_Pitch', label: 'Rock Pitch' },
+    { value: 'Sawed', label: 'Sawed' },
+    { value: 'Polished', label: 'Polished' },
+    { value: 'Steeled', label: 'Steeled' },
+  ],
+  dieTopFinish: [
+    { value: 'Rock_Pitch', label: 'Rock Pitch' },
+    { value: 'Sawed', label: 'Sawed' },
+    { value: 'Polished', label: 'Polished' },
+    { value: 'Steeled', label: 'Steeled' },
+  ],
+  designTypes: [
+    { value: 'Floral', label: 'Floral' },
+    { value: 'Faith', label: 'Faith' },
+    { value: 'Animal', label: 'Animal' },
+    { value: 'Angel', label: 'Angel' },
+    { value: 'Border', label: 'Border' },
+    { value: 'Building', label: 'Building' },
+    { value: 'Children', label: 'Children' },
+    { value: 'Emblems', label: 'Emblems' },
+    { value: 'Hand', label: 'Hand' },
+    { value: 'Hobbies', label: 'Hobbies' },
+    { value: 'Music', label: 'Music' },
+    { value: 'Miscellaneous', label: 'Miscellaneous' },
+    { value: 'Panel', label: 'Panel' },
+    { value: 'People', label: 'People' },
+    { value: 'Scene', label: 'Scene' },
+    { value: 'Shape', label: 'Shape' },
+    { value: 'Sports', label: 'Sports' },
+    { value: 'Transportation', label: 'Transportation' },
+    { value: 'Western', label: 'Western' },
+  ],
+  panels: [],
+  fonts: [],
+  baseTopFinish: [],
+  baseSidesFinish: [],
+};
+
+export const ADVANCED_ADDITIONAL_CATEGORIES = [
+  {
+    key: 'letteringStyle',
+    label: 'Lettering Style',
+    description: 'Choose how lettering should be presented for the memorial design.',
+  },
+  {
+    key: 'dieSidesFinish',
+    label: 'Die Sides Finish',
+    description: 'Select the finish treatment for die side surfaces.',
+  },
+  {
+    key: 'dieTopFinish',
+    label: 'Die Top Finish',
+    description: 'Select the finish treatment for the top of the die.',
+  },
+  {
+    key: 'designTypes',
+    label: 'Design Types',
+    description: 'Choose the design treatment category for this concept.',
+  },
+  {
+    key: 'panels',
+    label: 'Panels',
+    description: 'Choose panel layout and panel format options.',
+  },
+  {
+    key: 'fonts',
+    label: 'Fonts',
+    description: 'Select font categories used for lettering previews.',
+  },
+  {
+    key: 'baseTopFinish',
+    label: 'Base Top Finish',
+    description: 'Choose the finish treatment for base top surfaces.',
+  },
+  {
+    key: 'baseSidesFinish',
+    label: 'Base Sides Finish',
+    description: 'Choose the finish treatment for base side surfaces.',
+  },
+];
+
 export const SHAPE_DISABLED_BY_TYPE = {
   Heart_Shape: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
   Angel_Carved: ['Slant_Marker', 'Monolith', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
@@ -81,6 +171,8 @@ export const PREVIEW_CATALOG = {
     colors: ADVANCED_COLOR_OPTIONS,
     shapes: ADVANCED_SHAPE_OPTIONS,
     accessories: ADVANCED_ACCESSORY_OPTIONS,
+    additionalCategories: ADVANCED_ADDITIONAL_CATEGORIES,
+    additionalCategoryOptions: ADVANCED_ADDITIONAL_CATEGORY_OPTIONS,
   },
   rules: {
     colorRequiredTypes: COLOR_REQUIRED_TYPES,

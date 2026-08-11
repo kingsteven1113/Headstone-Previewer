@@ -1,7 +1,16 @@
 {
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix \"Headstone Previewer\" run dev",
+    "dev:local": "concurrently -k -n BACKEND,FRONTEND -c green,cyan \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:local:stripe": "concurrently -k -n BACKEND,FRONTEND,STRIPE -c green,cyan,magenta \"npm run dev:backend\" \"npm run dev:frontend\" \"npm --prefix backend run stripe:listen\""
+  },
   "dependencies": {
     "react": "^19.2.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.5"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

@@ -5,8 +5,10 @@ import Modal from '../Modal/Modal';
 import { saveProject, getSavedProjects, deleteProject, updateProject } from '../../utils/savedProjects';
 import { useAuth } from '../../context/AuthContext';
 import { canSaveProjects, canUseAdvancedPreviewer, getAdvancedPreviewerMessage, getSaveProjectMessage } from '../../utils/accessRules';
-import { DEFAULT_DESIGN_STYLE, DESIGN_STYLE_OPTIONS, getDesignStyleDetails, formatDesignStyleLabel } from '../../utils/designStyles';
+import { DEFAULT_DESIGN_STYLE } from '../../utils/designStyles';
 import { resolvePreviewCombination } from '../../utils/previewCombinationResolver';
+import { PREVIEW_CATALOG } from '../../utils/previewCatalog';
+import { getStepRequirements, isShapeDisabledForType, isAccessoryDisabledForSelection } from '../../utils/previewResolver';
 import Logo from '../../assets/CJStonesLogo.jpg';
 import Impala_Black from '../../assets/Casillas 2.jpg';
 import Barre_Grey from '../../assets/Coakley.jpeg';
@@ -443,51 +445,21 @@ import Tropical_Green_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 import Paradiso_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 import Bahama_Blue_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
 
-const COLOR_REQUIRED_TYPES = ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque'];
-
-const ADVANCED_TYPE_OPTIONS = [
-  { value: 'Die_And_Base', label: 'Die and Base' },
-  { value: 'Monolith', label: 'Monolith' },
-  { value: 'Slant_Marker', label: 'Slant Marker' },
-  { value: 'Flush_Marker', label: 'Flush Marker' },
-  { value: 'Hickey_Marker', label: 'Hickey Marker' },
-  { value: 'Natural_Stone', label: 'Natural Stone' },
-  { value: 'Bench', label: 'Bench' },
-  { value: 'Bronze_Plaque', label: 'Bronze Plaque' },
-];
-
-const ADVANCED_COLOR_OPTIONS = [
-  { value: 'Impala_Black', label: 'Impala Black' },
-  { value: 'Barre_Grey', label: 'Barre Grey' },
-  { value: 'North_American_Pink', label: 'North American Pink' },
-  { value: 'Mahogany', label: 'Mahogany' },
-  { value: 'Cats_Eye', label: 'Cats Eye Brown' },
-  { value: 'Evergreen', label: 'Evergreen' },
-  { value: 'Jet_Black', label: 'Jet Black' },
-  { value: 'Blue_Pearl', label: 'Blue Pearl' },
-  { value: 'Tropical_Green', label: 'Tropical Green' },
-  { value: 'Paradiso', label: 'Paradiso' },
-  { value: 'Bahama_Blue', label: 'Bahama Blue' },
-];
-
-const ADVANCED_SHAPE_OPTIONS = [
-  { value: 'Heart_Shape', label: 'Heart Shape' },
-  { value: 'Angel_Carved', label: 'Angel Carved' },
-  { value: 'Flat_Top', label: 'Flat Top' },
-  { value: 'Serpentine_Top', label: 'Serpentine Top' },
-  { value: 'Oval_Top', label: 'Oval Top' },
-  { value: 'Half_Serpentine_Top', label: 'Half Serpentine Top' },
-  { value: 'Half_Oval_Top', label: 'Half Oval Top' },
-  { value: 'Apex_Top', label: 'Apex Top' },
-  { value: 'Roof_Top', label: 'Roof Top' },
-];
-
-const ADVANCED_ACCESSORY_OPTIONS = [
-  { value: 'Vase', label: 'Vase' },
-  { value: 'Etching', label: 'Etching' },
-  { value: 'Bronze Emblem', label: 'Bronze Emblem' },
-  { value: 'Porcelain Photo', label: 'Porcelain Photo' },
-];
+const {
+  types: ADVANCED_TYPE_OPTIONS,
+  colors: ADVANCED_COLOR_OPTIONS,
+  shapes: ADVANCED_SHAPE_OPTIONS,
+  accessories: ADVANCED_ACCESSORY_OPTIONS,
+  additionalCategories: ADVANCED_ADDITIONAL_CATEGORIES,
+  additionalCategoryOptions: ADVANCED_ADDITIONAL_CATEGORY_OPTIONS,
+} = PREVIEW_CATALOG.options;
+const COLOR_REQUIRED_TYPES = PREVIEW_CATALOG.rules.colorRequiredTypes;
+const ADVANCED_ADDITIONAL_CATEGORY_KEYS = ADVANCED_ADDITIONAL_CATEGORIES.map((category) => category.key);
+const EMPTY_ADVANCED_ADDITIONAL_SELECTIONS = ADVANCED_ADDITIONAL_CATEGORY_KEYS.reduce((accumulator, categoryKey) => {
+  accumulator[categoryKey] = null;
+  return accumulator;
+}, {});
+const MISSING_PREVIEW_IMAGE_WARNED_KEYS = new Set();
 
 
 
@@ -690,19 +662,18 @@ const Previewer = () => {
     setTypeSelected(initialType);
     setColorSelected(initialColor);
     setShapeSelected(initialShape);
-    setDesignStyleSelected(initialDesignStyle);
     setActiveAdvancedStep('type');
+    setActiveCoreStep('type');
     clearAccessorySelections();
     
     document.getElementById('ColorOptionsList').classList.remove('active'), 1500;
     document.getElementById('ShapeOptionsList').classList.remove('active'), 1500;
-    document.getElementById('StyleOptionsList')?.classList.remove('active'), 1500;
     document.getElementById('AccessoriesOptionsList').classList.remove('active'), 1500;
     
-    document.querySelectorAll('.AccessorySelected, .TypeSelected, .ColorSelected, .ShapeSelected, .StyleSelected').forEach(element => element.classList.remove('AccessorySelected', 'TypeSelected', 'ColorSelected', 'ShapeSelected', 'StyleSelected'));
+    document.querySelectorAll('.AccessorySelected, .TypeSelected, .ColorSelected, .ShapeSelected').forEach(element => element.classList.remove('AccessorySelected', 'TypeSelected', 'ColorSelected', 'ShapeSelected'));
     document.getElementById('NoCombinationMessage').classList.add('hidden');
     if (window.innerWidth < 915) {
-      document.querySelectorAll('.TypeOptionsList ul, .ColorOptionsList ul, .ShapeOptionsList ul, .StyleOptionsList ul, .TypeOptionsList p, .ColorOptionsList p, .ShapeOptionsList p, .StyleOptionsList p, .TypeOptionsList h2, .ColorOptionsList h2, .ShapeOptionsList h2, .StyleOptionsList h2').forEach(element => element.classList.remove('disappear'));
+      document.querySelectorAll('.TypeOptionsList ul, .ColorOptionsList ul, .ShapeOptionsList ul, .TypeOptionsList p, .ColorOptionsList p, .ShapeOptionsList p, .TypeOptionsList h2, .ColorOptionsList h2, .ShapeOptionsList h2').forEach(element => element.classList.remove('disappear'));
     }
 
   }
@@ -712,9 +683,10 @@ const Previewer = () => {
     type: null,
     color: null,
     shape: null,
-    designStyle: null,
-    name: null
-  }
+    designStyle: DEFAULT_DESIGN_STYLE,
+    name: null,
+    ...EMPTY_ADVANCED_ADDITIONAL_SELECTIONS,
+  };
 
 
 
@@ -735,14 +707,8 @@ useEffect(() => {
     const isColorRequiredType = COLOR_REQUIRED_TYPES.includes(selection.type);
     const hasBaseSelection = selection.type === 'Natural_Stone' || (isColorRequiredType && selection.color) || (!isColorRequiredType && selection.type !== 'Natural_Stone' && selection.shape);
 
-    if (hasAdvancedPreviewerAccess && hasBaseSelection) {
-      document.getElementById('StyleOptionsList')?.classList.add('active');
-    } else {
-      document.getElementById('StyleOptionsList')?.classList.remove('active');
-    }
-
     // Show Accessories for Natural_Stone immediately, or for colorRequiredTypes when color is selected, or for other types when shape is selected
-    if ((hasAdvancedPreviewerAccess && hasBaseSelection && selection.designStyle) || (!hasAdvancedPreviewerAccess && hasBaseSelection)) {
+    if (hasBaseSelection) {
       document.getElementById('AccessoriesOptionsList')?.classList.add('active');
     } else {
       document.getElementById('AccessoriesOptionsList')?.classList.remove('active');
@@ -769,6 +735,11 @@ useEffect(() => {
     const resolvedSelection = resolvePreviewCombination(selection, PREVIEW_IMAGE_ASSET_MAP, {
       defaultImageKey: 'Logo',
     });
+
+    if (resolvedSelection.matched && !resolvedSelection.image && !MISSING_PREVIEW_IMAGE_WARNED_KEYS.has(resolvedSelection.imageKey)) {
+      MISSING_PREVIEW_IMAGE_WARNED_KEYS.add(resolvedSelection.imageKey);
+      console.warn('Missing preview image asset for key:', resolvedSelection.imageKey);
+    }
 
     selection.name = resolvedSelection.name ?? null;
     return resolvedSelection.image || Logo;
@@ -803,14 +774,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialType = "Select Type";
   const initialColor = "Select Color";
   const initialShape = "Select Shape";
-  const initialDesignStyle = 'Select Design Style';
   const navigate = useNavigate();
   const { isAuthenticated, plan } = useAuth();
   const hasAdvancedPreviewerAccess = canUseAdvancedPreviewer({ isAuthenticated, plan });
   const [typeSelected, setTypeSelected] = useState(initialType);
   const [colorSelected, setColorSelected] = useState(initialColor);
   const [shapeSelected, setShapeSelected] = useState(initialShape);
-  const [designStyleSelected, setDesignStyleSelected] = useState(initialDesignStyle);
   const [vase, setVase] = useState("");
   const [etching, setEtching] = useState("");
   const [bronzeEmblem, setBronzeEmblem] = useState("");
@@ -826,8 +795,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const [activeCoreStep, setActiveCoreStep] = useState('type');
 
   const selectedAccessories = [vase, etching, bronzeEmblem, porcelainPhoto].filter(Boolean);
-  const requiresColorStep = Boolean(selection.type) && selection.type !== 'Natural_Stone';
-  const requiresShapeStep = Boolean(selection.type) && !COLOR_REQUIRED_TYPES.includes(selection.type) && selection.type !== 'Natural_Stone';
+  const { requiresColorStep, requiresShapeStep } = getStepRequirements(selection.type, PREVIEW_CATALOG);
+
+  const formatSelectionLabel = (value) => {
+    if (!value) {
+      return '';
+    }
+
+    return value
+      .split('_')
+      .filter(Boolean)
+      .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase())
+      .join(' ');
+  };
+
+  const getAdditionalCategorySummary = (category) => {
+    const selectedValue = selection[category.key];
+    const options = ADVANCED_ADDITIONAL_CATEGORY_OPTIONS?.[category.key] || [];
+    const selectedOption = options.find((option) => option.value === selectedValue);
+
+    if (selectedOption) {
+      return selectedOption.label;
+    }
+
+    if (selectedValue) {
+      return formatSelectionLabel(selectedValue);
+    }
+
+    return options.length ? 'Not selected' : 'Coming soon';
+  };
 
   const advancedSteps = [
     {
@@ -855,13 +851,18 @@ document.addEventListener('DOMContentLoaded', () => {
           isComplete: Boolean(selection.shape),
         }]
       : []),
-    {
-      key: 'designStyle',
-      label: 'Design Style',
-      description: 'Apply the premium composition layer that makes the advanced previewer feel distinct.',
-      summary: selection.designStyle ? designStyleSelected : 'Not selected',
-      isComplete: Boolean(selection.designStyle),
-    },
+    ...ADVANCED_ADDITIONAL_CATEGORIES.map((category) => {
+      const options = ADVANCED_ADDITIONAL_CATEGORY_OPTIONS?.[category.key] || [];
+      const selectedValue = selection[category.key];
+
+      return {
+        key: category.key,
+        label: category.label,
+        description: category.description,
+        summary: getAdditionalCategorySummary(category),
+        isComplete: options.length ? Boolean(selectedValue) : true,
+      };
+    }),
     {
       key: 'accessories',
       label: 'Accessories',
@@ -938,13 +939,13 @@ document.addEventListener('DOMContentLoaded', () => {
       type: typeValue,
       color: null,
       shape: null,
-      designStyle: null,
+      designStyle: DEFAULT_DESIGN_STYLE,
       name: null,
+      ...EMPTY_ADVANCED_ADDITIONAL_SELECTIONS,
     }));
     setTypeSelected(typeLabel);
     setColorSelected(initialColor);
     setShapeSelected(initialShape);
-    setDesignStyleSelected(initialDesignStyle);
     clearAccessorySelections();
   };
 
@@ -953,12 +954,12 @@ document.addEventListener('DOMContentLoaded', () => {
       ...currentSelection,
       color: colorValue,
       shape: null,
-      designStyle: null,
+      designStyle: DEFAULT_DESIGN_STYLE,
       name: null,
+      ...EMPTY_ADVANCED_ADDITIONAL_SELECTIONS,
     }));
     setColorSelected(colorLabel);
     setShapeSelected(initialShape);
-    setDesignStyleSelected(initialDesignStyle);
     clearAccessorySelections();
   };
 
@@ -966,20 +967,19 @@ document.addEventListener('DOMContentLoaded', () => {
     setSelection((currentSelection) => ({
       ...currentSelection,
       shape: shapeValue,
-      designStyle: null,
+      designStyle: DEFAULT_DESIGN_STYLE,
       name: null,
+      ...EMPTY_ADVANCED_ADDITIONAL_SELECTIONS,
     }));
     setShapeSelected(shapeLabel);
-    setDesignStyleSelected(initialDesignStyle);
     clearAccessorySelections();
   };
 
-  const handleAdvancedDesignStyleSelect = (styleValue, styleLabel) => {
+  const handleAdvancedAdditionalCategorySelect = (categoryKey, optionValue) => {
     setSelection((currentSelection) => ({
       ...currentSelection,
-      designStyle: styleValue,
+      [categoryKey]: optionValue,
     }));
-    setDesignStyleSelected(styleLabel);
   };
 
   const toggleAdvancedAccessory = (accessoryValue) => {
@@ -1008,35 +1008,19 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const isAdvancedShapeDisabled = (shapeValue) => {
-    if (!selection.type) {
-      return true;
-    }
-
-    const disabledByType = {
-      Heart_Shape: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-      Angel_Carved: ['Slant_Marker', 'Monolith', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-      Flat_Top: ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-      Serpentine_Top: ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-      Oval_Top: ['Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-      Half_Serpentine_Top: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-      Half_Oval_Top: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-      Apex_Top: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-      Roof_Top: ['Slant_Marker', 'Flush_Marker', 'Hickey_Marker', 'Bench', 'Bronze_Plaque', 'Natural_Stone'],
-    };
-
-    return disabledByType[shapeValue]?.includes(selection.type) || false;
+    return isShapeDisabledForType({
+      shapeValue,
+      typeValue: selection.type,
+      catalog: PREVIEW_CATALOG,
+    });
   };
 
   const isAdvancedAccessoryDisabled = (accessoryValue) => {
-    if (accessoryValue === 'Vase') {
-      return selection.type === 'Natural_Stone' || selection.type === 'Monolith' || selection.type === 'Hickey_Marker';
-    }
-
-    if (accessoryValue === 'Etching') {
-      return selection.color === 'Mahogany' || selection.color === 'Barre_Grey' || selection.color === 'North_American_Pink' || selection.color === 'Cats_Eye' || selection.color === 'Paradiso' || selection.type === 'Natural_Stone';
-    }
-
-    return false;
+    return isAccessoryDisabledForSelection({
+      accessoryValue,
+      selection,
+      catalog: PREVIEW_CATALOG,
+    });
   };
 
   useEffect(() => {
@@ -1229,6 +1213,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const handleRequestQuote = () => {
+    const additionalCategorySelections = ADVANCED_ADDITIONAL_CATEGORY_KEYS.reduce((accumulator, categoryKey) => {
+      accumulator[categoryKey] = selection[categoryKey] || null;
+      return accumulator;
+    }, {});
+
     const quoteRequestDraft = {
       title: designName.trim() || 'Untitled memorial design',
       type: selection.type || null,
@@ -1237,6 +1226,7 @@ document.addEventListener('DOMContentLoaded', () => {
       designStyle: selection.designStyle || DEFAULT_DESIGN_STYLE,
       wording: wording.trim(),
       accessories: getSelectedAccessoryValues(),
+      additionalCategorySelections,
     };
 
     if (typeof window !== 'undefined') {
@@ -1248,18 +1238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         quoteRequestDraft,
       },
     });
-  };
-
-  const formatSelectionLabel = (value) => {
-    if (!value) {
-      return '';
-    }
-
-    return value
-      .split('_')
-      .filter(Boolean)
-      .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase())
-      .join(' ');
   };
 
   const applyLoadedProject = (project) => {
@@ -1275,13 +1253,13 @@ document.addEventListener('DOMContentLoaded', () => {
       shape: project.shape || null,
       designStyle: project.designStyle || DEFAULT_DESIGN_STYLE,
       name: project.name || null,
+      ...EMPTY_ADVANCED_ADDITIONAL_SELECTIONS,
     };
 
     setSelection(nextSelection);
     setTypeSelected(project.type ? formatSelectionLabel(project.type) : initialType);
     setColorSelected(project.color ? formatSelectionLabel(project.color) : initialColor);
     setShapeSelected(project.shape ? formatSelectionLabel(project.shape) : initialShape);
-    setDesignStyleSelected(project.designStyle ? formatDesignStyleLabel(project.designStyle) : initialDesignStyle);
     setDesignName(project.title || '');
     setWording(project.wording || '');
     setVase(project.accessories?.includes('Vase') ? 'Vase' : '');
@@ -1296,7 +1274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('BronzeEmblemInput').value = project.accessories?.includes('Bronze Emblem') ? 'Bronze Emblem' : '';
     document.getElementById('PorcelainPhotoInput').value = project.accessories?.includes('Porcelain Photo') ? 'Porcelain Photo' : '';
 
-    document.querySelectorAll('.TypeSelected, .ColorSelected, .ShapeSelected, .StyleSelected, .AccessorySelected').forEach((element) => element.classList.remove('TypeSelected', 'ColorSelected', 'ShapeSelected', 'StyleSelected', 'AccessorySelected'));
+    document.querySelectorAll('.TypeSelected, .ColorSelected, .ShapeSelected, .AccessorySelected').forEach((element) => element.classList.remove('TypeSelected', 'ColorSelected', 'ShapeSelected', 'AccessorySelected'));
 
     if (project.type) {
       document.getElementById(project.type)?.classList.add('TypeSelected');
@@ -1308,10 +1286,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (project.shape) {
       document.getElementById(project.shape)?.classList.add('ShapeSelected');
-    }
-
-    if (project.designStyle) {
-      document.getElementById(project.designStyle)?.classList.add('StyleSelected');
     }
 
     document.querySelectorAll('.AccessoryOption').forEach((button) => {
@@ -1390,17 +1364,29 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    if (currentAdvancedStep.key === 'designStyle') {
-      return DESIGN_STYLE_OPTIONS.map((styleOption) => (
+    const matchingAdditionalCategory = ADVANCED_ADDITIONAL_CATEGORIES.find((category) => category.key === currentAdvancedStep.key);
+
+    if (matchingAdditionalCategory) {
+      const categoryOptions = ADVANCED_ADDITIONAL_CATEGORY_OPTIONS?.[matchingAdditionalCategory.key] || [];
+
+      if (!categoryOptions.length) {
+        return (
+          <article className='AdvancedOptionButton selected' role='note' aria-live='polite'>
+            <strong>{matchingAdditionalCategory.label} options coming soon</strong>
+            <span>This category is now part of the Advanced Previewer workflow. We can add options next in small batches.</span>
+          </article>
+        );
+      }
+
+      return categoryOptions.map((categoryOption) => (
         <button
-          key={styleOption.value}
+          key={categoryOption.value}
           type='button'
-          className={`AdvancedOptionButton${selection.designStyle === styleOption.value ? ' selected' : ''}`}
-          onClick={() => handleAdvancedDesignStyleSelect(styleOption.value, styleOption.label)}
+          className={`AdvancedOptionButton${selection[matchingAdditionalCategory.key] === categoryOption.value ? ' selected' : ''}`}
+          onClick={() => handleAdvancedAdditionalCategorySelect(matchingAdditionalCategory.key, categoryOption.value)}
         >
-          <strong>{styleOption.label}</strong>
-          <span>{styleOption.description}</span>
-          <em>Advanced surcharge: ${styleOption.surcharge}</em>
+          <strong>{categoryOption.label}</strong>
+          <span>{categoryOption.description || `Set ${matchingAdditionalCategory.label.toLowerCase()} for this memorial concept.`}</span>
         </button>
       ));
     }
@@ -1492,7 +1478,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let SelectionImage = '';
-  const selectedDesignStyleDetails = getDesignStyleDetails(selection.designStyle || DEFAULT_DESIGN_STYLE);
   return (
     
     <>
@@ -1536,7 +1521,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <p className='SavedProjectCount'>{savedProjectCount} saved project{savedProjectCount === 1 ? '' : 's'}</p>
           {saveMessage ? <p className='SaveMessage'>{saveMessage}</p> : null}
-          <p className='AdvancedPreviewMessage'>{hasAdvancedPreviewerAccess ? 'Advanced preview mode unlocked. Add a design style before accessories to explore a richer memorial concept.' : getAdvancedPreviewerMessage({ isAuthenticated, plan })}</p>
+          <p className='AdvancedPreviewMessage'>{hasAdvancedPreviewerAccess ? 'Advanced preview mode unlocked. Use the extended category workflow to shape each memorial concept in more detail.' : getAdvancedPreviewerMessage({ isAuthenticated, plan })}</p>
           <button className='ResetButton MobileReset' id='MobileResetButton' type='button' onClick={resetSelections}>Reset Selection</button>
         </div>
         {hasAdvancedPreviewerAccess ? (
@@ -1582,7 +1567,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div>
                 <p className='AdvancedPreviewLabel'>Core Previewer</p>
                 <h2>Selections</h2>
-                <p className='AdvancedPreviewDescription'>Core plans now follow the same guided wizard pattern, without the design-style step.</p>
+                <p className='AdvancedPreviewDescription'>Core plans follow the same guided wizard pattern with a streamlined category set.</p>
               </div>
               <div className='AdvancedPreviewStepList'>
                 {coreSteps.map((step, index) => (
@@ -1618,20 +1603,18 @@ document.addEventListener('DOMContentLoaded', () => {
         <div className='LegacyStateShim' aria-hidden='true'>
           <div id='ColorOptionsList' className='ColorOptionsList' />
           <div id='ShapeOptionsList' className='ShapeOptionsList' />
-          <div id='StyleOptionsList' className='StyleOptionsList' />
           <div id='AccessoriesOptionsList' className='AccessoriesOptionsList' />
         </div>
 
         <div className='Preview-Images'>
-          <div className={`Preview-Container ${hasAdvancedPreviewerAccess ? selectedDesignStyleDetails.previewClassName : ''}`}>
-            <div className='PreviewStyleBadge'>{hasAdvancedPreviewerAccess ? selectedDesignStyleDetails.label : 'Core Previewer'}</div>
+          <div className='Preview-Container'>
+            <div className='PreviewStyleBadge'>{hasAdvancedPreviewerAccess ? 'Advanced Previewer' : 'Core Previewer'}</div>
             <img className='Image' id='Stone' src={imageSrc(selection)} alt="" />
           </div>
           <p id='NoCombinationMessage'  className='NoCombinationMessage hidden'>This combination has not been made yet. But if you'd like to see it, please let us know!</p>
           <div className='PreviewStyleCard'>
-            <h3>{hasAdvancedPreviewerAccess ? selectedDesignStyleDetails.label : 'Simple preview flow'}</h3>
-            <p>{hasAdvancedPreviewerAccess ? selectedDesignStyleDetails.description : 'Professional keeps the faster three-step previewer. Studio unlocks the more complex version with an added design-style layer before accessories.'}</p>
-            {hasAdvancedPreviewerAccess ? <p className='PreviewStyleMeta'>Advanced style surcharge: ${selectedDesignStyleDetails.surcharge}</p> : null}
+            <h3>{hasAdvancedPreviewerAccess ? 'Advanced category workflow' : 'Simple preview flow'}</h3>
+            <p>{hasAdvancedPreviewerAccess ? 'Advanced mode now includes an expanded category sequence so we can keep layering in options category-by-category.' : 'Core plans keep a streamlined guided flow across stone type, color/shape, and accessories.'}</p>
           </div>
         </div>
 
@@ -1640,7 +1623,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <input type='text' name='Type' id='TypeInput' value={typeSelected} hidden readOnly />
           <input type='text' name='Shape' id='ShapeInput' value={shapeSelected} hidden readOnly />
           <input type='text' name='Color' id='ColorInput' value={colorSelected} hidden readOnly />
-          <input type='text' name='Design Style' id='DesignStyleInput' value={designStyleSelected === initialDesignStyle ? DEFAULT_DESIGN_STYLE : designStyleSelected} hidden readOnly />
+          <input type='text' name='Design Style' id='DesignStyleInput' value={DEFAULT_DESIGN_STYLE} hidden readOnly />
           <input type='text' id='VaseInput' name='Would You Like a Vase?' hidden readOnly />
           <input type='text' id='EtchingInput' name='Would You Like an Etching?' hidden readOnly />
           <input type='text' id='BronzeEmblemInput' name='Would You Like a Bronze Emblem?' hidden readOnly />
