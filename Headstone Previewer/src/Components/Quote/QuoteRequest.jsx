@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { buildQuoteRequestIntake, saveQuoteRequestIntake } from '../../utils/quoteRequestIntake';
+import { useAuth } from '../../context/AuthContext';
+import { canUseAdvancedPreviewer } from '../../utils/accessRules';
+import { PREVIEW_CATALOG } from '../../utils/previewCatalog';
 
 const DEFAULT_DRAFT = {
   title: 'Untitled memorial design',
@@ -10,6 +13,7 @@ const DEFAULT_DRAFT = {
   designStyle: 'Standard',
   wording: '',
   accessories: [],
+  additionalCategorySelections: {},
 };
 
 const formatSelectionValue = (value) => {
@@ -24,6 +28,7 @@ const formatSelectionValue = (value) => {
 };
 
 function QuoteRequest() {
+  const { isAuthenticated, plan } = useAuth();
   const location = useLocation();
   const [message, setMessage] = useState('');
   const [draft, setDraft] = useState(DEFAULT_DRAFT);
@@ -60,6 +65,46 @@ function QuoteRequest() {
       notes: nextDraft.wording || currentData.notes,
     }));
   }, [location.state]);
+
+  const hasStudioTierAccess = canUseAdvancedPreviewer({ isAuthenticated, plan });
+
+  const additionalCategorySummary = useMemo(() => {
+    if (!hasStudioTierAccess) {
+      return [];
+    }
+
+    const selectedCategories = draft.additionalCategorySelections || {};
+    const categories = PREVIEW_CATALOG.options.additionalCategories || [];
+    const categoryOptions = PREVIEW_CATALOG.options.additionalCategoryOptions || {};
+
+    return categories.map((category) => {
+      const rawValue = selectedCategories[category.key] || null;
+      const options = categoryOptions[category.key] || [];
+      const selectedOption = options.find((option) => option.value === rawValue);
+
+      if (selectedOption) {
+        return {
+          key: category.key,
+          label: category.label,
+          value: selectedOption.label,
+        };
+      }
+
+      if (rawValue) {
+        return {
+          key: category.key,
+          label: category.label,
+          value: formatSelectionValue(rawValue),
+        };
+      }
+
+      return {
+        key: category.key,
+        label: category.label,
+        value: options.length ? 'Not selected' : 'Coming soon',
+      };
+    });
+  }, [draft.additionalCategorySelections, hasStudioTierAccess]);
 
   const accessorySummary = useMemo(() => {
     if (!draft.accessories?.length) {
@@ -110,6 +155,11 @@ function QuoteRequest() {
           <p><strong>Shape:</strong> {formatSelectionValue(draft.shape)}</p>
           <p><strong>Design style:</strong> {formatSelectionValue(draft.designStyle)}</p>
           <p><strong>Accessories:</strong> {accessorySummary}</p>
+          {hasStudioTierAccess
+            ? additionalCategorySummary.map((category) => (
+                <p key={category.key}><strong>{category.label}:</strong> {category.value}</p>
+              ))
+            : null}
           {draft.wording ? <p><strong>Wording draft:</strong> {draft.wording}</p> : null}
           <div className='quote-request-links'>
             <Link className='secondary-link' to='/preview'>Back to previewer</Link>

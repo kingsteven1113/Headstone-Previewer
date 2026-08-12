@@ -27,13 +27,6 @@ function Pricing() {
       description: 'Built for teams that want the advanced preview workflow and richer design control.',
       features: ['Advanced previewer', 'Design-style controls', 'Quote generation'],
     },
-    {
-      key: 'enterprise',
-      name: 'Enterprise',
-      price: 'Custom',
-      description: 'Built for multi-location funeral homes that need team controls.',
-      features: ['Multi-user teams', 'Branded experience', 'Priority support'],
-    },
   ];
 
   return (

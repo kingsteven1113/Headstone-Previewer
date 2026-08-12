@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Previewer.css';
 import Modal from '../Modal/Modal';
@@ -9,7 +9,7 @@ import { DEFAULT_DESIGN_STYLE } from '../../utils/designStyles';
 import { resolvePreviewCombination } from '../../utils/previewCombinationResolver';
 import { PREVIEW_CATALOG } from '../../utils/previewCatalog';
 import { getStepRequirements, isShapeDisabledForType, isAccessoryDisabledForSelection } from '../../utils/previewResolver';
-import Logo from '../../assets/CJStonesLogo.jpg';
+import Logo from '../../assets/Headstone Previewer Logo.png';
 import Impala_Black from '../../assets/Casillas 2.jpg';
 import Barre_Grey from '../../assets/Coakley.jpeg';
 import North_American_Pink from '../../assets/Dockendorf.png';
@@ -28,7 +28,7 @@ import Flat_Top from '../../assets/Weldon.JPG';
 import Serpentine_Top from '../../assets/Conforti.jpeg';
 import Oval_Top from '../../assets/Carpenter 2.jpg';
 import Half_Serpentine_Top from '../../assets/Walker.jpg';
-import Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 import Apex_Top from '../../assets/Thorsen back.jpeg';
 import Roof_Top from '../../assets/Camacho.jpeg';
 
@@ -38,11 +38,11 @@ import Impala_Black_Die_And_Base_Heart_Shape from '../../assets/Martinez heart.j
 import Impala_Black_Die_And_Base_Angel_Carved from '../../assets/Weitsma 1.jpg';
 import Impala_Black_Die_And_Base_Flat_Top from '../../assets/Weldon.JPG';
 import Impala_Black_Die_And_Base_Serpentine_Top from '../../assets/Casillas 2.jpg';
-import Impala_Black_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Impala_Black_Die_And_Base_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Impala_Black_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Impala_Black_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Impala_Black_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Impala_Black_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Barre_Grey_Die_And_Base from '../../assets/Coakley.jpeg';
 import Barre_Grey_Die_And_Base_Heart_Shape from '../../assets/Gabrielli3.jpg';
@@ -50,8 +50,8 @@ import Barre_Grey_Die_And_Base_Angel_Carved from '../../assets/Rende.jpg';
 import Barre_Grey_Die_And_Base_Flat_Top from '../../assets/Shappe.JPG';
 import Barre_Grey_Die_And_Base_Serpentine_Top from '../../assets/Coakley.jpeg';
 import Barre_Grey_Die_And_Base_Oval_Top from '../../assets/Smith.jpg';
-import Barre_Grey_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Barre_Grey_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Barre_Grey_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Barre_Grey_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 import Barre_Grey_Die_And_Base_Apex_Top from '../../assets/Thorsen back.jpeg';
 import Barre_Grey_Die_And_Base_Roof_Top from '../../assets/Camacho.jpeg';
 
@@ -61,43 +61,43 @@ import North_American_Pink_Die_And_Base_Angel_Carved from '../../assets/Angel He
 import North_American_Pink_Die_And_Base_Flat_Top from '../../assets/Finnigan.jpg';
 import North_American_Pink_Die_And_Base_Serpentine_Top from '../../assets/Conforti.jpeg';
 import North_American_Pink_Die_And_Base_Oval_Top from '../../assets/Zmudzinski.jpg';
-import North_American_Pink_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import North_American_Pink_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import North_American_Pink_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import North_American_Pink_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import North_American_Pink_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import North_American_Pink_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import North_American_Pink_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import North_American_Pink_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Mahogany_Die_And_Base from '../../assets/Ferdinand V.jpeg';
-import Mahogany_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Die_And_Base_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Die_And_Base_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Die_And_Base_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Mahogany_Die_And_Base_Serpentine_Top from '../../assets/Ferdinand V.jpeg';
-import Mahogany_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Die_And_Base_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Cats_Eye_Die_And_Base from '../../assets/Stockhamer.jpeg';
-import Cats_Eye_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Die_And_Base_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Die_And_Base_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Die_And_Base_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Cats_Eye_Die_And_Base_Serpentine_Top from '../../assets/Stockhamer.jpeg';
-import Cats_Eye_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Die_And_Base_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Evergreen_Die_And_Base from '../../assets/Seredynski.jpeg';
-import Evergreen_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Evergreen_Die_And_Base_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Die_And_Base_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Die_And_Base_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Evergreen_Die_And_Base_Serpentine_Top from '../../assets/Seredynski.jpeg';
-import Evergreen_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Evergreen_Die_And_Base_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Jet_Black_Die_And_Base from '../../assets/Rivera.jpg';
 import Jet_Black_Die_And_Base_Heart_Shape from '../../assets/Mason.jpg';
@@ -105,183 +105,183 @@ import Jet_Black_Die_And_Base_Angel_Carved from '../../assets/Weitsma 1.jpg';
 import Jet_Black_Die_And_Base_Flat_Top from '../../assets/Weldon.JPG';
 import Jet_Black_Die_And_Base_Serpentine_Top from '../../assets/Rivera.jpg';
 import Jet_Black_Die_And_Base_Oval_Top from '../../assets/Milkovich.jpeg';
-import Jet_Black_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Jet_Black_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Blue_Pearl_Die_And_Base from '../../assets/Anderson.JPG';
-import Blue_Pearl_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Blue_Pearl_Die_And_Base_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Die_And_Base_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Die_And_Base_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Blue_Pearl_Die_And_Base_Serpentine_Top from '../../assets/Anderson.JPG';
-import Blue_Pearl_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Blue_Pearl_Die_And_Base_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Tropical_Green_Die_And_Base from '../../assets/Meier.jpeg';
-import Tropical_Green_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Die_And_Base_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Die_And_Base_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Die_And_Base_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Tropical_Green_Die_And_Base_Serpentine_Top from '../../assets/Meier.jpeg';
-import Tropical_Green_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Die_And_Base_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Paradiso_Die_And_Base from '../../assets/Krieger.jpg';
-import Paradiso_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Die_And_Base_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Die_And_Base_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Die_And_Base_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Die_And_Base_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Die_And_Base_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
 import Paradiso_Die_And_Base_Oval_Top from '../../assets/Krieger.jpg';
-import Paradiso_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Bahama_Blue_Die_And_Base from '../../assets/Giglio.jpg';
-import Bahama_Blue_Die_And_Base_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Die_And_Base_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Die_And_Base_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Bahama_Blue_Die_And_Base_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Die_And_Base_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Die_And_Base_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Bahama_Blue_Die_And_Base_Serpentine_Top from '../../assets/Giglio.jpg';
-import Bahama_Blue_Die_And_Base_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Die_And_Base_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Die_And_Base_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Die_And_Base_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Die_And_Base_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Bahama_Blue_Die_And_Base_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Die_And_Base_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Die_And_Base_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Die_And_Base_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Die_And_Base_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Monolith from '../../assets/Wood.jpg';
 import Impala_Black_Monolith from '../../assets/Wood.jpg';
-import Impala_Black_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
+import Impala_Black_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
 import Impala_Black_Monolith_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Impala_Black_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Monolith_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
+import Impala_Black_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Impala_Black_Monolith_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
 import Impala_Black_Monolith_Oval_Top from '../../assets/Wood.jpg';
-import Impala_Black_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Impala_Black_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Impala_Black_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Impala_Black_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Impala_Black_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Impala_Black_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Barre_Grey_Monolith from '../../assets/Walker.jpg';
-import Barre_Grey_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
+import Barre_Grey_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
 import Barre_Grey_Monolith_Angel_Carved from '../../assets/Casillas 2.jpg';
 import Barre_Grey_Monolith_Flat_Top from '../../assets/Ettere.jpg';
 import Barre_Grey_Monolith_Serpentine_Top from '../../assets/Strandberg.jpg';
 import Barre_Grey_Monolith_Oval_Top from '../../assets/Fornerod.jpg';
 import Barre_Grey_Monolith_Half_Serpentine_Top from '../../assets/Walker.jpg';
-import Barre_Grey_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Barre_Grey_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Barre_Grey_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Barre_Grey_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Barre_Grey_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Barre_Grey_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import North_American_Pink_Monolith from '../../assets/Maynes.jpeg';
-import North_American_Pink_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
+import North_American_Pink_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
 import North_American_Pink_Monolith_Angel_Carved from '../../assets/Casillas 2.jpg';
-import North_American_Pink_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import North_American_Pink_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import North_American_Pink_Monolith_Serpentine_Top from '../../assets/Maynes.jpeg';
-import North_American_Pink_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import North_American_Pink_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import North_American_Pink_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import North_American_Pink_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import North_American_Pink_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import North_American_Pink_Monolith_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import North_American_Pink_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import North_American_Pink_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import North_American_Pink_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import North_American_Pink_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Mahogany_Monolith from '../../assets/Castellano.JPG';
-import Mahogany_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Monolith_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Monolith_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Mahogany_Monolith_Serpentine_Top from '../../assets/Castellano.JPG';
-import Mahogany_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Mahogany_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Monolith_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Mahogany_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
-import Cats_Eye_Monolith from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Monolith from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
-import Evergreen_Monolith from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Evergreen_Monolith from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Jet_Black_Monolith from '../../assets/Delorier.jpeg';
-import Jet_Black_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Monolith_Angel_Carved from '../../assets/CJStonesLogo.jpg';
+import Jet_Black_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Monolith_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
 import Jet_Black_Monolith_Flat_Top from '../../assets/Bruckenthal.webp';
 import Jet_Black_Monolith_Serpentine_Top from '../../assets/Delorier.jpeg';
-import Jet_Black_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Jet_Black_Monolith_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Blue_Pearl_Monolith from '../../assets/Taskovich.jpg';
-import Blue_Pearl_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
+import Blue_Pearl_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
 import Blue_Pearl_Monolith_Angel_Carved from '../../assets/Casillas 2.jpg';
-import Blue_Pearl_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Blue_Pearl_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Blue_Pearl_Monolith_Serpentine_Top from '../../assets/Taskovich.jpg';
-import Blue_Pearl_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Blue_Pearl_Monolith_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
-import Tropical_Green_Monolith from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Monolith from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Paradiso_Monolith from '../../assets/Reiter.jpg';
-import Paradiso_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Monolith_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Monolith_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Monolith_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Monolith_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
 import Paradiso_Monolith_Oval_Top from '../../assets/Reiter.jpg';
-import Paradiso_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
-import Bahama_Blue_Monolith from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Heart_Shape from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Angel_Carved from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Half_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Half_Oval_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Apex_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Monolith_Roof_Top from '../../assets/CJStonesLogo.jpg';
+import Bahama_Blue_Monolith from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Heart_Shape from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Angel_Carved from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Half_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Half_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Apex_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Monolith_Roof_Top from '../../assets/Headstone Previewer Logo.png';
 
 import Slant_Marker from '../../assets/Brunetto.jpg';
 import Impala_Black_Slant_Marker from '../../assets/Orellana.jpg';
 
 import Impala_Black_Slant_Marker_Flat_Top from '../../assets/Pharr.jpg';
 import Impala_Black_Slant_Marker_Serpentine_Top from '../../assets/Orellana.jpg';
-import Impala_Black_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Impala_Black_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 
 
 import Barre_Grey_Slant_Marker from '../../assets/Brunetto.jpg';
@@ -300,57 +300,57 @@ import North_American_Pink_Slant_Marker_Oval_Top from '../../assets/Brockway fro
 
 import Mahogany_Slant_Marker from '../../assets/Watson.webp';
 
-import Mahogany_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Slant_Marker_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Mahogany_Slant_Marker_Serpentine_Top from '../../assets/Watson.webp';
-import Mahogany_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 
 
-import Cats_Eye_Slant_Marker from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Slant_Marker from '../../assets/Headstone Previewer Logo.png';
 
-import Cats_Eye_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Slant_Marker_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Slant_Marker_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 
 
-import Evergreen_Slant_Marker from '../../assets/CJStonesLogo.jpg';
+import Evergreen_Slant_Marker from '../../assets/Headstone Previewer Logo.png';
 
-import Evergreen_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Evergreen_Slant_Marker_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Slant_Marker_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 
 
 import Jet_Black_Slant_Marker from '../../assets/Sheehy.JPG';
 
-import Jet_Black_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
+import Jet_Black_Slant_Marker_Flat_Top from '../../assets/Headstone Previewer Logo.png';
 import Jet_Black_Slant_Marker_Serpentine_Top from '../../assets/Sheehy.JPG';
-import Jet_Black_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Jet_Black_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 
 
 import Blue_Pearl_Slant_Marker from '../../assets/Hernandez R.jpg';
 
 import Blue_Pearl_Slant_Marker_Flat_Top from '../../assets/Hernandez R.jpg';
 import Blue_Pearl_Slant_Marker_Serpentine_Top from '../../assets/DOnofrio.jpg';
-import Blue_Pearl_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Blue_Pearl_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 
 
-import Tropical_Green_Slant_Marker from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Slant_Marker from '../../assets/Headstone Previewer Logo.png';
 
-import Tropical_Green_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
-
-
-import Paradiso_Slant_Marker from '../../assets/CJStonesLogo.jpg';
-
-import Paradiso_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Slant_Marker_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Slant_Marker_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 
 
-import Bahama_Blue_Slant_Marker from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Slant_Marker_Flat_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Slant_Marker_Serpentine_Top from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Slant_Marker_Oval_Top from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Slant_Marker from '../../assets/Headstone Previewer Logo.png';
+
+import Paradiso_Slant_Marker_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Slant_Marker_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
+
+
+import Bahama_Blue_Slant_Marker from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Slant_Marker_Flat_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Slant_Marker_Serpentine_Top from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Slant_Marker_Oval_Top from '../../assets/Headstone Previewer Logo.png';
 
 
 import Flush_Marker from '../../assets/Moore, Florence.JPG';
@@ -363,10 +363,10 @@ import Barre_Grey_Flush_Marker from '../../assets/Moore, Florence.JPG';
 import North_American_Pink_Flush_Marker from '../../assets/Trotman.jpg';
 
 
-import Mahogany_Flush_Marker from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Flush_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
-import Cats_Eye_Flush_Marker from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Flush_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
 import Evergreen_Flush_Marker from '../../assets/Wu.jpeg';
@@ -375,19 +375,19 @@ import Evergreen_Flush_Marker from '../../assets/Wu.jpeg';
 import Jet_Black_Flush_Marker from '../../assets/DeMeo.jpg';
 
 
-import Blue_Pearl_Flush_Marker from '../../assets/CJStonesLogo.jpg';
+import Blue_Pearl_Flush_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
-import Tropical_Green_Flush_Marker from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Flush_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
-import Paradiso_Flush_Marker from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Flush_Marker from '../../assets/Headstone Previewer Logo.png';
 
-import Bahama_Blue_Flush_Marker from '../../assets/CJStonesLogo.jpg';
+import Bahama_Blue_Flush_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
 import Hickey_Marker from '../../assets/Meek installed.jpg';
-import Impala_Black_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
+import Impala_Black_Hickey_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
 import Barre_Grey_Hickey_Marker from '../../assets/Meek installed.jpg';
@@ -396,26 +396,26 @@ import Barre_Grey_Hickey_Marker from '../../assets/Meek installed.jpg';
 import North_American_Pink_Hickey_Marker from '../../assets/Urban.JPG';
 
 
-import Mahogany_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Hickey_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
-import Cats_Eye_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Hickey_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
-import Evergreen_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
+import Evergreen_Hickey_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
-import Jet_Black_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
+import Jet_Black_Hickey_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
 import Blue_Pearl_Hickey_Marker from '../../assets/Yessian.jpg';
 
 
-import Tropical_Green_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Hickey_Marker from '../../assets/Headstone Previewer Logo.png';
 
-import Paradiso_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
+import Paradiso_Hickey_Marker from '../../assets/Headstone Previewer Logo.png';
 
-import Bahama_Blue_Hickey_Marker from '../../assets/CJStonesLogo.jpg';
+import Bahama_Blue_Hickey_Marker from '../../assets/Headstone Previewer Logo.png';
 
 
 import Natural_Stone from '../../assets/Lum.jpeg';
@@ -424,26 +424,26 @@ import Impala_Black_Bench from '../../assets/Capalbo installed.jpg';
 import Barre_Grey_Bench from '../../assets/Reynolds.JPG';
 import North_American_Pink_Bench from '../../assets/Gagliari.JPG';
 import Mahogany_Bench from '../../assets/Schiavone Bench.jpg';
-import Cats_Eye_Bench from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Bench from '../../assets/CJStonesLogo.jpg';
+import Cats_Eye_Bench from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Bench from '../../assets/Headstone Previewer Logo.png';
 import Jet_Black_Bench from '../../assets/Mayer bench 2.JPG';
 import Blue_Pearl_Bench from '../../assets/Giordano 1.jpg';
-import Tropical_Green_Bench from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Bench from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Bench from '../../assets/CJStonesLogo.jpg';
+import Tropical_Green_Bench from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Bench from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Bench from '../../assets/Headstone Previewer Logo.png';
 import Bronze_Plaque from '../../assets/George.JPG';
 
-import Impala_Black_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import Barre_Grey_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Impala_Black_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
+import Barre_Grey_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
 import North_American_Pink_Bronze_Plaque from '../../assets/George.JPG';
-import Mahogany_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import Cats_Eye_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import Evergreen_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import Jet_Black_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import Blue_Pearl_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import Tropical_Green_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import Paradiso_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
-import Bahama_Blue_Bronze_Plaque from '../../assets/CJStonesLogo.jpg';
+import Mahogany_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
+import Cats_Eye_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
+import Evergreen_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
+import Jet_Black_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
+import Blue_Pearl_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
+import Tropical_Green_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
+import Paradiso_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
+import Bahama_Blue_Bronze_Plaque from '../../assets/Headstone Previewer Logo.png';
 
 const {
   types: ADVANCED_TYPE_OPTIONS,
@@ -793,9 +793,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [activeAdvancedStep, setActiveAdvancedStep] = useState('type');
   const [activeCoreStep, setActiveCoreStep] = useState('type');
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [imageZoom, setImageZoom] = useState(1);
+  const [imagePan, setImagePan] = useState({ x: 0, y: 0 });
+  const [isDraggingImage, setIsDraggingImage] = useState(false);
+  const [dragStartPoint, setDragStartPoint] = useState({ x: 0, y: 0 });
+  const modalImageRef = useRef(null);
+
+  const MIN_IMAGE_ZOOM = 1;
+  const MAX_IMAGE_ZOOM = 3;
+  const IMAGE_ZOOM_STEP = 0.25;
 
   const selectedAccessories = [vase, etching, bronzeEmblem, porcelainPhoto].filter(Boolean);
   const { requiresColorStep, requiresShapeStep } = getStepRequirements(selection.type, PREVIEW_CATALOG);
+
+  useEffect(() => {
+    if (!isImageModalOpen) {
+      return undefined;
+    }
+
+    const handleEscToClose = (event) => {
+      if (event.key === 'Escape') {
+        setIsImageModalOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscToClose);
+    return () => {
+      document.removeEventListener('keydown', handleEscToClose);
+    };
+  }, [isImageModalOpen]);
 
   const formatSelectionLabel = (value) => {
     if (!value) {
@@ -933,6 +960,116 @@ document.addEventListener('DOMContentLoaded', () => {
     setHiddenInputValue('PorcelainPhotoInput', '');
   };
 
+  const openImageModal = () => {
+    setImageZoom(1);
+    setImagePan({ x: 0, y: 0 });
+    setIsImageModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
+    setIsDraggingImage(false);
+  };
+
+  const applyImageZoom = (targetZoom, anchorPoint = null) => {
+    setImageZoom((currentZoom) => {
+      const nextZoom = Math.max(MIN_IMAGE_ZOOM, Math.min(MAX_IMAGE_ZOOM, Number(targetZoom.toFixed(2))));
+
+      if (nextZoom === currentZoom) {
+        return currentZoom;
+      }
+
+      setImagePan((currentPan) => {
+        if (nextZoom === MIN_IMAGE_ZOOM) {
+          return { x: 0, y: 0 };
+        }
+
+        if (!anchorPoint || !modalImageRef.current) {
+          return currentPan;
+        }
+
+        const imageRect = modalImageRef.current.getBoundingClientRect();
+        const imageCenterX = imageRect.left + imageRect.width / 2;
+        const imageCenterY = imageRect.top + imageRect.height / 2;
+        const zoomRatio = nextZoom / currentZoom;
+
+        return {
+          x: Number((currentPan.x + (1 - zoomRatio) * (anchorPoint.x - imageCenterX)).toFixed(2)),
+          y: Number((currentPan.y + (1 - zoomRatio) * (anchorPoint.y - imageCenterY)).toFixed(2)),
+        };
+      });
+
+      return nextZoom;
+    });
+  };
+
+  const zoomInImage = () => {
+    applyImageZoom(imageZoom + IMAGE_ZOOM_STEP);
+  };
+
+  const zoomOutImage = () => {
+    applyImageZoom(imageZoom - IMAGE_ZOOM_STEP);
+  };
+
+  const resetImageZoom = () => {
+    setImageZoom(1);
+    setImagePan({ x: 0, y: 0 });
+  };
+
+  const handleImageViewportWheel = (event) => {
+    event.preventDefault();
+
+    if (event.deltaY < 0) {
+      applyImageZoom(imageZoom + IMAGE_ZOOM_STEP, { x: event.clientX, y: event.clientY });
+      return;
+    }
+
+    applyImageZoom(imageZoom - IMAGE_ZOOM_STEP, { x: event.clientX, y: event.clientY });
+  };
+
+  const handleImageMouseDown = (event) => {
+    if (imageZoom <= MIN_IMAGE_ZOOM) {
+      return;
+    }
+
+    event.preventDefault();
+    setIsDraggingImage(true);
+    setDragStartPoint({
+      x: event.clientX - imagePan.x,
+      y: event.clientY - imagePan.y,
+    });
+  };
+
+  const handleImageMouseMove = (event) => {
+    if (!isDraggingImage) {
+      return;
+    }
+
+    setImagePan({
+      x: event.clientX - dragStartPoint.x,
+      y: event.clientY - dragStartPoint.y,
+    });
+  };
+
+  const stopImageDragging = () => {
+    setIsDraggingImage(false);
+  };
+
+  useEffect(() => {
+    if (!isDraggingImage) {
+      return undefined;
+    }
+
+    const handleWindowMouseUp = () => {
+      stopImageDragging();
+    };
+
+    window.addEventListener('mouseup', handleWindowMouseUp);
+    return () => {
+      window.removeEventListener('mouseup', handleWindowMouseUp);
+    };
+  }, [isDraggingImage]);
+
   const handleAdvancedTypeSelect = (typeValue, typeLabel) => {
     setSelection((currentSelection) => ({
       ...currentSelection,
@@ -1031,19 +1168,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const stepStillVisible = advancedSteps.some((step) => step.key === activeAdvancedStep);
     if (!stepStillVisible) {
       setActiveAdvancedStep(advancedSteps[0]?.key || 'type');
-      return;
-    }
-
-    const firstIncompleteStep = advancedSteps.find((step) => !step.isComplete);
-    if (!firstIncompleteStep) {
-      return;
-    }
-
-    const activeStepIndex = advancedSteps.findIndex((step) => step.key === activeAdvancedStep);
-    const incompleteStepIndex = advancedSteps.findIndex((step) => step.key === firstIncompleteStep.key);
-
-    if (activeStepIndex !== -1 && incompleteStepIndex > activeStepIndex && advancedSteps[activeStepIndex]?.isComplete) {
-      setActiveAdvancedStep(firstIncompleteStep.key);
     }
   }, [
     hasAdvancedPreviewerAccess,
@@ -1059,19 +1183,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const stepStillVisible = coreSteps.some((step) => step.key === activeCoreStep);
     if (!stepStillVisible) {
       setActiveCoreStep(coreSteps[0]?.key || 'type');
-      return;
-    }
-
-    const firstIncompleteStep = coreSteps.find((step) => !step.isComplete);
-    if (!firstIncompleteStep) {
-      return;
-    }
-
-    const activeStepIndex = coreSteps.findIndex((step) => step.key === activeCoreStep);
-    const incompleteStepIndex = coreSteps.findIndex((step) => step.key === firstIncompleteStep.key);
-
-    if (activeStepIndex !== -1 && incompleteStepIndex > activeStepIndex && coreSteps[activeStepIndex]?.isComplete) {
-      setActiveCoreStep(firstIncompleteStep.key);
     }
   }, [
     hasAdvancedPreviewerAccess,
@@ -1478,6 +1589,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   let SelectionImage = '';
+  const previewImageSrc = imageSrc(selection);
   return (
     
     <>
@@ -1609,7 +1721,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <div className='Preview-Images'>
           <div className='Preview-Container'>
             <div className='PreviewStyleBadge'>{hasAdvancedPreviewerAccess ? 'Advanced Previewer' : 'Core Previewer'}</div>
-            <img className='Image' id='Stone' src={imageSrc(selection)} alt="" />
+            <button
+              type='button'
+              className='PreviewImageButton'
+              onClick={openImageModal}
+              aria-label='Open preview image in zoomable modal'
+            >
+              <img className='Image' id='Stone' src={previewImageSrc} alt='Selected headstone preview' />
+            </button>
           </div>
           <p id='NoCombinationMessage'  className='NoCombinationMessage hidden'>This combination has not been made yet. But if you'd like to see it, please let us know!</p>
           <div className='PreviewStyleCard'>
@@ -1632,6 +1751,39 @@ document.addEventListener('DOMContentLoaded', () => {
         
       </div>
 
+      {isImageModalOpen && (
+        <div className='PreviewImageModalOverlay' onClick={closeImageModal}>
+          <div className='PreviewImageModalContent' onClick={(event) => event.stopPropagation()}>
+            <button type='button' className='PreviewImageModalCloseButton' onClick={closeImageModal} aria-label='Close image modal'>
+              x
+            </button>
+            <div className='PreviewImageModalToolbar'>
+              <button type='button' onClick={zoomOutImage} disabled={imageZoom <= MIN_IMAGE_ZOOM}>-</button>
+              <span>{Math.round(imageZoom * 100)}%</span>
+              <button type='button' onClick={zoomInImage} disabled={imageZoom >= MAX_IMAGE_ZOOM}>+</button>
+              <button type='button' onClick={resetImageZoom}>Reset</button>
+            </div>
+            <div
+              className={`PreviewImageModalViewport${imageZoom > MIN_IMAGE_ZOOM ? ' is-draggable' : ''}${isDraggingImage ? ' is-dragging' : ''}`}
+              onWheel={handleImageViewportWheel}
+              onMouseDown={handleImageMouseDown}
+              onMouseMove={handleImageMouseMove}
+              onMouseLeave={stopImageDragging}
+              onMouseUp={stopImageDragging}
+            >
+              <img
+                ref={modalImageRef}
+                className='PreviewImageModalImage'
+                src={previewImageSrc}
+                alt='Selected headstone preview enlarged'
+                onDragStart={(event) => event.preventDefault()}
+                style={{ transform: `translate(${imagePan.x}px, ${imagePan.y}px) scale(${imageZoom})` }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       
     </>
     
@@ -1641,3 +1793,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 export default Previewer;
+

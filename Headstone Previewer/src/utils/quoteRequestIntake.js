@@ -14,6 +14,18 @@ function normalizeAccessories(accessories) {
     .filter(Boolean);
 }
 
+function normalizeAdditionalCategorySelections(selections) {
+  if (!selections || typeof selections !== 'object') {
+    return {};
+  }
+
+  return Object.entries(selections).reduce((accumulator, [key, value]) => {
+    const normalizedValue = normalizeText(value);
+    accumulator[key] = normalizedValue || null;
+    return accumulator;
+  }, {});
+}
+
 export function buildQuoteRequestIntake({ draft, formData }) {
   const normalizedForm = {
     familyName: normalizeText(formData?.familyName),
@@ -52,6 +64,7 @@ export function buildQuoteRequestIntake({ draft, formData }) {
       designStyle: normalizeText(draft?.designStyle) || 'Standard',
       wording: normalizeText(draft?.wording) || null,
       accessories: normalizeAccessories(draft?.accessories),
+      additionalCategorySelections: normalizeAdditionalCategorySelections(draft?.additionalCategorySelections),
     },
     referralAttribution,
   };
