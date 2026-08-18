@@ -5,6 +5,7 @@ import projectsRouter from './routes/projects.js';
 import authRouter from './routes/auth.js';
 import adminRouter from './routes/admin.js';
 import billingRouter, { stripeWebhookHandler } from './routes/billing.js';
+import quoteRequestsRouter from './routes/quoteRequests.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 dotenv.config();
@@ -56,6 +57,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/projects', projectsRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/billing', billingRouter);
+app.use('/api/quote-requests', quoteRequestsRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

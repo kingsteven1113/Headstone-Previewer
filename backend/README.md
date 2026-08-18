@@ -27,6 +27,15 @@ STRIPE_PRICE_ENTERPRISE_MONTHLY=price_...
 STRIPE_CHECKOUT_SUCCESS_URL=http://localhost:5173/dashboard?billing=success
 STRIPE_CHECKOUT_CANCEL_URL=http://localhost:5173/dashboard?billing=cancelled
 STRIPE_PORTAL_RETURN_URL=http://localhost:5173/dashboard
+DEALER_VERIFICATION_DEV_MODE=true
+EMAIL_NOTIFICATIONS_ENABLED=false
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=mailer@example.com
+SMTP_PASS=replace-with-app-password
+SMTP_FROM="Headstone Previewer <no-reply@example.com>"
+APP_BASE_URL=http://localhost:5173
 ```
 
 ### Run database migrations
@@ -46,6 +55,8 @@ The server will start on `http://localhost:5000`
 ### Authentication
 - `POST /api/auth/login` - Login and get JWT token
 - `POST /api/auth/verify` - Verify token validity
+- `POST /api/auth/dealer/register` - Start dealer onboarding and issue one-time verification challenge
+- `POST /api/auth/dealer/verify` - Verify dealer one-time code and activate dealer account
 
 ### Projects
 - `GET /api/projects` - Get all projects for authenticated user
@@ -70,6 +81,25 @@ The server will start on `http://localhost:5000`
 ### Billing (webhook)
 - `POST /api/billing/webhook` - Stripe webhook endpoint (raw body, signature verified)
 
+### Quote Requests (authenticated)
+- `GET /api/quote-requests/dealers` - List verified monument dealers available for routing
+- `POST /api/quote-requests` - Submit quote request from funeral home to selected dealer
+- `GET /api/quote-requests/mine` - List quote requests submitted by current account
+- `GET /api/quote-requests/inbox` - Dealer inbox of assigned quote requests
+- `PATCH /api/quote-requests/:quoteRequestId/status` - Dealer status updates (in_review/responded/declined)
+- `GET /api/quote-requests/:quoteRequestId/messages` - List chat messages for request participants
+- `POST /api/quote-requests/:quoteRequestId/messages` - Send chat message on a quote request thread
+- `GET /api/quote-requests/:quoteRequestId/offers` - List official dealer quotes for request participants
+- `POST /api/quote-requests/:quoteRequestId/offers` - Dealer sends or revises an official quote
+
+### Email Notifications
+
+- Set `EMAIL_NOTIFICATIONS_ENABLED=true` to enable outbound notifications.
+- SMTP notifications are sent for:
+	- New quote request thread messages (to the other participant)
+	- Newly issued/revised official dealer quotes (to the funeral-home requester)
+- If SMTP variables are missing or disabled, API behavior is unchanged and email sends are skipped.
+
 ## Authentication
 
 Include JWT token in request headers:
@@ -87,6 +117,13 @@ This backend now uses Prisma + PostgreSQL for persistence.
 - The API keeps the 10 most recent projects per user
 - Subscriptions and payments are persisted for admin reporting
 - Stripe webhook events sync subscription status and payment records
+- Dealer onboarding uses a two-step verification flow (`DEALER_PENDING` -> `DEALER`)
+
+## Dealer Verification Notes
+
+- `DEALER_VERIFICATION_DEV_MODE=true` (default) exposes the one-time dealer verification code in the response payload for local testing.
+- Set `DEALER_VERIFICATION_DEV_MODE=false` in production and deliver codes by email/SMS through your own provider.
+- Verification codes expire after 15 minutes and lock out after repeated failed attempts.
 
 ## Stripe Tier Setup
 

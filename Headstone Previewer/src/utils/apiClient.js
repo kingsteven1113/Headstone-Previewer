@@ -101,6 +101,26 @@ class ApiClient {
     });
   }
 
+  async registerDealer(dealerPayload) {
+    return this.request('/auth/dealer/register', {
+      method: 'POST',
+      body: JSON.stringify(dealerPayload),
+    });
+  }
+
+  async verifyDealerCode(email, code) {
+    const data = await this.request('/auth/dealer/verify', {
+      method: 'POST',
+      body: JSON.stringify({ email, code }),
+    });
+
+    if (data.token) {
+      this.setToken(data.token);
+    }
+
+    return data;
+  }
+
   async logout() {
     this.setToken(null);
   }
@@ -202,6 +222,65 @@ class ApiClient {
     return this.request('/billing/checkout-complete', {
       method: 'POST',
       body: JSON.stringify({ sessionId }),
+    });
+  }
+
+  // Quote request routing endpoints
+  async getVerifiedDealers() {
+    return this.request('/quote-requests/dealers', {
+      method: 'GET',
+    });
+  }
+
+  async createQuoteRequest(payload) {
+    return this.request('/quote-requests', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async getMyQuoteRequests() {
+    return this.request('/quote-requests/mine', {
+      method: 'GET',
+    });
+  }
+
+  async getDealerQuoteInbox() {
+    return this.request('/quote-requests/inbox', {
+      method: 'GET',
+    });
+  }
+
+  async updateQuoteRequestStatus(quoteRequestId, status) {
+    return this.request(`/quote-requests/${quoteRequestId}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status }),
+    });
+  }
+
+  async getQuoteRequestMessages(quoteRequestId) {
+    return this.request(`/quote-requests/${quoteRequestId}/messages`, {
+      method: 'GET',
+    });
+  }
+
+  async sendQuoteRequestMessage(quoteRequestId, body) {
+    return this.request(`/quote-requests/${quoteRequestId}/messages`, {
+      method: 'POST',
+      body: JSON.stringify({ body }),
+    });
+  }
+
+  async getQuoteRequestOffers(quoteRequestId) {
+    return this.request(`/quote-requests/${quoteRequestId}/offers`, {
+      method: 'GET',
+    });
+  }
+
+  async createQuoteRequestOffer(quoteRequestId, payload) {
+    return this.request(`/quote-requests/${quoteRequestId}/offers`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
     });
   }
 }

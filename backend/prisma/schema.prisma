@@ -10,6 +10,14 @@ datasource db {
 enum UserRole {
   ADMIN
   MEMBER
+  DEALER_PENDING
+  DEALER
+}
+
+enum DealerVerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
 }
 
 enum SubscriptionStatus {
@@ -27,6 +35,19 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum QuoteRequestStatus {
+  SUBMITTED
+  IN_REVIEW
+  RESPONDED
+  DECLINED
+}
+
+enum QuoteOfferStatus {
+  SENT
+  REVISED
+  WITHDRAWN
+}
+
 model User {
   id           String       @id @default(cuid())
   email        String       @unique
@@ -37,6 +58,115 @@ model User {
   projects     Project[]
   subscription Subscription?
   payments     Payment[]
+  dealerProfile DealerProfile?
+  dealerVerifications DealerVerification[]
+  quoteRequestsSent QuoteRequest[] @relation("QuoteRequestRequester")
+  quoteRequestsReceived QuoteRequest[] @relation("QuoteRequestDealer")
+  quoteRequestMessages QuoteRequestMessage[]
+  quoteRequestOffers QuoteRequestOffer[]
+}
+
+model DealerProfile {
+  id                 String                   @id @default(cuid())
+  businessName       String
+  businessPhone      String
+  website            String?
+  taxIdLast4         String?
+  verificationStatus DealerVerificationStatus @default(PENDING)
+  verifiedAt         DateTime?
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DealerVerification {
+  id         String   @id @default(cuid())
+  codeHash   String
+  expiresAt  DateTime
+  attempts   Int      @default(0)
+  consumedAt DateTime?
+  createdAt  DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt(sort: Desc)])
+}
+
+model QuoteRequest {
+  id                String             @id @default(cuid())
+  status            QuoteRequestStatus @default(SUBMITTED)
+  familyName        String
+  customerEmail     String
+  customerPhone     String
+  appointmentWindow String?
+  notes             String?
+  cemeteryName      String?
+  designTitle       String
+  designType        String?
+  designColor       String?
+  designShape       String?
+  designStyle       String?
+  designWording     String?
+  accessories       Json
+  additionalSelections Json
+  preferredDealerName String?
+  referralCode      String?
+  submittedAt       DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  requesterUserId String
+  requesterUser   User @relation("QuoteRequestRequester", fields: [requesterUserId], references: [id], onDelete: Cascade)
+
+  dealerUserId String
+  dealerUser   User @relation("QuoteRequestDealer", fields: [dealerUserId], references: [id], onDelete: Cascade)
+
+  messages QuoteRequestMessage[]
+  offers QuoteRequestOffer[]
+
+  @@index([dealerUserId, submittedAt(sort: Desc)])
+  @@index([requesterUserId, submittedAt(sort: Desc)])
+}
+
+model QuoteRequestOffer {
+  id           String           @id @default(cuid())
+  title        String
+  amountCents  Int
+  currency     String           @default("usd")
+  leadTimeDays Int?
+  validUntil   DateTime?
+  scopeSummary String?
+  terms        String?
+  status       QuoteOfferStatus @default(SENT)
+  isCurrent    Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  quoteRequestId String
+  quoteRequest   QuoteRequest @relation(fields: [quoteRequestId], references: [id], onDelete: Cascade)
+
+  dealerUserId String
+  dealerUser   User @relation(fields: [dealerUserId], references: [id], onDelete: Cascade)
+
+  @@index([quoteRequestId, createdAt(sort: Desc)])
+  @@index([dealerUserId, createdAt(sort: Desc)])
+}
+
+model QuoteRequestMessage {
+  id        String   @id @default(cuid())
+  body      String
+  createdAt DateTime @default(now())
+
+  quoteRequestId String
+  quoteRequest   QuoteRequest @relation(fields: [quoteRequestId], references: [id], onDelete: Cascade)
+
+  senderUserId String
+  senderUser   User @relation(fields: [senderUserId], references: [id], onDelete: Cascade)
+
+  @@index([quoteRequestId, createdAt(sort: Asc)])
+  @@index([senderUserId, createdAt(sort: Desc)])
 }
 
 model Project {

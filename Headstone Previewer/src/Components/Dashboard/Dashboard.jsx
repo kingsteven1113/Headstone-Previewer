@@ -19,9 +19,26 @@ function formatDisplayDate(dateString) {
   return parsed.toLocaleDateString();
 }
 
+function formatMoney(cents, currency = 'usd') {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: String(currency || 'usd').toUpperCase(),
+  }).format((Number(cents) || 0) / 100);
+}
+
 function Dashboard() {
   const { user, plan, subscriptionStatus, refreshAuthUser } = useAuth();
   const [projects, setProjects] = useState([]);
+  const [quoteRequests, setQuoteRequests] = useState([]);
+  const [isLoadingQuoteRequests, setIsLoadingQuoteRequests] = useState(false);
+  const [quoteRequestError, setQuoteRequestError] = useState('');
+  const [selectedQuoteRequestId, setSelectedQuoteRequestId] = useState('');
+  const [messagesByQuoteRequestId, setMessagesByQuoteRequestId] = useState({});
+  const [offersByQuoteRequestId, setOffersByQuoteRequestId] = useState({});
+  const [messageDraftByQuoteRequestId, setMessageDraftByQuoteRequestId] = useState({});
+  const [loadingMessagesForQuoteRequestId, setLoadingMessagesForQuoteRequestId] = useState('');
+  const [loadingOffersForQuoteRequestId, setLoadingOffersForQuoteRequestId] = useState('');
+  const [sendingMessageForQuoteRequestId, setSendingMessageForQuoteRequestId] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editingName, setEditingName] = useState('');
   const [billingPlans, setBillingPlans] = useState([]);
@@ -88,6 +105,24 @@ function Dashboard() {
     };
 
     loadBilling();
+  }, []);
+
+  useEffect(() => {
+    const loadQuoteRequests = async () => {
+      try {
+        setQuoteRequestError('');
+        setIsLoadingQuoteRequests(true);
+        const data = await apiClient.getMyQuoteRequests();
+        setQuoteRequests(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Failed to load quote requests:', error);
+        setQuoteRequestError(error.message || 'Unable to load routed quote requests.');
+      } finally {
+        setIsLoadingQuoteRequests(false);
+      }
+    };
+
+    loadQuoteRequests();
   }, []);
 
   useEffect(() => {
@@ -227,6 +262,80 @@ function Dashboard() {
     setEditingName('');
   };
 
+  const openQuoteRequestChat = async (quoteRequestId) => {
+    setSelectedQuoteRequestId(quoteRequestId);
+
+    if (messagesByQuoteRequestId[quoteRequestId]) {
+      return;
+    }
+
+    try {
+      setLoadingMessagesForQuoteRequestId(quoteRequestId);
+      const messages = await apiClient.getQuoteRequestMessages(quoteRequestId);
+      setMessagesByQuoteRequestId((currentState) => ({
+        ...currentState,
+        [quoteRequestId]: Array.isArray(messages) ? messages : [],
+      }));
+    } catch (error) {
+      console.error('Failed to load quote request chat:', error);
+      setQuoteRequestError(error.message || 'Unable to load quote request chat.');
+    } finally {
+      setLoadingMessagesForQuoteRequestId('');
+    }
+  };
+
+  const sendQuoteRequestMessage = async (quoteRequestId) => {
+    const draft = String(messageDraftByQuoteRequestId[quoteRequestId] || '').trim();
+    if (!draft) {
+      return;
+    }
+
+    try {
+      setSendingMessageForQuoteRequestId(quoteRequestId);
+      const createdMessage = await apiClient.sendQuoteRequestMessage(quoteRequestId, draft);
+      setMessagesByQuoteRequestId((currentState) => ({
+        ...currentState,
+        [quoteRequestId]: [...(currentState[quoteRequestId] || []), createdMessage],
+      }));
+      setMessageDraftByQuoteRequestId((currentState) => ({
+        ...currentState,
+        [quoteRequestId]: '',
+      }));
+    } catch (error) {
+      console.error('Failed to send quote request message:', error);
+      setQuoteRequestError(error.message || 'Unable to send message right now.');
+    } finally {
+      setSendingMessageForQuoteRequestId('');
+    }
+  };
+
+  const openQuoteRequestOffers = async (quoteRequestId) => {
+    setSelectedQuoteRequestId(quoteRequestId);
+
+    if (offersByQuoteRequestId[quoteRequestId]) {
+      return;
+    }
+
+    try {
+      setLoadingOffersForQuoteRequestId(quoteRequestId);
+      const offers = await apiClient.getQuoteRequestOffers(quoteRequestId);
+      setOffersByQuoteRequestId((currentState) => ({
+        ...currentState,
+        [quoteRequestId]: Array.isArray(offers) ? offers : [],
+      }));
+    } catch (error) {
+      console.error('Failed to load official quote offers:', error);
+      setQuoteRequestError(error.message || 'Unable to load official quote offers.');
+    } finally {
+      setLoadingOffersForQuoteRequestId('');
+    }
+  };
+
+  const selectedQuoteRequest = quoteRequests.find((request) => request.id === selectedQuoteRequestId) || null;
+  const selectedQuoteRequestMessages = selectedQuoteRequest ? (messagesByQuoteRequestId[selectedQuoteRequest.id] || []) : [];
+  const selectedQuoteRequestOffers = selectedQuoteRequest ? (offersByQuoteRequestId[selectedQuoteRequest.id] || []) : [];
+  const currentSelectedQuoteOffer = selectedQuoteRequestOffers.find((offer) => offer.isCurrent) || selectedQuoteRequest?.currentOffer || null;
+
   return (
     <section className="dashboard-card">
       <div className="dashboard-header">
@@ -325,6 +434,103 @@ function Dashboard() {
           <p className="panel-note">{quoteAccessEnabled ? 'Quote generation is also enabled on this account.' : 'Quote generation remains locked until you move above Trial.'}</p>
         </article>
         <article className="panel">
+          <h3>Dealer quote routing</h3>
+          {isLoadingQuoteRequests ? <p>Loading routed requests...</p> : null}
+          {!isLoadingQuoteRequests && quoteRequests.length === 0 ? (
+            <p>No quote requests sent yet. Submit one from the quote request page to route designs directly to a dealer.</p>
+          ) : null}
+          {!isLoadingQuoteRequests && quoteRequests.length > 0 ? (
+            <ul className="feature-list">
+              {quoteRequests.slice(0, 5).map((request) => (
+                <li key={request.id}>
+                  {request.design?.title || 'Untitled design'} {'->'} {request.dealer?.businessName || request.dealer?.name || 'Dealer'} ({request.status})
+                  <button
+                    className="secondary-link project-action-button"
+                    type="button"
+                    onClick={() => openQuoteRequestChat(request.id)}
+                    disabled={loadingMessagesForQuoteRequestId === request.id}
+                  >
+                    {loadingMessagesForQuoteRequestId === request.id ? 'Loading chat...' : 'Open chat'}
+                  </button>
+                  <button
+                    className="secondary-link project-action-button"
+                    type="button"
+                    onClick={() => openQuoteRequestOffers(request.id)}
+                    disabled={loadingOffersForQuoteRequestId === request.id}
+                  >
+                    {loadingOffersForQuoteRequestId === request.id ? 'Loading quote...' : 'View official quote'}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {quoteRequestError ? <p className="panel-note billing-error">{quoteRequestError}</p> : null}
+          {currentSelectedQuoteOffer ? (
+            <article className="quote-offer-card current">
+              <div className="quote-offer-header">
+                <h4>{currentSelectedQuoteOffer.title}</h4>
+                <span>Official quote</span>
+              </div>
+              <p className="quote-offer-amount">{formatMoney(currentSelectedQuoteOffer.amountCents, currentSelectedQuoteOffer.currency)}</p>
+              <p className="panel-note">Lead time: {currentSelectedQuoteOffer.leadTimeDays ?? 'Not specified'} day(s)</p>
+              <p className="panel-note">Valid until: {currentSelectedQuoteOffer.validUntil ? formatDisplayDate(currentSelectedQuoteOffer.validUntil) : 'Not specified'}</p>
+              {currentSelectedQuoteOffer.scopeSummary ? <p className="panel-note">Scope: {currentSelectedQuoteOffer.scopeSummary}</p> : null}
+              {currentSelectedQuoteOffer.terms ? <p className="panel-note">Terms: {currentSelectedQuoteOffer.terms}</p> : null}
+            </article>
+          ) : null}
+          {selectedQuoteRequestOffers.length > 1 ? (
+            <details className="quote-offer-history">
+              <summary>View previous quote revisions</summary>
+              <ul className="feature-list">
+                {selectedQuoteRequestOffers.filter((offer) => !offer.isCurrent).map((offer) => (
+                  <li key={offer.id}>
+                    {offer.title} - {formatMoney(offer.amountCents, offer.currency)} ({offer.status})
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : null}
+          {selectedQuoteRequest ? (
+            <div>
+              <p className="panel-note">Chat with {selectedQuoteRequest.dealer?.businessName || selectedQuoteRequest.dealer?.name || 'dealer'}:</p>
+              {selectedQuoteRequestMessages.length === 0 ? <p>No messages yet.</p> : null}
+              {selectedQuoteRequestMessages.length > 0 ? (
+                <ul className="feature-list">
+                  {selectedQuoteRequestMessages.map((message) => (
+                    <li key={message.id}>
+                      <strong>{message.sender?.name || message.sender?.email || 'Unknown'}:</strong> {message.body}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              <label>
+                Send message
+                <textarea
+                  rows={3}
+                  value={messageDraftByQuoteRequestId[selectedQuoteRequest.id] || ''}
+                  onChange={(event) => {
+                    const nextValue = event.target.value;
+                    setMessageDraftByQuoteRequestId((currentState) => ({
+                      ...currentState,
+                      [selectedQuoteRequest.id]: nextValue,
+                    }));
+                  }}
+                  placeholder="Ask follow-up questions or share updates"
+                />
+              </label>
+              <button
+                className="secondary-link project-action-button"
+                type="button"
+                onClick={() => sendQuoteRequestMessage(selectedQuoteRequest.id)}
+                disabled={sendingMessageForQuoteRequestId === selectedQuoteRequest.id}
+              >
+                {sendingMessageForQuoteRequestId === selectedQuoteRequest.id ? 'Sending...' : 'Send message'}
+              </button>
+            </div>
+          ) : null}
+          <Link className="secondary-link" to="/quote-request">Open quote request routing</Link>
+        </article>
+        <article className="panel">
           <h3>Billing</h3>
           {isBillingLoading ? <p>Loading billing details...</p> : null}
           {!isBillingLoading ? (
@@ -379,6 +585,7 @@ function Dashboard() {
       </div>
 
       <div className="dashboard-actions">
+        <Link className="dashboard-primary-link" to="/dealer-quotes">Open dealer quote center</Link>
         <Link className="secondary-link" to="/pricing">View pricing</Link>
         <Link className="secondary-link" to="/preview">Back to previewer</Link>
       </div>

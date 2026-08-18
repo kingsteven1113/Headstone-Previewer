@@ -249,6 +249,27 @@ body {
   display: flex;
   gap: 1rem;
   margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-primary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.8rem;
+  border: 1px solid #0f766e;
+  background: #0f766e;
+  color: #ffffff;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.dashboard-primary-link:hover {
+  background: #115e59;
+  box-shadow: 0 8px 18px rgba(15, 118, 110, 0.22);
+  transform: translateY(-1px);
 }
 
 .billing-actions {
@@ -416,6 +437,91 @@ body {
   margin-top: 1rem;
 }
 
+.quote-offer-form {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.quote-offer-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.quote-offer-form input,
+.quote-offer-form textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.7rem;
+  padding: 0.65rem 0.8rem;
+  font: inherit;
+}
+
+.quote-offer-send {
+  justify-self: start;
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  background: #0f766e;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quote-offer-send:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.quote-offer-list {
+  display: grid;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.quote-offer-card {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 0.9rem;
+}
+
+.quote-offer-card.current {
+  border-color: #0f766e;
+  box-shadow: inset 0 0 0 1px rgba(15, 118, 110, 0.25);
+}
+
+.quote-offer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.quote-offer-header h4 {
+  margin: 0;
+  color: #0f172a;
+}
+
+.quote-offer-header span {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0f766e;
+  font-weight: 700;
+}
+
+.quote-offer-amount {
+  margin: 0.45rem 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #102a43;
+}
+
+.quote-offer-history {
+  margin: 0.75rem 0;
+}
+
 .quote-button {
   border: none;
   border-radius: 999px;
@@ -445,6 +551,18 @@ body {
   gap: 0.75rem;
 }
 
+.quote-request-item {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.quote-request-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
 .project-item-content {
   display: flex;
   flex-direction: column;
@@ -468,6 +586,54 @@ body {
   display: flex;
   gap: 0.75rem;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.quote-request-toggle {
+  border: 1px solid #99f6e4;
+  border-radius: 999px;
+  background: #f0fdfa;
+  color: #115e59;
+  padding: 0.4rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.quote-request-toggle:hover {
+  background: #ccfbf1;
+}
+
+.quote-request-toggle-arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.quote-request-toggle.open .quote-request-toggle-arrow {
+  transform: rotate(180deg);
+}
+
+.quote-request-expand {
+  margin-top: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.35s ease;
+}
+
+.quote-request-expand.open {
+  margin-top: 0.85rem;
+  max-height: 2200px;
+  opacity: 1;
+}
+
+.quote-request-details {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .project-rename-button {

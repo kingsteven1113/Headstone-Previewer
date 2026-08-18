@@ -4,14 +4,17 @@ import Previewer from './Components/Previewer/Previewer.jsx';
 import Landing from './Components/Landing/Landing.jsx';
 import Login from './Components/Auth/Login.jsx';
 import Signup from './Components/Auth/Signup.jsx';
+import DealerSignup from './Components/Auth/DealerSignup.jsx';
 import ProtectedRoute from './Components/Auth/ProtectedRoute.jsx';
 import AdminRoute from './Components/Auth/AdminRoute.jsx';
 import Dashboard from './Components/Dashboard/Dashboard.jsx';
 import AdminDashboard from './Components/Dashboard/AdminDashboard.jsx';
+import DealerDashboard from './Components/Dashboard/DealerDashboard.jsx';
 import Pricing from './Components/Pricing/Pricing.jsx';
 import Quote from './Components/Quote/Quote.jsx';
 import QuoteFeaturePage from './Components/Quote/QuoteFeaturePage.jsx';
 import QuoteRequest from './Components/Quote/QuoteRequest.jsx';
+import DealerQuotesPage from './Components/Quote/DealerQuotesPage.jsx';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { canGenerateQuotes } from './utils/accessRules';
 import './App.css';
@@ -46,6 +49,9 @@ class ErrorBoundary extends React.Component {
 
 function AppShell() {
   const { isAuthenticated, logout, user, plan } = useAuth();
+  const userRole = String(user?.role || '').toUpperCase();
+  const isDealer = userRole === 'DEALER' || userRole === 'DEALER_PENDING';
+  const isAdmin = userRole === 'ADMIN';
   const quoteToolEnabled = canGenerateQuotes({ isAuthenticated, plan });
   const quoteNavTarget = quoteToolEnabled ? '/quote' : '/quote-feature';
 
@@ -72,9 +78,9 @@ function AppShell() {
           {isAuthenticated ? (
             <>
               <NavLink className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')} to="/dashboard">
-                Dashboard
+                {isDealer ? 'Dealer Inbox' : 'Dashboard'}
               </NavLink>
-              {String(user?.role || '').toUpperCase() === 'ADMIN' ? (
+              {isAdmin ? (
                 <NavLink className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')} to="/admin">
                   Admin
                 </NavLink>
@@ -91,6 +97,9 @@ function AppShell() {
               </NavLink>
               <NavLink className="nav-cta" to="/signup">
                 Create account
+              </NavLink>
+              <NavLink className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')} to="/dealer-signup">
+                Dealer account
               </NavLink>
             </>
           )}
@@ -110,6 +119,7 @@ function AppShell() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/dealer-signup" element={<DealerSignup />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/quote-feature" element={<QuoteFeaturePage />} />
           <Route
@@ -124,12 +134,27 @@ function AppShell() {
               )
             }
           />
-          <Route path="/quote-request" element={<QuoteRequest />} />
+          <Route
+            path="/quote-request"
+            element={
+              <ProtectedRoute>
+                <QuoteRequest />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dealer-quotes"
+            element={
+              <ProtectedRoute>
+                <DealerQuotesPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                {isDealer ? <DealerDashboard /> : <Dashboard />}
               </ProtectedRoute>
             }
           />

@@ -4,6 +4,7 @@ import { buildQuoteRequestIntake, saveQuoteRequestIntake } from '../../utils/quo
 import { useAuth } from '../../context/AuthContext';
 import { canUseAdvancedPreviewer } from '../../utils/accessRules';
 import { PREVIEW_CATALOG } from '../../utils/previewCatalog';
+import { apiClient } from '../../utils/apiClient';
 
 const DEFAULT_DRAFT = {
   title: 'Untitled memorial design',
@@ -28,10 +29,13 @@ const formatSelectionValue = (value) => {
 };
 
 function QuoteRequest() {
-  const { isAuthenticated, plan } = useAuth();
+  const { isAuthenticated, plan, user } = useAuth();
   const location = useLocation();
   const [message, setMessage] = useState('');
   const [draft, setDraft] = useState(DEFAULT_DRAFT);
+  const [dealers, setDealers] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoadingDealers, setIsLoadingDealers] = useState(false);
   const [formData, setFormData] = useState({
     familyName: '',
     email: '',
@@ -39,6 +43,7 @@ function QuoteRequest() {
     appointmentWindow: '',
     notes: '',
     cemeteryName: '',
+    dealerUserId: '',
     preferredDealer: '',
     referralCode: '',
   });
@@ -65,6 +70,29 @@ function QuoteRequest() {
       notes: nextDraft.wording || currentData.notes,
     }));
   }, [location.state]);
+
+  useEffect(() => {
+    const loadDealers = async () => {
+      try {
+        setIsLoadingDealers(true);
+        const response = await apiClient.getVerifiedDealers();
+        const dealerOptions = Array.isArray(response) ? response : [];
+        setDealers(dealerOptions);
+        setFormData((currentData) => ({
+          ...currentData,
+          dealerUserId: currentData.dealerUserId || dealerOptions[0]?.id || '',
+          preferredDealer: currentData.preferredDealer || dealerOptions[0]?.businessName || '',
+        }));
+      } catch (error) {
+        console.error('Failed to load dealer directory:', error);
+        setMessage(error.message || 'Unable to load dealer directory right now.');
+      } finally {
+        setIsLoadingDealers(false);
+      }
+    };
+
+    loadDealers();
+  }, []);
 
   const hasStudioTierAccess = canUseAdvancedPreviewer({ isAuthenticated, plan });
 
@@ -122,23 +150,53 @@ function QuoteRequest() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (isSubmitting) {
+      return;
+    }
+
+    if (!formData.dealerUserId) {
+      setMessage('Select a dealer before submitting your quote request.');
+      return;
+    }
 
     const intakePayload = buildQuoteRequestIntake({
       draft,
       formData,
     });
 
-    saveQuoteRequestIntake(intakePayload);
+    try {
+      setIsSubmitting(true);
+      const selectedDealer = dealers.find((dealer) => dealer.id === formData.dealerUserId) || null;
 
-    if (intakePayload.referralAttribution.commissionEligible) {
-      setMessage('Quote intake saved with dealer referral attribution. Next step is wiring this form to backend inquiry endpoints.');
-      return;
+      const createdRequest = await apiClient.createQuoteRequest({
+        dealerUserId: formData.dealerUserId,
+        customer: intakePayload.customer,
+        design: intakePayload.design,
+        referralAttribution: {
+          ...intakePayload.referralAttribution,
+          preferredDealer: intakePayload.referralAttribution.preferredDealer || selectedDealer?.businessName || null,
+        },
+      });
+
+      saveQuoteRequestIntake({
+        ...intakePayload,
+        status: createdRequest.status,
+        quoteRequestId: createdRequest.id,
+      });
+
+      setMessage(`Quote request sent to ${createdRequest.dealer?.businessName || createdRequest.dealer?.name || 'selected dealer'}. They can now respond from their dealer inbox.`);
+    } catch (error) {
+      console.error('Failed to submit quote request:', error);
+      setMessage(error.message || 'Quote request submission failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setMessage('Quote intake saved. Add a preferred dealer or referral code to track commission attribution in this workflow.');
   };
+
+  const isDealerAccount = String(user?.role || '').toUpperCase() === 'DEALER' || String(user?.role || '').toUpperCase() === 'DEALER_PENDING';
 
   return (
     <section className='quote-request-card'>
@@ -168,6 +226,33 @@ function QuoteRequest() {
         </article>
 
         <form className='quote-request-form' onSubmit={handleSubmit}>
+          {isLoadingDealers ? <p>Loading dealer directory...</p> : null}
+
+          <label>
+            Select monument dealer
+            <select
+              name='dealerUserId'
+              value={formData.dealerUserId}
+              onChange={(event) => {
+                const selectedDealer = dealers.find((dealer) => dealer.id === event.target.value) || null;
+                setFormData((currentData) => ({
+                  ...currentData,
+                  dealerUserId: event.target.value,
+                  preferredDealer: selectedDealer?.businessName || currentData.preferredDealer,
+                }));
+              }}
+              required
+              disabled={isSubmitting || isLoadingDealers || isDealerAccount}
+            >
+              <option value=''>Choose a dealer</option>
+              {dealers.map((dealer) => (
+                <option key={dealer.id} value={dealer.id}>
+                  {dealer.businessName}
+                </option>
+              ))}
+            </select>
+          </label>
+
           <label>
             Family or customer name
             <input
@@ -177,6 +262,7 @@ function QuoteRequest() {
               onChange={handleChange}
               placeholder='Who is this proposal for?'
               required
+              disabled={isSubmitting || isDealerAccount}
             />
           </label>
 
@@ -189,6 +275,7 @@ function QuoteRequest() {
               onChange={handleChange}
               placeholder='name@example.com'
               required
+              disabled={isSubmitting || isDealerAccount}
             />
           </label>
 
@@ -201,6 +288,7 @@ function QuoteRequest() {
               onChange={handleChange}
               placeholder='Best callback number'
               required
+              disabled={isSubmitting || isDealerAccount}
             />
           </label>
 
@@ -212,6 +300,7 @@ function QuoteRequest() {
               value={formData.appointmentWindow}
               onChange={handleChange}
               placeholder='Example: Weekday afternoons'
+              disabled={isSubmitting || isDealerAccount}
             />
           </label>
 
@@ -223,6 +312,7 @@ function QuoteRequest() {
               value={formData.cemeteryName}
               onChange={handleChange}
               placeholder='Example: Oak Hill Memorial Park'
+              disabled={isSubmitting || isDealerAccount}
             />
           </label>
 
@@ -234,6 +324,7 @@ function QuoteRequest() {
               value={formData.preferredDealer}
               onChange={handleChange}
               placeholder='Used for referral attribution and quote routing'
+              disabled={isSubmitting || isDealerAccount}
             />
           </label>
 
@@ -245,6 +336,7 @@ function QuoteRequest() {
               value={formData.referralCode}
               onChange={handleChange}
               placeholder='Example: LEGACY-2026'
+              disabled={isSubmitting || isDealerAccount}
             />
           </label>
 
@@ -256,10 +348,15 @@ function QuoteRequest() {
               onChange={handleChange}
               placeholder='Share inscription notes or family preferences'
               rows={5}
+              disabled={isSubmitting || isDealerAccount}
             />
           </label>
 
-          <button className='quote-button' type='submit'>Submit quote request draft</button>
+          {isDealerAccount ? <p className='form-message'>Dealer accounts can review inbound requests from the dashboard inbox.</p> : null}
+
+          <button className='quote-button' type='submit' disabled={isSubmitting || isDealerAccount || isLoadingDealers || !dealers.length}>
+            {isSubmitting ? 'Submitting request...' : 'Send quote request to dealer'}
+          </button>
           {message ? <p className='form-message'>{message}</p> : null}
         </form>
       </div>

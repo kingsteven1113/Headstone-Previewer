@@ -68,6 +68,9 @@ function Signup() {
       <p className="auth-footer">
         Already have an account? <Link to="/login">Sign in</Link>
       </p>
+      <p className="auth-footer">
+        Monument Dealer? <Link to="/dealer-signup">Create a verified dealer account</Link>
+      </p>
     </section>
   );
 }
